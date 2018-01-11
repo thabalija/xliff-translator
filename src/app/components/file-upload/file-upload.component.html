@@ -1,0 +1,15 @@
+<div class="dropzone">
+  <p *ngIf="!filesForUpload">
+    Drop files here to upload<br> 
+    <span>or click here</span>  
+  </p> 
+  <p *ngIf="filesForUpload">
+    {{ filesForUpload.name }}<br> 
+    <span>change file</span>  
+  </p>
+</div>
+
+<div [formGroup]="fileInput">
+  <input type="file" id="input" formControlName="file" (change)="openFile($event)">
+</div>
+

@@ -1,0 +1,13 @@
+.dropzone{
+    width: 300px;
+    border: 2px dashed #ccc;
+    color: #ccc;
+    padding: 4em 2em;
+    text-align: center;
+    vertical-align: middle;
+    
+    &.dragover{
+        color: #000;
+        border-color:  #000;
+    }
+}
