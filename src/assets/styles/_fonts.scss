@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:300,400,700&subset=latin-ext');
+
 @font-face {
     font-family: 'Material Icons';
     font-style: normal;
@@ -23,6 +25,7 @@
   src: url('./assets/fonts/nunito-light.ttf') format('ttf');
 }
   
+
 /* Material icons */
 
 mat-icon {
@@ -66,19 +69,19 @@ mat-icon.mat-light.mat-inactive { color: rgba(255, 255, 255, 0.3); }
 
 /* Set Nunito as base font */
 html,body {
-  font-family: Nunito, Helvetica, Arial, Sans-Serif;
+  font-family: 'Nunito', Helvetica, Arial, Sans-Serif;
   font-weight: 400;
 }
 strong,b{
-  font-family: Nunito, Helvetica, Arial, Sans-Serif;
+  font-family: 'Nunito', Helvetica, Arial, Sans-Serif;
   font-weight: 700;
 }
 .font-light{
-  font-family: Nunito, Helvetica, Arial, Sans-Serif;
+  font-family: 'Nunito', Helvetica, Arial, Sans-Serif;
   font-weight: 300;
 }
 .font-bold{
-  font-family: Nunito, Helvetica, Arial, Sans-Serif;
+  font-family: 'Nunito', Helvetica, Arial, Sans-Serif;
   font-weight: 700;
 }
 

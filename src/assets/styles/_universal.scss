@@ -1,0 +1,123 @@
+@import 'variables';
+
+.flex-spacer {
+    flex-grow: 1;
+}
+* {
+    box-sizing: border-box;
+}
+body {
+    background: url('./assets/img/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+.app-container {
+    max-width: 1080px;
+    margin: 0 auto;
+}
+.settings {
+    color: $white;
+    padding: 1em 0.5em;
+    .mat-slide-toggle-content{
+        font-size: 1em;
+    }
+}
+.file-info {
+    &.mat-card {
+        background: $gradient-primary;
+        box-shadow: none;
+        color: $white;
+        border-radius: 10px; 
+        margin-bottom: 4em;  
+    }
+    .file-info--group {
+        padding: 0 0.75em;
+
+        .file-info--title{
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .file-info--value{
+            margin: 0;
+            font-weight: 300;
+        }
+    }
+}
+.translation-unit {
+    display: flex;
+    margin-bottom: 0.5em;
+    align-items: stretch;
+    align-content: space-around;
+    justify-content: space-between;  
+
+    div.source,
+    div.target{
+        width: calc( 50% - 1em);           
+        display: flex;
+        flex-direction: column;   
+        .mat-card {
+            box-shadow: none;
+            border-radius: 10px;
+            flex-grow: 1;
+
+            .mat-card-content {
+                margin: 0;
+                p {
+                    width: calc( 100% - 3em);
+                    font-size: 1.2em;
+                    font-weight: 700;
+                }
+                .mat-form-field {
+                    width: calc( 100% - 3em);
+                    font-size: 1.2em;
+                    font-weight: 700;
+                    .mat-form-field-wrapper {
+                        padding: 0; 
+                        .mat-form-field-infix {
+                            padding: 0;
+                            border-top: 0;
+                        }
+                        .mat-input-underline.mat-form-field-underline {
+                            display: none;
+                        }
+                    }
+                }
+            }
+            .mat-card-actions {
+                position: absolute;
+                right: 13px;
+                margin: 0;
+                padding: 0;
+                bottom: 13px;
+            }
+        }
+        .translation-unit--footer {
+            height: 56px;
+            display: flex;
+            align-items: center;
+            padding: 1em;
+            color: $white;
+
+            .mat-icon--fingerprint {
+                margin-right: 0.25em;
+            }
+            .mat-radio-button {
+                margin-right: 1em;
+            }
+        }
+
+    }
+    div.source {
+        .mat-card {
+            background: $gradient-primary;
+            
+            p,
+            .mat-icon-button {
+                color: $white;
+            }
+        }
+    }
+
+}
+.flex-row {
+    display: flex;
+}
