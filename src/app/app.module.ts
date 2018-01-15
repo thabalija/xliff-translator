@@ -14,22 +14,26 @@ import { AppRoutingModule } from './shared/modules/routing/app-routing.module';
 
 // Root Component
 import { AppComponent } from './app.component';
-import { FileUploadComponent } from './components/file-upload/file-upload.component';
-import { TranslationStatusComponent } from './components/translation-status/translation-status.component';
-import { LayoutComponent } from './components/layout/layout.component';
-import { EditorComponent } from './components/editor/editor.component';
 
 // App Components
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { EditorComponent } from './components/editor/editor.component';
+import { FileInfoComponent } from './components/file-info/file-info.component';
 
 // Services
+import { FileUploadService } from './services/file-upload.service';
+import { TranslationStatusService } from './services/translation-status.service';
+import { FileDownloadComponent } from './components/file-download/file-download.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FileUploadComponent,
-    TranslationStatusComponent,
     LayoutComponent,
-    EditorComponent
+    EditorComponent,
+    FileInfoComponent,
+    FileDownloadComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +44,10 @@ import { EditorComponent } from './components/editor/editor.component';
     AppRoutingModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [
+    FileUploadService,
+    TranslationStatusService
+  ],
   entryComponents: [],
   bootstrap: [AppComponent]
 })
