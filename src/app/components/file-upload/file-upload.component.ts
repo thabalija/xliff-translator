@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FileUploadService } from './../../services/file-upload.service';
 
 @Component({
   selector: 'app-file-upload',
@@ -21,7 +22,8 @@ export class FileUploadComponent implements OnInit {
   translationUnits = [];
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _fileUploadService: FileUploadService
   ) {
     this.createForm();
   }
@@ -48,41 +50,39 @@ export class FileUploadComponent implements OnInit {
 
       const parser = new DOMParser();
       const htmlDoc = parser.parseFromString(text, 'application/xhtml+xml');
-      
+
       this.uploadedFile = htmlDoc;
 
-      console.log(htmlDoc);
+      // console.log(htmlDoc);
 
-      const elements = htmlDoc.getElementsByTagName('trans-unit');
-      const arr = Array.from(elements);
+      // const elements = htmlDoc.getElementsByTagName('trans-unit');
+      // const arr = Array.from(elements);
 
-      const fileElement = htmlDoc.getElementsByTagName('file')[0];
-      this.uploadedFileInfo.sourceLang = fileElement.getAttribute('source-language');
-      this.uploadedFileInfo.targetLang = fileElement.getAttribute('target-language');
-      this.uploadedFileInfo.datatype = fileElement.getAttribute('datatype');
-      this.uploadedFileInfo.original = fileElement.getAttribute('original');
-      const xliffElement = htmlDoc.getElementsByTagName('xliff')[0];
-      this.uploadedFileInfo.xliffVersion = xliffElement.getAttribute('version');
+      // const fileElement = htmlDoc.getElementsByTagName('file')[0];
+      // this.uploadedFileInfo.sourceLang = fileElement.getAttribute('source-language');
+      // this.uploadedFileInfo.targetLang = fileElement.getAttribute('target-language');
+      // this.uploadedFileInfo.datatype = fileElement.getAttribute('datatype');
+      // this.uploadedFileInfo.original = fileElement.getAttribute('original');
+      // const xliffElement = htmlDoc.getElementsByTagName('xliff')[0];
+      // this.uploadedFileInfo.xliffVersion = xliffElement.getAttribute('version');
 
-      arr.forEach( (el) => {
-        const self = {
-          id: el.getAttribute('id'),
-          source: el.querySelector('source').innerHTML,
-          target: el.querySelector('target').innerHTML,
-          targetState: el.querySelector('target').getAttribute('state'),
-          note: el.getElementsByTagName('note')
-        };
-        this.translationUnits.push(self);
-      });
-
-      htmlDoc
-        .getElementById('9a91783e9c0f790ed49edae730f9156070ed9dd5')
-        .getElementsByTagName('target')[0] .innerHTML = 'dickbutt';
+      // arr.forEach( (el) => {
+      //   const self = {
+      //     id: el.getAttribute('id'),
+      //     source: el.querySelector('source').innerHTML,
+      //     target: el.querySelector('target').innerHTML,
+      //     targetState: el.querySelector('target').getAttribute('state'),
+      //     note: el.getElementsByTagName('note')
+      //   };
+      //   this.translationUnits.push(self);
+      // });
 
 
       const stringer = new XMLSerializer();
 
       this.finalFile = stringer.serializeToString(htmlDoc);
+
+      this._fileUploadService.updateFile(htmlDoc);
 
     };
 

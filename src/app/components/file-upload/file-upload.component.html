@@ -1,35 +1,8 @@
-<div class="dropzone">
-  <p *ngIf="!filesForUpload">
-    Drop files here to upload<br> 
-    <span>or click here</span>  
-  </p> 
-  <p *ngIf="filesForUpload">
-    {{ filesForUpload.name }}<br> 
-    <span>change file</span>  
-  </p>
-</div>
 
-<div [formGroup]="fileInput">
-  <input type="file" id="input" formControlName="file" (change)="openFile($event)">
-</div>
-
-
-<span *ngIf="uploadedFileInfo.targetLang">Target lang = {{uploadedFileInfo.targetLang}}</span>
-<span *ngIf="uploadedFileInfo.sourceLang">Source lang = {{uploadedFileInfo.sourceLang}}</span>
-<span *ngIf="uploadedFileInfo.xliffVersion">XLIFF version = {{uploadedFileInfo.xliffVersion}}</span>
-<span *ngIf="uploadedFileInfo.datatype">Data type = {{uploadedFileInfo.datatype}}</span>
-<span *ngIf="uploadedFileInfo.original">Original = {{uploadedFileInfo.original}}</span>
-
-<button (click)="downloadFileCall()">Download</button>
-
-<ng-container *ngIf="translationUnits">
-  <div *ngFor="let unit of translationUnits">
-    <span>id = {{ unit.id }} </span> <br>
-    <span>source = {{ unit.source }} </span> <br>
-    <span>target = {{ unit.target }} </span> <br>
-    <input type="text" name="" id="" [(ngModel)]="unit.target">
-    <span>targetState = {{ unit.targetState }} </span> <br>
-    <span>note = {{ unit.note }} </span> <br><br>
-    <hr>
+<div class="flex-row">
+  <div [formGroup]="fileInput">
+    <input type="file" id="input" formControlName="file" (change)="openFile($event)">
   </div>
-</ng-container>
+  <div class="flex-spacer"></div>
+  <button (click)="downloadFileCall()">Download</button>
+</div>
