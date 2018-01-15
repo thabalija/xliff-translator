@@ -1,0 +1,31 @@
+<ng-container *ngIf="file">
+	<mat-card class="file-info">
+		<div class="flex-row">
+			<div class="file-info--group">
+				<h5 class="file-info--title">File name</h5>
+				<h1 class="file-info--value">{{ uploadedFileInfo.name }}</h1>
+			</div>
+			<div class="flex-spacer"></div>
+			<div class="file-info--group">
+				<h5 class="file-info--title">Translation units</h5>
+				<h1 class="file-info--value">{{ uploadedFileInfo.totalUnits }}</h1>
+			</div>
+			<div class="file-info--group">
+				<h5 class="file-info--title">Translated</h5>
+				<h1 class="file-info--value">{{ uploadedFileInfo.translatedUnits }}</h1>
+			</div>
+			<div class="file-info--group">
+				<h5 class="file-info--title">Source language</h5>
+				<h1 class="file-info--value">{{ uploadedFileInfo.sourceLang }}</h1>
+			</div>
+			<div class="file-info--group">
+				<h5 class="file-info--title">Target language</h5>
+				<h1 class="file-info--value">{{ uploadedFileInfo.targetLang }}</h1>
+			</div>
+			<div class="file-info--group">
+				<h5 class="file-info--title">XLIFF version</h5>
+				<h1 class="file-info--value">{{ uploadedFileInfo.xliffVersion }}</h1>
+			</div>
+		</div>
+	</mat-card>
+</ng-container>
