@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Feature Modules
 import { MaterialModule } from './shared/modules/material/material.module';
+import { SharedModule } from './shared/modules/shared/shared.module';
 
 // Routing Modules
 import { RouterModule } from '@angular/router';
@@ -42,7 +43,8 @@ import { FileDownloadComponent } from './components/file-download/file-download.
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ],
   providers: [
     FileUploadService,
