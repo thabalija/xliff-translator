@@ -72,6 +72,9 @@ body {
                     font-weight: 700;
                     .mat-form-field-wrapper {
                         padding: 0; 
+                        textarea.mat-autosize{
+                            overflow: hidden !important;
+                        }
                         .mat-form-field-infix {
                             padding: 0;
                             border-top: 0;
@@ -116,8 +119,32 @@ body {
             }
         }
     }
+}
+.cdk-overlay-container {
+    .mat-dialog-container {
+        border-radius: 10px;
 
+        .mat-dialog-title {
+            font-weight: 700;
+        }
+        .mat-dialog-content {
+            .mat-form-field {
+                width: calc(50% - 0.15em);
+                margin-bottom: 1em;
+            }
+        }
+        .mat-dialog-actions:last-child {
+            margin-bottom: -12px;
+        }
+    }
+}
+button.button-gradient.button-round {
+    background: $gradient-primary;
+    border-radius: 18px;
+    color: $white;
 }
 .flex-row {
     display: flex;
 }
+
+
