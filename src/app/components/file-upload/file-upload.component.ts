@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FileUploadService } from './../../services/file-upload.service';
 
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dialog/confirm-dialog.component';
+import { SettingsDialogComponent } from '../../shared/modules/shared/settings-dialog/settings-dialog.component';
+
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
@@ -23,7 +27,8 @@ export class FileUploadComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private _fileUploadService: FileUploadService
+    private _fileUploadService: FileUploadService,
+    public dialog: MatDialog
   ) {
     this.createForm();
   }
@@ -92,8 +97,8 @@ export class FileUploadComponent implements OnInit {
 
   downloadFileCall() {
 
-    this.translationUnits.forEach( (transUnit) => {
-      this.uploadedFile.getElementById(transUnit.id).getElementsByTagName('target')[0] .innerHTML = transUnit.target;
+    this.translationUnits.forEach((transUnit) => {
+      this.uploadedFile.getElementById(transUnit.id).getElementsByTagName('target')[0].innerHTML = transUnit.target;
     });
 
     const stringer = new XMLSerializer();
@@ -112,6 +117,29 @@ export class FileUploadComponent implements OnInit {
     element.click();
     document.body.removeChild(element);
   }
+
+  // open dialog for save confirmation
+  openSaveDataDialog() {
+    const dialogRef = this.dialog.open(SettingsDialogComponent, {
+      width: '500px',
+      data: {
+        title: 'Project settings',
+        name: ``,
+        localeArray: [{ lang: 'Croatian', id: 'hr' }, {lang: 'English-US', id: 'en-US' }],
+        sourceLang: 'hr',
+        targetLang: '',
+        confirm: 'Save changes',
+        confirmIcon: 'save'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
+  }
+
+
 
 }
 
