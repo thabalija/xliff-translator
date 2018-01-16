@@ -22,7 +22,7 @@
 					<p>{{unit.source}}</p>
 				</mat-card-content>
 				<mat-card-actions align="end">
-					<button mat-icon-button>
+					<button mat-icon-button (click)="copy(unit.source)">
 						<mat-icon>content_copy</mat-icon>
 					</button>
 				</mat-card-actions>
@@ -42,11 +42,11 @@
 						<textarea matInput matTextareaAutosize matAutosizeMinRows="1" [(ngModel)]="unit.target"></textarea>
 					</mat-form-field>
 				</mat-card-content>
-				<mat-card-actions align="end">
+				<!-- <mat-card-actions align="end">
 					<button mat-icon-button>
 						<mat-icon>content_paste</mat-icon>
 					</button>
-				</mat-card-actions>
+				</mat-card-actions> -->
 			</mat-card>
 			<div class="translation-unit--footer">
 				<mat-radio-group [(ngModel)]="unit.targetState" >

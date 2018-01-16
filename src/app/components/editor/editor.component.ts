@@ -74,6 +74,27 @@ export class EditorComponent implements OnInit, OnDestroy {
     document.body.removeChild(element);
   }
 
+  copy(text) {
+    const textArea = document.createElement('textarea');
+    textArea.style.position = 'fixed';
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.opacity = '0';
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            return true;
+        }
+    } catch (err) {
+        console.log('Oops, unable to copy');
+    }
+    document.body.removeChild(textArea);
+    return false;
+  }
+
   ngOnDestroy() {
     this.uploadedFile$.unsubscribe();
   }
