@@ -1,0 +1,10 @@
+<h1 class="mat-dialog-title">{{ data.title }}</h1>
+
+<mat-dialog-content>
+    <p>{{ data.content }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="dialogRef.close(false)">Odustani</button>
+    <button mat-button [color]="data.buttonColor" (click)="dialogRef.close(true)">{{ data.confirm }}</button>
+</mat-dialog-actions>
