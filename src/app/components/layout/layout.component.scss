@@ -1,0 +1,19 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1080px;
+    margin: 0 auto;
+    margin-bottom: 2em;
+    align-items: center;
+    a {
+        color: rgba(255, 255 ,255, 0.85);
+        transition: 200ms color ease;
+        &:hover {
+            color: rgba(255, 255 ,255, 1);
+        }
+        text-decoration: none;
+        .mat-icon {     
+            vertical-align: text-bottom;
+        }
+    }
+}
