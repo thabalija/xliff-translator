@@ -26,6 +26,7 @@ import { FileInfoComponent } from './components/file-info/file-info.component';
 import { FileUploadService } from './services/file-upload.service';
 import { TranslationStatusService } from './services/translation-status.service';
 import { FileDownloadComponent } from './components/file-download/file-download.component';
+import { TranslationsComponent } from './components/translations/translations.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FileDownloadComponent } from './components/file-download/file-download.
     LayoutComponent,
     EditorComponent,
     FileInfoComponent,
-    FileDownloadComponent
+    FileDownloadComponent,
+    TranslationsComponent
   ],
   imports: [
     BrowserModule,
