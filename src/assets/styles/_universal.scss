@@ -6,14 +6,60 @@
 * {
     box-sizing: border-box;
 }
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
 body {
-    background: url('./assets/img/background.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background: $gradient-primary;
 }
 .app-container {
     max-width: 1080px;
     margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+.mat-card {
+    padding: 3em;
+    max-width: 100%;
+    .mat-card-header {
+        justify-content: space-between;
+        .mat-card-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: $primary;
+        }
+        .progress {
+            .mat-icon {
+                height: 16px;
+                width: 16px;
+                font-size: 12px;
+                &.active {
+                    color: $primary;
+                }
+                &.inactive {
+                    color: $light-gray;
+                }
+            }
+        }
+    }
+}
+.get-started {
+    width: 550px;
+    .flex-row {
+        justify-content: space-between; 
+        .mat-form-field {
+            width: calc(50% - 1em);
+        }
+    }
+}
+
+
+
 .settings {
     color: $white;
     padding: 1em 0.5em;
