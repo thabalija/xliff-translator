@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FileUploadService } from './../../services/file-upload.service';
 
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dialog/confirm-dialog.component';
-import { SettingsDialogComponent } from '../../shared/modules/shared/settings-dialog/settings-dialog.component';
+import { FileUploadService } from './../../services/file-upload.service';
+import { Locale } from './../../shared/interfaces/locale.interface';
 
 @Component({
   selector: 'app-file-upload',
@@ -13,140 +10,50 @@ import { SettingsDialogComponent } from '../../shared/modules/shared/settings-di
 })
 export class FileUploadComponent implements OnInit {
 
-  fileInput: FormGroup;
-  uploadedFile;
-  finalFile;
-  uploadedFileInfo = {
-    'targetLang': '',
-    'sourceLang': '',
-    'xliffVersion': '',
-    'datatype': '',
-    'original': ''
-  };
-  translationUnits = [];
+  fileName: string;
+  fileSourceLang: string;
+  htmlDocument: HTMLDocument;
+  languages: Locale[];
+  showComponent: boolean;
 
   constructor(
-    private fb: FormBuilder,
-    private _fileUploadService: FileUploadService,
-    public dialog: MatDialog
-  ) {
-    this.createForm();
+    private _fileUploadService: FileUploadService
+  ) { }
+
+  ngOnInit() {
+    this.getLanguages();
   }
 
-  // create file input form
-  createForm() {
-    this.fileInput = this.fb.group({
-      file: []
-    });
+  getLanguages(): void {
+    this.languages = [
+      {language: 'Croatian', locale: 'hr'},
+      {language: 'English - US', locale: 'en-US'}
+    ];
   }
 
-  ngOnInit() { }
-
-  openFile(event) {
-    const input = event.target;
-    const file = input.files[0];
-
+  onFileChange(uploadedFile: File[]): void {
+    const file = uploadedFile[0];
+    this.fileName = file.name;
     const reader = new FileReader();
-
     reader.onload = () => {
-
-      // this 'text' is the content of the file
-      const text = reader.result;
-
+      const fileContent = reader.result;
       const parser = new DOMParser();
-      const htmlDoc = parser.parseFromString(text, 'application/xhtml+xml');
-
-      this.uploadedFile = htmlDoc;
-
-      // console.log(htmlDoc);
-
-      // const elements = htmlDoc.getElementsByTagName('trans-unit');
-      // const arr = Array.from(elements);
-
-      // const fileElement = htmlDoc.getElementsByTagName('file')[0];
-      // this.uploadedFileInfo.sourceLang = fileElement.getAttribute('source-language');
-      // this.uploadedFileInfo.targetLang = fileElement.getAttribute('target-language');
-      // this.uploadedFileInfo.datatype = fileElement.getAttribute('datatype');
-      // this.uploadedFileInfo.original = fileElement.getAttribute('original');
-      // const xliffElement = htmlDoc.getElementsByTagName('xliff')[0];
-      // this.uploadedFileInfo.xliffVersion = xliffElement.getAttribute('version');
-
-      // arr.forEach( (el) => {
-      //   const self = {
-      //     id: el.getAttribute('id'),
-      //     source: el.querySelector('source').innerHTML,
-      //     target: el.querySelector('target').innerHTML,
-      //     targetState: el.querySelector('target').getAttribute('state'),
-      //     note: el.getElementsByTagName('note')
-      //   };
-      //   this.translationUnits.push(self);
-      // });
-
-
-      const stringer = new XMLSerializer();
-
-      this.finalFile = stringer.serializeToString(htmlDoc);
-
-      this._fileUploadService.updateFile(htmlDoc);
-
+      this.htmlDocument = parser.parseFromString(fileContent, 'application/xhtml+xml');
+      const fileElement = this.htmlDocument.getElementsByTagName('file')[0];
+      this.fileSourceLang = fileElement.getAttribute('source-language');
     };
-
-    reader.readAsText(file);
-
+    reader.readAsText(uploadedFile[0]);
   }
 
-  downloadFileCall() {
-
-    this.translationUnits.forEach((transUnit) => {
-      this.uploadedFile.getElementById(transUnit.id).getElementsByTagName('target')[0].innerHTML = transUnit.target;
-    });
-
-    const stringer = new XMLSerializer();
-
-    this.finalFile = stringer.serializeToString(this.uploadedFile);
-
-    this.downloadFile(this.finalFile, `myName.${this.uploadedFileInfo.targetLang}.xlf`);
+  uploadFile(): void {
+    if (this.htmlDocument) {
+      this._fileUploadService.updateFile(this.htmlDocument, this.fileName, this.fileSourceLang);
+      this._fileUploadService.updateTranslationUnits(this.htmlDocument);
+      this._fileUploadService.updateFileInfo(this.htmlDocument, this.fileName, this.fileSourceLang);
+    } else {
+      // TODO mat snackbar
+      console.log('please upload file');
+    }
   }
 
-  downloadFile(file, fileName) {
-    const element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(file));
-    element.setAttribute('download', fileName);
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-  }
-
-  // open dialog for save confirmation
-  openSaveDataDialog() {
-    const dialogRef = this.dialog.open(SettingsDialogComponent, {
-      width: '500px',
-      data: {
-        title: 'Project settings',
-        name: ``,
-        localeArray: [{ lang: 'Croatian', id: 'hr' }, {lang: 'English-US', id: 'en-US' }],
-        sourceLang: 'hr',
-        targetLang: '',
-        confirm: 'Save changes',
-        confirmIcon: 'save'
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log(result);
-      }
-    });
-  }
-
-
-
-}
-
-export interface TransUnit {
-  id: string;
-  source: string;
-  target?: string;
-  targetState?: string;
-  note?: any;
 }
