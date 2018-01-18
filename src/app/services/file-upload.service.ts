@@ -23,8 +23,8 @@ export class FileUploadService {
   }
 
   public updateTranslationUnits(htmlDoc: HTMLDocument) {
-    const translationNodes: NodeList = htmlDoc.getElementsByTagName('trans-unit');
-    const translationArray: HTMLElement[] = Array.from(translationNodes);
+    const translationNodes = htmlDoc.getElementsByTagName('trans-unit');
+    const translationArray = Array.from(translationNodes);
     const translationUnits: TranslationUnit[] = [];
 
     translationArray.forEach((unit) => {
