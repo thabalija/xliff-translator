@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Feature Modules
 import { MaterialModule } from '../material/material.module';
+import { DragAndDropModule } from '../drag-and-drop/drag-and-drop.module';
 
 // Components
 import { InputFileComponent } from './input-file/input-file.component';
@@ -23,7 +24,11 @@ import { SettingsDialogComponent } from './settings-dialog/settings-dialog.compo
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
-        MaterialModule
+        MaterialModule,
+        DragAndDropModule
+    ],
+    exports: [
+        DragAndDropModule
     ],
     entryComponents: [
         ConfirmDialogComponent,
