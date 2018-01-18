@@ -1,4 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+
+import { TranslationUnit } from './../../shared/interfaces/translation-unit.interface';
 import { FileUploadService } from './../../services/file-upload.service';
 import { TranslationStatusService } from '../../services/translation-status.service';
 
@@ -9,9 +12,9 @@ import { TranslationStatusService } from '../../services/translation-status.serv
 })
 export class EditorComponent implements OnInit, OnDestroy {
 
-  uploadedFile$;
-  uploadedFile;
-  translationUnits = [];
+  uploadedFile: HTMLDocument;
+  uploadedFile$: Subscription;
+  translationUnits: TranslationUnit[] = [];
 
   constructor(
     private _fileUploadService: FileUploadService,
