@@ -1,60 +1,51 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-
-import { TranslationUnit } from './../../shared/interfaces/translation-unit.interface';
 import { FileUploadService } from './../../services/file-upload.service';
-import { TranslationStatusService } from '../../services/translation-status.service';
+
+import { FileInfo } from './../../shared/interfaces/file-info.interface';
+import { TranslationUnit } from './../../shared/interfaces/translation-unit.interface';
 
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss']
 })
-export class EditorComponent implements OnInit, OnDestroy {
+export class EditorComponent implements OnInit {
 
+  fileInfo: FileInfo;
   uploadedFile: HTMLDocument;
-  uploadedFile$: Subscription;
   translationUnits: TranslationUnit[] = [];
 
   constructor(
     private _fileUploadService: FileUploadService,
-    private _translationStatusService: TranslationStatusService,
   ) { }
 
   ngOnInit() {
-    this.loadFiles();
+    this.loadFileInfo();
+    this.loadTranslationUnits();
   }
 
-  // create file subscription
-  loadFiles() {
-    this.uploadedFile$ = this._fileUploadService.uploadedFile$.subscribe( (res) => {
-      this.uploadedFile = res;
-      this.processFile(this.uploadedFile);
-    });
+  // get file info from localstorage
+  loadFileInfo() {
+    this.fileInfo = this._fileUploadService.getFileInfo();
   }
 
-  processFile(htmlDoc: HTMLDocument) {
-    const elements = htmlDoc.getElementsByTagName('trans-unit');
-    const arr = Array.from(elements);
-
-    arr.forEach( (el) => {
-      const unit = {
-        id: el.getAttribute('id'),
-        source: el.querySelector('source').innerHTML,
-        target: el.querySelector('target').innerHTML,
-        targetState: el.querySelector('target').getAttribute('state'),
-        note: el.getElementsByTagName('note')
-      };
-      this.translationUnits.push(unit);
-    });
-
-    this._translationStatusService.translationStatus(55);
-    console.log(this.translationUnits);
+  // get translation units from localstorage
+  loadTranslationUnits() {
+    this.translationUnits = this._fileUploadService.getTranslationUnits();
+  }
+  // get original file from localstorage
+  loadOriginalFile() {
+    this.uploadedFile = this._fileUploadService.getFile();
   }
 
+  // save changes to localstorage
+  saveChanges(translationUnits: TranslationUnit[]) {
+    localStorage.removeItem('translationUnits');
+    localStorage.setItem('translationUnits', JSON.stringify(translationUnits));
+  }
 
   downloadFileCall() {
-
     this.translationUnits.forEach( (transUnit) => {
       this.uploadedFile.getElementById(transUnit.id).getElementsByTagName('target')[0].innerHTML = transUnit.target;
       this.uploadedFile.getElementById(transUnit.id).getElementsByTagName('target')[0].setAttribute('state', transUnit.targetState);
@@ -77,6 +68,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     document.body.removeChild(element);
   }
 
+  // copies input text to clipboard
   copy(text) {
     const textArea = document.createElement('textarea');
     textArea.style.position = 'fixed';
@@ -96,10 +88,6 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
     document.body.removeChild(textArea);
     return false;
-  }
-
-  ngOnDestroy() {
-    this.uploadedFile$.unsubscribe();
   }
 
 }
