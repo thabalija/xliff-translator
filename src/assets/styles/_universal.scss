@@ -17,14 +17,12 @@ body {
 .app-container {
     max-width: 1080px;
     margin: 0 auto;
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .mat-card {
-    padding: 3em;
     max-width: 100%;
     .mat-card-header {
         justify-content: space-between;
@@ -50,6 +48,7 @@ body {
 }
 .get-started {
     width: 550px;
+    margin: 0 auto;
     .flex-row {
         justify-content: space-between; 
         .mat-form-field {
@@ -58,7 +57,63 @@ body {
     }
 }
 
+mat-card.mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: $box-shadow;
+}
+a:hover {
+    cursor: pointer;
+}
 
+.translation-list {
+    padding: 1em 2em 5em 2em;
+    border: $border-dotted;
+    margin: 0 auto;
+    margin-bottom: 1em;
+    min-height: 250px;
+    .mat-header-row {
+        border-bottom: $border-dotted;
+        min-height: 60px;
+    }
+    .mat-row {
+        min-height: 72px;
+        border-bottom: $border-dotted;
+        &:last-of-type {
+            border-bottom: none;
+        }
+        .mat-cell {
+            color: #616161;
+            font-size: 1.1em;            
+            .status {
+                display: flex;
+                align-items: center;
+                .mat-progress-bar-buffer {
+                    background-color: $light-gray;
+                }
+                p {
+                    flex: 1 0 75px;
+                    padding-left: 1em;
+                }
+            }
+        }
+    }
+    .no-translations {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2em;
+        .mat-icon {
+            width: auto;
+            height: auto;
+            font-size: 48px;
+            opacity: 0.5;
+        }
+        a {
+            font-weight: 700;
+        }
+    }
+}
 
 .settings {
     color: $white;
@@ -68,22 +123,22 @@ body {
     }
 }
 .file-info {
-    &.mat-card {
-        background: $gradient-primary;
-        box-shadow: none;
-        color: $white;
-        border-radius: 10px; 
-        margin-bottom: 4em;  
+    &.mat-card { 
+        margin-bottom: 1em;  
     }
     .file-info--group {
         padding: 0 0.75em;
 
         .file-info--title{
+            font-size: 0.75em;
             margin: 0;
             text-transform: uppercase;
+            color: $gray;
         }
         .file-info--value{
+            font-size: 1.8em;
             margin: 0;
+            color: $primary;
             font-weight: 300;
         }
     }
@@ -192,5 +247,3 @@ button.button-gradient.button-round {
 .flex-row {
     display: flex;
 }
-
-
