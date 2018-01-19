@@ -15,6 +15,7 @@ export class EditorComponent implements OnInit {
   fileInfo: FileInfo;
   uploadedFile: HTMLDocument;
   translationUnits: TranslationUnit[] = [];
+  show = 'all';
 
   constructor(
     private _fileUploadService: FileUploadService,

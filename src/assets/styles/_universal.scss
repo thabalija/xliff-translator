@@ -81,7 +81,7 @@ a:hover {
             border-bottom: none;
         }
         .mat-cell {
-            color: #616161;
+            color: $text-gray;
             font-size: 1.1em;            
             .status {
                 display: flex;
@@ -116,7 +116,7 @@ a:hover {
 }
 
 .settings {
-    color: $white;
+    color: $text-gray;
     padding: 1em 0.5em;
     .mat-slide-toggle-content{
         font-size: 1em;
@@ -142,6 +142,22 @@ a:hover {
             font-weight: 300;
         }
     }
+    &.file-info-editable {
+        .file-info--group {
+            padding: 0 2em 0 0;
+        }
+        .mat-form-field {
+            align-self: flex-start;
+            margin-right: 20px;
+            min-width: 200px;
+            .mat-form-field-wrapper {
+                padding-bottom: 0;
+            }
+            .mat-form-field-underline{
+                bottom: 0;
+            }
+        }
+    }
 }
 .translation-unit {
     display: flex;
@@ -157,7 +173,7 @@ a:hover {
         flex-direction: column;   
         .mat-card {
             box-shadow: none;
-            border-radius: 10px;
+            border-radius: 2px;
             flex-grow: 1;
 
             .mat-card-content {
@@ -199,7 +215,6 @@ a:hover {
             display: flex;
             align-items: center;
             padding: 1em;
-            color: $white;
 
             .mat-icon--fingerprint {
                 margin-right: 0.25em;
@@ -212,12 +227,17 @@ a:hover {
     }
     div.source {
         .mat-card {
-            background: $gradient-primary;
+            background: #f2f2f2;
             
             p,
             .mat-icon-button {
-                color: $white;
+                color: $text-gray;
             }
+        }
+    }
+    div.target {
+        .mat-card {
+            border: $border-dotted;
         }
     }
 }
@@ -246,4 +266,7 @@ button.button-gradient.button-round {
 }
 .flex-row {
     display: flex;
+}
+.flex-spacer {
+    flex-grow: 1;
 }

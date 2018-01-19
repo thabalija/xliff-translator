@@ -1,60 +1,91 @@
-<div class="flex-row settings">
-	<span class="settings-show">
-		Show
-		<span>
-			All 
-			<mat-icon>arrow_drop_down</mat-icon>
-		</span>
-	</span>
-	<div class="flex-spacer"></div>
-	<button mat-button (click)="downloadFileCall()">Download</button>
-	<span>
-		<mat-slide-toggle labelPosition="before">Make code readable</mat-slide-toggle>
-		<mat-slide-toggle labelPosition="before">Auto mark as translated</mat-slide-toggle>
-	</span>
-</div>
-
-<ng-container *ngFor="let unit of translationUnits">
-	<div class="translation-unit" id="unit.id">
-		<div class="source">
-			<mat-card class="">
-				<mat-card-content>
-					<p>{{unit.source}}</p>
-				</mat-card-content>
-				<mat-card-actions align="end">
-					<button mat-icon-button (click)="copy(unit.source)">
-						<mat-icon>content_copy</mat-icon>
-					</button>
-				</mat-card-actions>
-			</mat-card>
-			<div class="translation-unit--footer">
-				<mat-icon class="mat-icon--fingerprint">fingerprint</mat-icon>
-				<span>7102e04f1820726572933528b677a41baca8536d</span>
-				<div class="flex-spacer"></div>
-				<mat-icon>info_outline</mat-icon>
-			</div>
+<mat-card class="file-info file-info-editable" *ngIf="fileInfo">
+	<div class="flex-row">
+		<mat-form-field>
+			<input matInput placeholder="File name" value="Sushi" [(ngModel)]="fileInfo.fileName">
+		</mat-form-field>
+		<mat-form-field>
+			<mat-select placeholder="Target language" [(ngModel)]="fileInfo.targetLang">
+				<mat-option [value]="'hr'">
+					Croatian
+				</mat-option>
+				<mat-option [value]="'en-US'">
+					Croatian
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-select placeholder="Show" [(ngModel)]="show">
+				<mat-option [value]="'all'">
+					All
+				</mat-option>
+				<mat-option [value]="'translated'">
+					Translated
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<div class="flex-spacer"></div>
+		<div class="file-info--group">
+			<h5 class="file-info--title">Translated</h5>
+			<h1 class="file-info--value">0%</h1>
 		</div>
-
-		<div class="target">
-			<mat-card class="target-input">
-				<mat-card-content>
-					<mat-form-field>
-						<textarea matInput matTextareaAutosize matAutosizeMinRows="1" [(ngModel)]="unit.target"></textarea>
-					</mat-form-field>
-				</mat-card-content>
-				<!-- <mat-card-actions align="end">
-					<button mat-icon-button>
-						<mat-icon>content_paste</mat-icon>
-					</button>
-				</mat-card-actions> -->
-			</mat-card>
-			<div class="translation-unit--footer">
-				<mat-radio-group [(ngModel)]="unit.targetState" >
-					<mat-radio-button [value]="'new'">New</mat-radio-button>
-					<mat-radio-button [value]="'translated'">Translated</mat-radio-button>
-					<mat-radio-button [value]="'final'">Final</mat-radio-button>
-				</mat-radio-group>
-			</div>
-		</div>
+		<button mat-button color="primary">Download</button>
 	</div>
-</ng-container>
+</mat-card>
+
+<mat-card>
+	<mat-card-header>
+		<mat-card-title>
+			Translate strings
+		</mat-card-title>
+		<span>
+			<mat-slide-toggle labelPosition="before" color="primary">Make code readable</mat-slide-toggle>
+			<mat-slide-toggle labelPosition="before" color="primary">Auto mark as translated</mat-slide-toggle>
+		</span>
+
+		<div class="progress" align="end">
+			<mat-icon class="inactive">lens</mat-icon>
+			<mat-icon class="inactive">lens</mat-icon>
+			<mat-icon class="active">lens</mat-icon>
+		</div>
+	</mat-card-header>
+
+	<ng-container *ngFor="let unit of translationUnits">
+		<div class="translation-unit" id="unit.id">
+			<div class="source">
+				<mat-card class="">
+					<mat-card-content>
+						<p>{{unit.source}}</p>
+					</mat-card-content>
+					<mat-card-actions align="end">
+						<button mat-icon-button (click)="copy(unit.source)">
+							<mat-icon>content_copy</mat-icon>
+						</button>
+					</mat-card-actions>
+				</mat-card>
+				<div class="translation-unit--footer">
+					<mat-icon class="mat-icon--fingerprint">fingerprint</mat-icon>
+					<span>7102e04f1820726572933528b677a41baca8536d</span>
+					<div class="flex-spacer"></div>
+					<mat-icon>info_outline</mat-icon>
+				</div>
+			</div>
+
+			<div class="target">
+				<mat-card class="target-input">
+					<mat-card-content>
+						<mat-form-field>
+							<textarea matInput matTextareaAutosize matAutosizeMinRows="1" [(ngModel)]="unit.target"></textarea>
+						</mat-form-field>
+					</mat-card-content>
+				</mat-card>
+				<div class="translation-unit--footer">
+					<mat-radio-group [(ngModel)]="unit.targetState">
+						<mat-radio-button color="primary" [value]="'new'">New</mat-radio-button>
+						<mat-radio-button color="primary" [value]="'translated'">Translated</mat-radio-button>
+						<mat-radio-button color="primary" [value]="'final'">Final</mat-radio-button>
+					</mat-radio-group>
+				</div>
+			</div>
+		</div>
+	</ng-container>
+</mat-card>
