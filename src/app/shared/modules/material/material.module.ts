@@ -14,7 +14,8 @@ import {
   MatProgressBarModule,
   MatDialogModule,
   MatTooltipModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatTableModule
 } from '@angular/material';
 
 @NgModule({
@@ -33,7 +34,8 @@ import {
     MatProgressBarModule,
     MatDialogModule,
     MatTooltipModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTableModule
   ],
   exports: [
     MatCheckboxModule,
@@ -50,7 +52,8 @@ import {
     MatProgressBarModule,
     MatDialogModule,
     MatTooltipModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTableModule
   ],
 })
 export class MaterialModule { }
