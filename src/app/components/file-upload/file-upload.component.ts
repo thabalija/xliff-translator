@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { FileUploadService } from './../../services/file-upload.service';
@@ -17,6 +18,7 @@ export class FileUploadComponent implements OnInit {
   showComponent: boolean;
 
   constructor(
+    public _router: Router,
     private _fileUploadService: FileUploadService
   ) { }
 
@@ -47,9 +49,12 @@ export class FileUploadComponent implements OnInit {
 
   uploadFile(): void {
     if (this.htmlDocument) {
-      this._fileUploadService.updateFile(this.htmlDocument, this.fileName, this.fileSourceLang);
-      this._fileUploadService.updateTranslationUnits(this.htmlDocument);
-      this._fileUploadService.updateFileInfo(this.htmlDocument, this.fileName, this.fileSourceLang);
+      this._fileUploadService.uploadFile(this.htmlDocument, this.fileName, this.fileSourceLang);
+      if (localStorage.getItem('fileInfo')) {
+        this._router.navigate(['/translations']);
+      } else {
+        console.log('error');
+      }
     } else {
       // TODO mat snackbar
       console.log('please upload file');
