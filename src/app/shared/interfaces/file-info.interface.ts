@@ -1,4 +1,5 @@
 export interface FileInfo {
+    id?: number;
     fileName: string;
     xliffVersion: string;
     sourceLang: string;
@@ -6,4 +7,5 @@ export interface FileInfo {
     totalUnits: number;
     datatype?: string;
     original?: string;
+    translatedUnits?: number;
 }
