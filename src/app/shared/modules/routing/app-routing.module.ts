@@ -8,7 +8,11 @@ import { TranslationsComponent } from './../../../components/translations/transl
 import { EditorComponent } from './../../../components/editor/editor.component';
 
 const routes: Routes = [
-  { path: '', component: LayoutComponent},
+  { path: '', component: LayoutComponent, children: [
+    { path: 'upload', component: FileUploadComponent},
+    { path: 'translations', component: TranslationsComponent},
+    { path: 'edit-translation/:id', component: EditorComponent}
+  ]},
   { path: '*', redirectTo: '', pathMatch: 'full'}
 ];
 
