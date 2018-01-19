@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { MatTableDataSource } from '@angular/material';
 
 import { FileUploadService } from './../../services/file-upload.service';
 import { FileInfo } from './../../shared/interfaces/file-info.interface';
@@ -11,34 +11,51 @@ import { TranslationUnit } from './../../shared/interfaces/translation-unit.inte
   templateUrl: './translations.component.html',
   styleUrls: ['./translations.component.scss']
 })
-export class TranslationsComponent implements OnInit, OnDestroy {
+export class TranslationsComponent implements OnInit {
 
-  translationUnits: TranslationUnit[];
-  translationUnits$: Subscription;
   fileInfo: FileInfo;
-  fileInfo$: Subscription;
+  translationsList: FileInfo[] = [];
+  displayedColumns = ['language', 'fileName', 'status', 'translate', 'download'];
+  dataSource = new MatTableDataSource<FileInfo>();
 
   constructor(
-    public router: Router,
+    public _router: Router,
     private _fileUploadService: FileUploadService,
   ) { }
 
   ngOnInit() {
     this.loadFile();
+    this.translationsList = TRANSLATIONS;
+    this.dataSource.data = this.translationsList;
   }
 
   // create file subscription
   loadFile() {
-    this.translationUnits$ = this._fileUploadService.translationUnits$.subscribe((res) => {
-      this.translationUnits = res;
-    });
-    this.fileInfo$ = this._fileUploadService.fileInfo$.subscribe((res) => {
-      this.fileInfo = res;
-    });
+      this.fileInfo = this._fileUploadService.getFileInfo();
   }
 
-  ngOnDestroy() {
-    this.fileInfo$.unsubscribe();
-    this.translationUnits$.unsubscribe();
+  // open selected translation
+  openTranslation(translation: FileInfo) {
+    this._router.navigate([`/edit-translation/${translation.id}`]);
   }
+
 }
+
+export const TRANSLATIONS: FileInfo[] = [{
+  id: 1,
+  fileName: 'messages',
+  xliffVersion: '1.2',
+  sourceLang: 'en-US',
+  targetLang: 'hr',
+  totalUnits: 8,
+  translatedUnits: 6
+},
+{
+  id: 2,
+  fileName: 'messages',
+  xliffVersion: '1.2',
+  sourceLang: 'en-US',
+  targetLang: 'sp',
+  totalUnits: 8,
+  translatedUnits: 8
+}];

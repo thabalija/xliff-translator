@@ -1,31 +1,105 @@
-<ng-container *ngIf="fileInfo">
-    <mat-card class="file-info">
-        <div class="flex-row">
-            <div class="file-info--group">
-                <h5 class="file-info--title">File name</h5>
-                <h1 class="file-info--value">{{ fileInfo.fileName }}</h1>
-            </div>
-            <div class="flex-spacer"></div>
-            <div class="file-info--group">
-                <h5 class="file-info--title">Translation units</h5>
-                <h1 class="file-info--value">{{ fileInfo.totalUnits }}</h1>
-            </div>
-            <div class="file-info--group">
-                <h5 class="file-info--title">Translated</h5>
-                <h1 class="file-info--value">0%</h1>
-            </div>
-            <div class="file-info--group">
-                <h5 class="file-info--title">Source language</h5>
-                <h1 class="file-info--value">{{ fileInfo.sourceLang }}</h1>
-            </div>
-            <div class="file-info--group">
-                <h5 class="file-info--title">Target language</h5>
-                <h1 class="file-info--value">{{ fileInfo.targetLang }}</h1>
-            </div>
-            <div class="file-info--group">
-                <h5 class="file-info--title">XLIFF version</h5>
-                <h1 class="file-info--value">{{ fileInfo.xliffVersion }}</h1>
+<mat-card class="file-info" *ngIf="fileInfo">
+    <div class="flex-row">
+        <div class="file-info--group">
+            <h5 class="file-info--title">Uploaded file</h5>
+            <h1 class="file-info--value">{{ fileInfo.fileName }}</h1>
+        </div>
+        <div class="flex-spacer"></div>
+        <div class="file-info--group">
+            <h5 class="file-info--title">Translation units</h5>
+            <h1 class="file-info--value">{{ fileInfo.totalUnits }}</h1>
+        </div>
+        <div class="file-info--group">
+            <h5 class="file-info--title">Translated</h5>
+            <h1 class="file-info--value">0%</h1>
+        </div>
+        <div class="file-info--group">
+            <h5 class="file-info--title">Source language</h5>
+            <h1 class="file-info--value">{{ fileInfo.sourceLang }}</h1>
+        </div>
+        <div class="file-info--group">
+            <h5 class="file-info--title">XLIFF version</h5>
+            <h1 class="file-info--value">{{ fileInfo.xliffVersion }}</h1>
+        </div>
+    </div>
+</mat-card>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            My translations
+        </mat-card-title>
+        <div class="progress" align="end">
+            <mat-icon class="inactive">lens</mat-icon>
+            <mat-icon class="active">lens</mat-icon>
+            <mat-icon class="inactive">lens</mat-icon>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="translation-list">
+
+            <mat-table #table [dataSource]="dataSource">
+
+                <!-- language Column -->
+                <ng-container matColumnDef="language">
+                    <mat-header-cell *matHeaderCellDef> Target language </mat-header-cell>
+                    <mat-cell *matCellDef="let translation">
+                        <ng-container *ngIf="translation.targetLang === 'hr'">Croatian</ng-container>
+                        <ng-container *ngIf="translation.targetLang === 'sp'">Spanish</ng-container>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- fileName Column -->
+                <ng-container matColumnDef="fileName">
+                    <mat-header-cell *matHeaderCellDef> File name </mat-header-cell>
+                    <mat-cell *matCellDef="let translation"> {{ translation.fileName }}.{{ translation.targetLang }}.xlf </mat-cell>
+                </ng-container>
+
+                <!-- status Column -->
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                    <mat-cell *matCellDef="let translation">
+                        <div class="status">
+                            <mat-progress-bar mode="determinate" [value]="(translation.translatedUnits / translation.totalUnits) * 100"></mat-progress-bar>
+                            <p>{{ (translation.translatedUnits / translation.totalUnits) * 100 }} %</p>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- translate Column -->
+                <ng-container matColumnDef="translate">
+                    <mat-header-cell *matHeaderCellDef align="center"> Translate </mat-header-cell>
+                    <mat-cell *matCellDef="let translation" align="center">
+                        <button mat-icon-button (click)="openTranslation(translation)">
+                            <mat-icon color="primary">edit</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- download Column -->
+                <ng-container matColumnDef="download">
+                    <mat-header-cell *matHeaderCellDef align="center"> Download </mat-header-cell>
+                    <mat-cell *matCellDef="let translation" align="center">
+                        <button mat-icon-button>
+                            <mat-icon color="primary">file_download</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+
+            <div *ngIf="translationsList.length === 0" class="no-translations">
+                <mat-icon>playlist_add</mat-icon>
+                <p>No translations yet.
+                    <a>Add translation</a>
+                </p>
             </div>
         </div>
-    </mat-card>
-</ng-container>
+        <div align="end">
+            <button mat-button (click)="uploadFile()" color="primary">
+                Add translations
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>
