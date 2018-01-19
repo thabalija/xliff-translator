@@ -20,12 +20,9 @@ import { AppComponent } from './app.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { EditorComponent } from './components/editor/editor.component';
-import { FileInfoComponent } from './components/file-info/file-info.component';
 
 // Services
 import { FileUploadService } from './services/file-upload.service';
-import { TranslationStatusService } from './services/translation-status.service';
-import { FileDownloadComponent } from './components/file-download/file-download.component';
 import { TranslationsComponent } from './components/translations/translations.component';
 
 @NgModule({
@@ -34,8 +31,6 @@ import { TranslationsComponent } from './components/translations/translations.co
     FileUploadComponent,
     LayoutComponent,
     EditorComponent,
-    FileInfoComponent,
-    FileDownloadComponent,
     TranslationsComponent
   ],
   imports: [
@@ -49,8 +44,7 @@ import { TranslationsComponent } from './components/translations/translations.co
     SharedModule
   ],
   providers: [
-    FileUploadService,
-    TranslationStatusService
+    FileUploadService
   ],
   entryComponents: [],
   bootstrap: [AppComponent]
