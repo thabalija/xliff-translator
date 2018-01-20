@@ -1,3 +1,4 @@
+
 // Angular Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,13 +18,14 @@ import { AppRoutingModule } from './shared/modules/routing/app-routing.module';
 import { AppComponent } from './app.component';
 
 // App Components
-import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { EditorComponent } from './components/editor/editor.component';
+import { TranslationsComponent } from './components/translations/translations.component';
 
 // Services
 import { FileUploadService } from './services/file-upload.service';
-import { TranslationsComponent } from './components/translations/translations.component';
+import { FileDownloadService } from './services/file-download.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { TranslationsComponent } from './components/translations/translations.co
     SharedModule
   ],
   providers: [
-    FileUploadService
+    FileUploadService,
+    FileDownloadService
   ],
   entryComponents: [],
   bootstrap: [AppComponent]
