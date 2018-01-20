@@ -32,19 +32,37 @@ body {
             font-weight: 700;
             color: $primary;
         }
-        .progress {
-            .mat-icon {
-                height: 16px;
-                width: 16px;
-                font-size: 12px;
-                &.active {
-                    color: $primary;
-                }
-                &.inactive {
-                    color: $light-gray;
-                }
-            }
+    }
+}
+.progress {
+    .mat-icon {
+        height: 16px;
+        width: 16px;
+        font-size: 12px;
+        &.active {
+            color: $primary;
         }
+        &.inactive {
+            color: $light-gray;
+        }
+    }
+}
+.dialog {
+    .dialog-header {
+        display: flex;
+        justify-content: space-between;
+        .dialog-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #af67b7;
+            display: block;
+            margin: 0 0 16px;
+        }
+    }
+    .dialog-content {
+        margin: 2em 0 1em;
+        display: flex;
+        justify-content: space-between;
     }
 }
 .get-started {
@@ -249,15 +267,12 @@ a:hover {
 }
 .cdk-overlay-container {
     .mat-dialog-container {
-        border-radius: 10px;
-
         .mat-dialog-title {
             font-weight: 700;
         }
         .mat-dialog-content {
             .mat-form-field {
                 width: calc(50% - 0.15em);
-                margin-bottom: 1em;
             }
         }
         .mat-dialog-actions:last-child {
