@@ -9,14 +9,14 @@ import { DragAndDropModule } from '../drag-and-drop/drag-and-drop.module';
 
 // Components
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
+import { AddTranslationDialogComponent } from './add-translation-dialog/add-translation-dialog.component';
 
 // Services
 
 @NgModule({
     declarations: [
         ConfirmDialogComponent,
-        SettingsDialogComponent
+        AddTranslationDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -30,7 +30,7 @@ import { SettingsDialogComponent } from './settings-dialog/settings-dialog.compo
     ],
     entryComponents: [
         ConfirmDialogComponent,
-        SettingsDialogComponent
+        AddTranslationDialogComponent
     ]
 })
 
