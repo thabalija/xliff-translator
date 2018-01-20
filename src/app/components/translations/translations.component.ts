@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
 
-import { FileUploadService } from './../../services/file-upload.service';
 import { FileInfo } from './../../shared/interfaces/file-info.interface';
 import { TranslationUnit } from './../../shared/interfaces/translation-unit.interface';
+import { FileUploadService } from './../../services/file-upload.service';
+import { FileDownloadService } from './../../services/file-download.service';
 
 @Component({
   selector: 'app-translations',
@@ -21,17 +22,24 @@ export class TranslationsComponent implements OnInit {
   constructor(
     public _router: Router,
     private _fileUploadService: FileUploadService,
+    private _fileDownloadService: FileDownloadService
   ) { }
 
   ngOnInit() {
-    this.loadFile();
-    this.translationsList = TRANSLATIONS;
+    this.loadFileInfo();
+    this.loadTranslations();
     this.dataSource.data = this.translationsList;
   }
 
-  // create file subscription
-  loadFile() {
-      this.fileInfo = this._fileUploadService.getFileInfo();
+  // create translations
+  loadTranslations() {
+    console.log(this.fileInfo);
+    this.translationsList = [this.fileInfo];
+  }
+
+  // load file info
+  loadFileInfo() {
+    this.fileInfo = this._fileUploadService.getFileInfo();
   }
 
   // open selected translation
@@ -39,23 +47,9 @@ export class TranslationsComponent implements OnInit {
     this._router.navigate([`/edit-translation/${translation.id}`]);
   }
 
-}
+  // download file
+  downloadFile(fileID: number): void {
+    this._fileDownloadService.downloadFile(fileID);
+  }
 
-export const TRANSLATIONS: FileInfo[] = [{
-  id: 1,
-  fileName: 'messages',
-  xliffVersion: '1.2',
-  sourceLang: 'en-US',
-  targetLang: 'hr',
-  totalUnits: 8,
-  translatedUnits: 6
-},
-{
-  id: 2,
-  fileName: 'messages',
-  xliffVersion: '1.2',
-  sourceLang: 'en-US',
-  targetLang: 'sp',
-  totalUnits: 8,
-  translatedUnits: 8
-}];
+}

@@ -79,7 +79,7 @@
                 <ng-container matColumnDef="download">
                     <mat-header-cell *matHeaderCellDef align="center"> Download </mat-header-cell>
                     <mat-cell *matCellDef="let translation" align="center">
-                        <button mat-icon-button>
+                        <button mat-icon-button (click)="downloadFile(translation.id)">
                             <mat-icon color="primary">file_download</mat-icon>
                         </button>
                     </mat-cell>
