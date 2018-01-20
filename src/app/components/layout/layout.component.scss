@@ -3,9 +3,11 @@ header {
     justify-content: space-between;
     max-width: 1080px;
     margin: 0 auto;
-    margin-bottom: 2em;
+    padding: 1em 0;
+    margin-bottom: 1em;
     align-items: center;
-    a {
+    a { 
+        padding: 0 1em;
         color: rgba(255, 255 ,255, 0.85);
         transition: 200ms color ease;
         &:hover {
