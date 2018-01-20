@@ -1,4 +1,3 @@
-
 // Angular Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -26,6 +25,7 @@ import { TranslationsComponent } from './components/translations/translations.co
 // Services
 import { FileUploadService } from './services/file-upload.service';
 import { FileDownloadService } from './services/file-download.service';
+import { AddTranslationService } from './services/add-translation.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,8 @@ import { FileDownloadService } from './services/file-download.service';
   ],
   providers: [
     FileUploadService,
-    FileDownloadService
+    FileDownloadService,
+    AddTranslationService
   ],
   entryComponents: [],
   bootstrap: [AppComponent]
