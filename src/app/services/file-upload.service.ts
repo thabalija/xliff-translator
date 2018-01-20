@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
 
 import { FileInfo } from './../shared/interfaces/file-info.interface';
 import { TranslationUnit } from './../shared/interfaces/translation-unit.interface';
@@ -17,15 +15,32 @@ export class FileUploadService {
     const translationNodes = htmlDoc.getElementsByTagName('trans-unit');
     const translationArray = Array.from(translationNodes);
     const translationUnits: TranslationUnit[] = [];
+    let translatedUnits = 0;
 
     translationArray.forEach((unit) => {
+
+      const targetElementList = unit.getElementsByTagName('target');
+      let targetElement: Element;
+
+      // if target element does not exist create one, if exist select it
+      if (targetElementList.length ===  0) {
+        targetElement = document.createElement('TARGET');
+        targetElement.setAttribute('state', 'new');
+        unit.appendChild(targetElement);
+      } else {
+        targetElement = unit.getElementsByTagName('target')[0];
+      }
+
       const translationUnit = {
         id: unit.getAttribute('id'),
         source: unit.querySelector('source').innerHTML,
-        target: unit.querySelector('target').innerHTML,
-        targetState: unit.querySelector('target').getAttribute('state'),
+        target: targetElement.innerHTML,
+        targetState: targetElement.getAttribute('state'),
         note: unit.getElementsByTagName('note')
       };
+      if (unit.querySelector('target').getAttribute('state') === 'translated') {
+        translatedUnits++;
+      }
       translationUnits.push(translationUnit);
     });
 
@@ -36,7 +51,8 @@ export class FileUploadService {
       targetLang: fileElement.getAttribute('target-language'),
       totalUnits: htmlDoc.getElementsByTagName('trans-unit').length,
       datatype: fileElement.getAttribute('datatype'),
-      original: fileElement.getAttribute('original')
+      original: fileElement.getAttribute('original'),
+      translatedUnits: translatedUnits
     };
 
     // save file info
@@ -67,11 +83,12 @@ export class FileUploadService {
 
   // get original file from local storage
   public getFile(): HTMLDocument {
-    return JSON.parse(localStorage.getItem('uploadedFile'));
+    return this.stringToXml(localStorage.getItem('uploadedFile'));
   }
 
   // get original file from local storage
   public getTranslationUnits(): TranslationUnit[] {
     return JSON.parse(localStorage.getItem('translationUnits'));
   }
+
 }
