@@ -9,7 +9,7 @@
 					Croatian
 				</mat-option>
 				<mat-option [value]="'en-US'">
-					Croatian
+					English
 				</mat-option>
 			</mat-select>
 		</mat-form-field>
@@ -28,7 +28,8 @@
 			<h5 class="file-info--title">Translated</h5>
 			<h1 class="file-info--value">0%</h1>
 		</div>
-		<button mat-button color="primary">Download</button>
+		<button mat-button color="primary" (click)="downloadFile(fileInfo.id)">Download</button>
+		<button mat-button color="primary">Save</button>
 	</div>
 </mat-card>
 
@@ -66,7 +67,9 @@
 					<mat-icon class="mat-icon--fingerprint">fingerprint</mat-icon>
 					<span>7102e04f1820726572933528b677a41baca8536d</span>
 					<div class="flex-spacer"></div>
-					<mat-icon>info_outline</mat-icon>
+					<button mat-icon-button *ngIf="unit.note">
+						<mat-icon>info_outline</mat-icon>
+					</button>
 				</div>
 			</div>
 

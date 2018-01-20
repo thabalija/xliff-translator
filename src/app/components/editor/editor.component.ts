@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { FileUploadService } from './../../services/file-upload.service';
 
+import { FileDownloadService } from './../../services/file-download.service';
+import { FileUploadService } from './../../services/file-upload.service';
 import { FileInfo } from './../../shared/interfaces/file-info.interface';
 import { TranslationUnit } from './../../shared/interfaces/translation-unit.interface';
 
@@ -13,12 +13,12 @@ import { TranslationUnit } from './../../shared/interfaces/translation-unit.inte
 export class EditorComponent implements OnInit {
 
   fileInfo: FileInfo;
-  uploadedFile: HTMLDocument;
   translationUnits: TranslationUnit[] = [];
   show = 'all';
 
   constructor(
     private _fileUploadService: FileUploadService,
+    private _fileDownloadService: FileDownloadService
   ) { }
 
   ngOnInit() {
@@ -35,38 +35,17 @@ export class EditorComponent implements OnInit {
   loadTranslationUnits() {
     this.translationUnits = this._fileUploadService.getTranslationUnits();
   }
-  // get original file from localstorage
-  loadOriginalFile() {
-    this.uploadedFile = this._fileUploadService.getFile();
-  }
 
   // save changes to localstorage
-  saveChanges(translationUnits: TranslationUnit[]) {
-    localStorage.removeItem('translationUnits');
-    localStorage.setItem('translationUnits', JSON.stringify(translationUnits));
+  saveChanges() {
+    localStorage.setItem('translationUnits', JSON.stringify(this.translationUnits));
+    localStorage.setItem('fileInfo', JSON.stringify(this.fileInfo));
   }
 
-  downloadFileCall() {
-    this.translationUnits.forEach( (transUnit) => {
-      this.uploadedFile.getElementById(transUnit.id).getElementsByTagName('target')[0].innerHTML = transUnit.target;
-      this.uploadedFile.getElementById(transUnit.id).getElementsByTagName('target')[0].setAttribute('state', transUnit.targetState);
-    });
-
-    const stringer = new XMLSerializer();
-
-    const finalFile = stringer.serializeToString(this.uploadedFile);
-
-    this.downloadFile(finalFile, `messages.hr.xlf`);
-  }
-
-  downloadFile(file, fileName) {
-    const element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(file));
-    element.setAttribute('download', fileName);
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
+  // download file
+  downloadFile(fileID: number): void {
+    this.saveChanges();
+    this._fileDownloadService.downloadFile(fileID);
   }
 
   // copies input text to clipboard
