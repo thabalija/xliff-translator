@@ -1,0 +1,36 @@
+<mat-dialog-content class="dialog">
+
+    <div class="dialog-header">
+        <h1 class="dialog-title">
+            Add translation
+        </h1>
+        <div class="progress" align="end">
+            <mat-icon class="inactive">lens</mat-icon>
+            <mat-icon class="active">lens</mat-icon>
+            <mat-icon class="inactive">lens</mat-icon>
+        </div>
+    </div>
+    <div class="dialog-content flex-row">
+        <mat-form-field>
+            <input matInput placeholder="File name" [(ngModel)]="data.name">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="Target language" [(ngModel)]="data.targetLang">
+                <mat-option [value]="'hr'">
+                    Croatian
+                </mat-option>
+                <mat-option [value]="'en-US'">
+                    English
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="dialogRef.close(false)">Cancel</button>
+    <button mat-button (click)="dialogRef.close(data)">
+        <mat-icon>add</mat-icon>
+        <span>Create translation</span>
+    </button>
+</mat-dialog-actions>
