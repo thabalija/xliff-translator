@@ -24,6 +24,7 @@ body {
 
 .mat-card {
     max-width: 100%;
+    margin-bottom: 2em;
     .mat-card-header {
         justify-content: space-between;
         .mat-card-title {
@@ -175,6 +176,7 @@ a:hover {
             box-shadow: none;
             border-radius: 2px;
             flex-grow: 1;
+            margin-bottom: 0;
 
             .mat-card-content {
                 margin: 0;
@@ -215,12 +217,16 @@ a:hover {
             display: flex;
             align-items: center;
             padding: 1em;
+            opacity: 0.5;
 
             .mat-icon--fingerprint {
                 margin-right: 0.25em;
             }
             .mat-radio-button {
                 margin-right: 1em;
+                .mat-radio-label {
+                    opacity: 1;
+                }
             }
         }
 
