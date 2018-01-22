@@ -16,12 +16,9 @@
         </mat-form-field>
         <mat-form-field>
             <mat-select placeholder="Target language" [(ngModel)]="data.targetLang">
-                <mat-option [value]="'hr'">
-                    Croatian
-                </mat-option>
-                <mat-option [value]="'en-US'">
-                    English
-                </mat-option>
+				<mat-option *ngFor="let lang of languages" [value]="lang.locale">
+					{{ lang.language }}
+				</mat-option>
             </mat-select>
         </mat-form-field>
     </div>

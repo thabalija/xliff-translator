@@ -5,11 +5,8 @@
 		</mat-form-field>
 		<mat-form-field>
 			<mat-select placeholder="Target language" [(ngModel)]="fileInfo.targetLang">
-				<mat-option [value]="'hr'">
-					Croatian
-				</mat-option>
-				<mat-option [value]="'en-US'">
-					English
+				<mat-option *ngFor="let lang of languages" [value]="lang.locale">
+					{{ lang.language }}
 				</mat-option>
 			</mat-select>
 		</mat-form-field>
@@ -17,6 +14,9 @@
 			<mat-select placeholder="Show" [(ngModel)]="show">
 				<mat-option [value]="'all'">
 					All
+				</mat-option>
+				<mat-option [value]="'new'">
+					New
 				</mat-option>
 				<mat-option [value]="'translated'">
 					Translated
@@ -26,10 +26,10 @@
 		<div class="flex-spacer"></div>
 		<div class="file-info--group">
 			<h5 class="file-info--title">Translated</h5>
-			<h1 class="file-info--value">0%</h1>
+			<h1 class="file-info--value">{{ (fileInfo.translatedUnits / fileInfo.totalUnits) * 100 | number:'0.0-0' }}%</h1>
 		</div>
 		<button mat-button color="primary" (click)="downloadFile(fileInfo.id)">Download</button>
-		<button mat-button color="primary">Save</button>
+		<button mat-button color="primary" (click)="saveChanges()">Save</button>
 	</div>
 </mat-card>
 
@@ -74,7 +74,7 @@
 			</div>
 
 			<div class="target">
-				<mat-card class="target-input">
+				<mat-card class="target-input" (click)="focusTextarea()">
 					<mat-card-content>
 						<mat-form-field>
 							<textarea matInput matTextareaAutosize matAutosizeMinRows="1" [(ngModel)]="unit.target"></textarea>
@@ -85,7 +85,6 @@
 					<mat-radio-group [(ngModel)]="unit.targetState">
 						<mat-radio-button color="primary" [value]="'new'">New</mat-radio-button>
 						<mat-radio-button color="primary" [value]="'translated'">Translated</mat-radio-button>
-						<mat-radio-button color="primary" [value]="'final'">Final</mat-radio-button>
 					</mat-radio-group>
 				</div>
 			</div>

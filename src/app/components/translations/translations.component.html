@@ -11,7 +11,7 @@
         </div>
         <div class="file-info--group">
             <h5 class="file-info--title">Translated</h5>
-            <h1 class="file-info--value">0%</h1>
+            <h1 class="file-info--value">{{ translationStatus | number:'0.0-0' }}%</h1>
         </div>
         <div class="file-info--group">
             <h5 class="file-info--title">Source language</h5>
@@ -43,16 +43,17 @@
                 <ng-container matColumnDef="language">
                     <mat-header-cell *matHeaderCellDef> Target language </mat-header-cell>
                     <mat-cell *matCellDef="let translation">
-                        <ng-container *ngIf="translation.targetLang === 'hr'">Croatian</ng-container>
-                        <ng-container *ngIf="translation.targetLang === 'sp'">Spanish</ng-container>
+                        <ng-container *ngFor="let locale of languages">
+                            <ng-container *ngIf="locale.locale === translation.targetLang">{{ locale.language}}</ng-container>
+                        </ng-container>                        
                     </mat-cell>
                 </ng-container>
 
                 <!-- fileName Column -->
-                <ng-container matColumnDef="fileName">
+                <!-- <ng-container matColumnDef="fileName">
                     <mat-header-cell *matHeaderCellDef> File name </mat-header-cell>
                     <mat-cell *matCellDef="let translation"> {{ translation.fileName }}.{{ translation.targetLang }}.xlf </mat-cell>
-                </ng-container>
+                </ng-container> -->
 
                 <!-- status Column -->
                 <ng-container matColumnDef="status">
@@ -60,8 +61,18 @@
                     <mat-cell *matCellDef="let translation">
                         <div class="status">
                             <mat-progress-bar mode="determinate" [value]="(translation.translatedUnits / translation.totalUnits) * 100"></mat-progress-bar>
-                            <p>{{ (translation.translatedUnits / translation.totalUnits) * 100 }} %</p>
+                            <p>{{ (translation.translatedUnits / translation.totalUnits) * 100 | number:'0.0-0' }} %</p>
                         </div>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- delete Column -->
+                <ng-container matColumnDef="delete">
+                    <mat-header-cell *matHeaderCellDef align="center"> Delete </mat-header-cell>
+                    <mat-cell *matCellDef="let translation" align="center">
+                        <button mat-icon-button (click)="openDeleteTranslationDialog(translation.id)">
+                            <mat-icon color="primary">delete</mat-icon>
+                        </button>
                     </mat-cell>
                 </ng-container>
 
@@ -97,7 +108,7 @@
             </div>
         </div>
         <div align="end">
-            <button mat-button (click)="openAddTranslationDialog()" color="primary">
+            <button mat-button (click)="openAddTranslationDialog()" color="primary" class="button-round">
                 Add translations
             </button>
         </div>

@@ -1,7 +1,9 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 
 import { FileUploadService } from './../../services/file-upload.service';
+import { LocaleService } from './../../services/locale.service';
 import { Locale } from './../../shared/interfaces/locale.interface';
 
 @Component({
@@ -19,45 +21,55 @@ export class FileUploadComponent implements OnInit {
 
   constructor(
     public _router: Router,
-    private _fileUploadService: FileUploadService
+    private _fileUploadService: FileUploadService,
+    private _localeService: LocaleService,
+    public snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
-    this.getLanguages();
+    this.loadLanguages();
   }
 
-  getLanguages(): void {
-    this.languages = [
-      {language: 'Croatian', locale: 'hr'},
-      {language: 'English - US', locale: 'en-US'}
-    ];
+  // loads locale in select
+  loadLanguages(): void {
+    this.languages = this._localeService.getLocale();
   }
 
+  // read file info, fill name, language input fields with values from file
   onFileChange(uploadedFile: File[]): void {
-    const file = uploadedFile[0];
-    this.fileName = file.name;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const fileContent = reader.result;
-      const parser = new DOMParser();
-      this.htmlDocument = parser.parseFromString(fileContent, 'application/xhtml+xml');
-      const fileElement = this.htmlDocument.getElementsByTagName('file')[0];
-      this.fileSourceLang = fileElement.getAttribute('source-language');
-    };
-    reader.readAsText(uploadedFile[0]);
+    if (uploadedFile.length === 0) {
+      this.fileName = '';
+      this.fileSourceLang = '';
+    } else {
+      const file = uploadedFile[0];
+      this.fileName = file.name;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const fileContent = reader.result;
+        const parser = new DOMParser();
+        this.htmlDocument = parser.parseFromString(fileContent, 'application/xhtml+xml');
+        const fileElement = this.htmlDocument.getElementsByTagName('file')[0];
+        this.fileSourceLang = fileElement.getAttribute('source-language');
+      };
+      reader.readAsText(uploadedFile[0]);
+    }
   }
 
+  // send file to service for uploading to localstorage
   uploadFile(): void {
     if (this.htmlDocument) {
       this._fileUploadService.uploadFile(this.htmlDocument, this.fileName, this.fileSourceLang);
       if (localStorage.getItem('fileInfo')) {
         this._router.navigate(['/translations']);
       } else {
-        console.log('error');
+        this.snackBar.open('Wild error occurred', 'close', {
+          duration: 2000,
+        });
       }
     } else {
-      // TODO mat snackbar
-      console.log('please upload file');
+      this.snackBar.open('Please choose a file', 'close', {
+        duration: 2000,
+      });
     }
   }
 

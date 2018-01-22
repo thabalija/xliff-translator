@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { FileInfo } from './../shared/interfaces/file-info.interface';
 import { TranslationUnit } from './../shared/interfaces/translation-unit.interface';
 import { FileUploadService } from './file-upload.service';
+import { TranslationUnitsService } from './translation-units.service';
+import { TranslationListService } from './translation-list.service';
 
 @Injectable()
 
@@ -14,15 +16,15 @@ export class FileDownloadService {
 
   constructor(
     private _fileUploadService: FileUploadService,
+    private _translationListService: TranslationListService,
+    private _translationUnitsService: TranslationUnitsService
   ) { }
 
-  public downloadFile(fileID: number): void {
-
-    // TODO - detect file of multiple files via fileID
+  public downloadFile(translationID: number): void {
 
     this.originalFile = this._fileUploadService.getFile();
-    this.translationUnits = this._fileUploadService.getTranslationUnits();
-    this.fileInfo = this._fileUploadService.getFileInfo();
+    this.translationUnits = this._translationUnitsService.getTraslationUnits(translationID);
+    this.fileInfo = this._translationListService.getTranslationInfo(translationID);
 
     this.translationUnits.forEach((transUnit) => {
       const targetElementList = this.originalFile.getElementById(transUnit.id).getElementsByTagName('target');

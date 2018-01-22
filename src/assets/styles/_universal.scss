@@ -152,7 +152,7 @@ a:hover {
             font-size: 0.75em;
             margin: 0;
             text-transform: uppercase;
-            color: $gray;
+            color: $text-gray;
         }
         .file-info--value{
             font-size: 1.8em;
@@ -235,7 +235,7 @@ a:hover {
             display: flex;
             align-items: center;
             padding: 1em;
-            opacity: 0.5;
+            color: #B3B3B3;
 
             .mat-icon--fingerprint {
                 margin-right: 0.25em;
@@ -251,17 +251,22 @@ a:hover {
     }
     div.source {
         .mat-card {
-            background: #f2f2f2;
-            
+            background: #f2f2f2;            
             p,
             .mat-icon-button {
-                color: $text-gray;
+                color: #616161;
             }
         }
     }
     div.target {
         .mat-card {
             border: $border-dotted;
+            &:hover{
+                cursor: text;
+            }
+            .mat-form-field {
+                color: #212121;
+            }
         }
     }
 }
@@ -290,4 +295,10 @@ button.button-gradient.button-round {
 }
 .flex-spacer {
     flex-grow: 1;
+}
+
+.mat-button.button-round {
+    border: 1px solid $primary;
+    border-radius: 19px;
+    overflow: hidden;
 }
