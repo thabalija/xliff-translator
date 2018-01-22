@@ -23,9 +23,11 @@ import { EditorComponent } from './components/editor/editor.component';
 import { TranslationsComponent } from './components/translations/translations.component';
 
 // Services
+import { LocaleService } from './services/locale.service';
 import { FileUploadService } from './services/file-upload.service';
 import { FileDownloadService } from './services/file-download.service';
-import { AddTranslationService } from './services/add-translation.service';
+import { TranslationListService } from './services/translation-list.service';
+import { TranslationUnitsService } from './services/translation-units.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { AddTranslationService } from './services/add-translation.service';
   providers: [
     FileUploadService,
     FileDownloadService,
-    AddTranslationService
+    TranslationListService,
+    LocaleService,
+    TranslationUnitsService
   ],
   entryComponents: [],
   bootstrap: [AppComponent]
