@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, PageEvent, MatSelectChange } from '@angular/material';
 import { LocaleService } from './../../services/locale.service';
 import { FileDownloadService } from './../../services/file-download.service';
 import { FileUploadService } from './../../services/file-upload.service';
@@ -19,10 +19,14 @@ import { TranslationListService } from '../../services/translation-list.service'
 })
 export class EditorComponent implements OnInit {
 
+  translationID: number;
   fileInfo: FileInfo;
   translationUnits: TranslationUnit[] = [];
+  paginatedTranslationUnits: TranslationUnit[] = [];
+  pageEvent: PageEvent = { pageIndex: 0, pageSize: 5, length: 0 };
+  pageSizeOptions = [5, 10, 25, 50];
   languages: Locale[];
-  translationID: number;
+  showUnits = 'all';
 
   constructor(
     private route: ActivatedRoute,
@@ -54,10 +58,19 @@ export class EditorComponent implements OnInit {
   // get translation units from localstorage
   loadTranslationUnits(): void {
     this.translationUnits = this._translationUnitsService.getTraslationUnits(this.translationID);
+    this.countTranslatedUnits();
+    this.refreshTranslationUnits();
   }
 
   // save changes to localstorage
   saveChanges(): void {
+    this.countTranslatedUnits();
+    this._translationUnitsService.addTraslationUnits(this.translationID, this.translationUnits);
+    this._translationListService.updateTranslationInfo(this.fileInfo);
+  }
+
+  // count translated units marked as translated
+  countTranslatedUnits(): void {
     let translatedUnitsCount = 0;
     this.translationUnits.forEach(unit => {
       if (unit.targetState === 'translated') {
@@ -65,8 +78,6 @@ export class EditorComponent implements OnInit {
       }
     });
     this.fileInfo.translatedUnits = translatedUnitsCount;
-    this._translationUnitsService.addTraslationUnits(this.translationID, this.translationUnits);
-    this._translationListService.updateTranslationInfo(this.fileInfo);
   }
 
   // download file
@@ -103,6 +114,33 @@ export class EditorComponent implements OnInit {
   // focus textarea on mat-card click
   focusTextarea(): void {
     console.log('TODO set focus on textarea by clicking on mat-card');
+  }
+
+  // slice translation units on pagination event
+  onPageChange(event: PageEvent): void {
+    this.pageEvent = event;
+    this.refreshTranslationUnits();
+  }
+
+  // filter translation units on selection event (show all/new/translated)
+  filterTranslations(showUnits: string): void {
+    this.showUnits = showUnits;
+    this.refreshTranslationUnits();
+  }
+
+  // filter and slice
+  refreshTranslationUnits(): void {
+    let filteredUnits: TranslationUnit[];
+    if (this.showUnits === 'all') {
+      filteredUnits = this.translationUnits;
+    } else {
+      filteredUnits = this.translationUnits.filter((el, i) => {
+        return this.translationUnits[i].targetState === this.showUnits;
+      });
+    }
+    this.paginatedTranslationUnits = filteredUnits.slice(
+      this.pageEvent.pageIndex * this.pageEvent.pageSize,
+      (this.pageEvent.pageIndex + 1) * this.pageEvent.pageSize);
   }
 
 }

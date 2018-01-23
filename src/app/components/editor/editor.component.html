@@ -11,7 +11,7 @@
 			</mat-select>
 		</mat-form-field>
 		<mat-form-field>
-			<mat-select placeholder="Show" [(ngModel)]="show">
+			<mat-select placeholder="Show" [(ngModel)]="showUnits" (selectionChange)="filterTranslations(showUnits)">
 				<mat-option [value]="'all'">
 					All
 				</mat-option>
@@ -33,16 +33,11 @@
 	</div>
 </mat-card>
 
-<mat-card>
+<mat-card class="editor">
 	<mat-card-header>
 		<mat-card-title>
 			Translate strings
 		</mat-card-title>
-		<span>
-			<mat-slide-toggle labelPosition="before" color="primary">Make code readable</mat-slide-toggle>
-			<mat-slide-toggle labelPosition="before" color="primary">Auto mark as translated</mat-slide-toggle>
-		</span>
-
 		<div class="progress" align="end">
 			<mat-icon class="inactive">lens</mat-icon>
 			<mat-icon class="inactive">lens</mat-icon>
@@ -50,7 +45,7 @@
 		</div>
 	</mat-card-header>
 
-	<ng-container *ngFor="let unit of translationUnits">
+	<ng-container *ngFor="let unit of paginatedTranslationUnits">
 		<div class="translation-unit" id="unit.id">
 			<div class="source">
 				<mat-card class="">
@@ -67,9 +62,9 @@
 					<mat-icon class="mat-icon--fingerprint">fingerprint</mat-icon>
 					<span>7102e04f1820726572933528b677a41baca8536d</span>
 					<div class="flex-spacer"></div>
-					<button mat-icon-button *ngIf="unit.note">
+					<!-- <button mat-icon-button *ngIf="unit.note">
 						<mat-icon>info_outline</mat-icon>
-					</button>
+					</button> -->
 				</div>
 			</div>
 
@@ -90,4 +85,16 @@
 			</div>
 		</div>
 	</ng-container>
+
+	<div class="missing-data" *ngIf="paginatedTranslationUnits.length === 0">
+		<mat-icon class="mat-48">speaker_notes_off</mat-icon>
+		<p>You have 0 translation units matching your parameters.</p>
+	</div>
+	
+	<mat-paginator 
+	  [length]="translationUnits.length" 
+	  [pageSize]="pageEvent.pageSize"
+	  [pageSizeOptions]="pageSizeOptions" 
+	  (page)="onPageChange($event)">
+	</mat-paginator>
 </mat-card>
