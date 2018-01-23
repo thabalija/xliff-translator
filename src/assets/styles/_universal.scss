@@ -91,8 +91,6 @@ a:hover {
 }
 
 .translation-list {
-    padding: 1em 2em 5em 2em;
-    border: $border-dotted;
     margin: 0 auto;
     margin-bottom: 1em;
     min-height: 250px;
@@ -312,9 +310,11 @@ a {
     flex-direction: column;
     align-items: center;
     min-height: 200px;
-    justify-content: space-evenly;
+    justify-content: center;
     .mat-icon {
         color: $light-gray;
+        width: auto;
+        height: auto;
     }
     p {
         color: $text-gray;
