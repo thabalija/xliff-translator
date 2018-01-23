@@ -2,12 +2,19 @@ import { Injectable } from '@angular/core';
 
 import { FileInfo } from './../shared/interfaces/file-info.interface';
 import { TranslationUnit } from './../shared/interfaces/translation-unit.interface';
+import { TranslationListService } from './translation-list.service';
 
 @Injectable()
 
 export class FileUploadService {
 
+  constructor(
+    private _translationListService: TranslationListService
+  ) {}
+
   public uploadFile(htmlDoc: HTMLDocument, fileName: string, sourceLang: string) {
+
+    localStorage.clear();
 
     const originalFile = htmlDoc;
     const fileElement = htmlDoc.getElementsByTagName('file')[0];
@@ -64,6 +71,9 @@ export class FileUploadService {
     // save original file
     localStorage.setItem('uploadedFile', this.xmlToString(htmlDoc));
 
+    if (fileInfo.targetLang) {
+      this._translationListService.addTranslation(fileInfo.fileName, fileInfo.targetLang, true);
+    }
   }
 
   // converts xml to string
