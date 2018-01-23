@@ -1,10 +1,11 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { FileUploadService } from './../../services/file-upload.service';
 import { LocaleService } from './../../services/locale.service';
 import { Locale } from './../../shared/interfaces/locale.interface';
+import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-file-upload',
@@ -23,7 +24,8 @@ export class FileUploadComponent implements OnInit {
     public _router: Router,
     private _fileUploadService: FileUploadService,
     private _localeService: LocaleService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private _dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -55,19 +57,40 @@ export class FileUploadComponent implements OnInit {
     }
   }
 
-  // send file to service for uploading to localstorage
-  uploadFile(): void {
+  // open upload file dialog
+  openUploadFileDialog(): void {
     if (this.htmlDocument) {
-      this._fileUploadService.uploadFile(this.htmlDocument, this.fileName, this.fileSourceLang);
       if (localStorage.getItem('fileInfo')) {
-        this._router.navigate(['/translations']);
-      } else {
-        this.snackBar.open('Wild error occurred', 'close', {
-          duration: 2000,
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '350px',
+          data: {
+            title: 'Please confirm',
+            content: `Are you sure you want to upload new file? All of your translations you haven't download will be lost!`,
+            confirm: `Upload`
+          }
         });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.uploadFile();
+          }
+        });
+      } else {
+        this.uploadFile();
       }
     } else {
       this.snackBar.open('Please choose a file', 'close', {
+        duration: 2000,
+      });
+    }
+  }
+
+  // send file to service for uploading to localstorage
+  uploadFile(): void {
+    this._fileUploadService.uploadFile(this.htmlDocument, this.fileName, this.fileSourceLang);
+    if (localStorage.getItem('fileInfo')) {
+      this._router.navigate(['/translations']);
+    } else {
+      this.snackBar.open('Wild error occurred', 'close', {
         duration: 2000,
       });
     }
