@@ -62,7 +62,14 @@ body {
     .dialog-content {
         margin: 2em 0 1em;
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        .flex-row {
+            justify-content: space-between;
+        }
+        .mat-checkbox {
+            margin-top: 1.5em;
+            color: rgba(0, 0, 0, 0.54);
+        }
     }
 }
 .get-started {
@@ -115,23 +122,7 @@ a:hover {
             }
         }
     }
-    .no-translations {
-        display: flex;
-        flex-grow: 1;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 2em;
-        .mat-icon {
-            width: auto;
-            height: auto;
-            font-size: 48px;
-            opacity: 0.5;
-        }
-        a {
-            font-weight: 700;
-        }
-    }
+
 }
 
 .settings {
@@ -298,7 +289,34 @@ button.button-gradient.button-round {
 }
 
 .mat-button.button-round {
-    border: 1px solid $primary;
     border-radius: 19px;
     overflow: hidden;
+}
+.mat-button.button-border {
+    border: 1px solid $primary;
+}
+a {
+    color: $primary;
+    opacity: 0.9;
+    transition: 200ms opacity ease;
+    span, 
+    .mat-icon {
+        vertical-align: middle;
+    }
+    &:hover {
+        opacity: 1;
+    }
+}
+.missing-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 200px;
+    justify-content: space-evenly;
+    .mat-icon {
+        color: $light-gray;
+    }
+    p {
+        color: $text-gray;
+    }
 }
