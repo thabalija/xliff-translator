@@ -77,19 +77,20 @@ export class TranslationsComponent implements OnInit {
       width: '500px',
       data: {
         name: '',
-        targetLang: ``
+        targetLang: ``,
+        useTranslationUnits: true
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.createTranslation(result.name, result.targetLang);
+        this.createTranslation(result.name, result.targetLang, result.useTranslationUnits);
       }
     });
   }
 
   // create new translation
-  createTranslation(fileName: string, targetLang: string): void {
-    this._translationListService.addTranslation(fileName, targetLang);
+  createTranslation(fileName: string, targetLang: string, useTranslationUnits: boolean): void {
+    this._translationListService.addTranslation(fileName, targetLang, useTranslationUnits);
     this.loadTranslations();
   }
 
@@ -100,7 +101,6 @@ export class TranslationsComponent implements OnInit {
       data: {
         title: 'Delete translation',
         content: 'Are you sure you want to delete translation?',
-        buttonColor: 'warn',
         confirm: 'Delete'
       }
     });

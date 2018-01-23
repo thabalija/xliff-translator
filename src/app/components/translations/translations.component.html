@@ -45,7 +45,7 @@
                     <mat-cell *matCellDef="let translation">
                         <ng-container *ngFor="let locale of languages">
                             <ng-container *ngIf="locale.locale === translation.targetLang">{{ locale.language}}</ng-container>
-                        </ng-container>                        
+                        </ng-container>
                     </mat-cell>
                 </ng-container>
 
@@ -70,9 +70,10 @@
                 <ng-container matColumnDef="delete">
                     <mat-header-cell *matHeaderCellDef align="center"> Delete </mat-header-cell>
                     <mat-cell *matCellDef="let translation" align="center">
-                        <button mat-icon-button (click)="openDeleteTranslationDialog(translation.id)">
+                        <a (click)="openDeleteTranslationDialog(translation.id)">
                             <mat-icon color="primary">delete</mat-icon>
-                        </button>
+                            <span>Delete</span>
+                        </a>
                     </mat-cell>
                 </ng-container>
 
@@ -80,9 +81,10 @@
                 <ng-container matColumnDef="translate">
                     <mat-header-cell *matHeaderCellDef align="center"> Translate </mat-header-cell>
                     <mat-cell *matCellDef="let translation" align="center">
-                        <button mat-icon-button (click)="openTranslation(translation)">
+                        <a (click)="openTranslation(translation)">
                             <mat-icon color="primary">edit</mat-icon>
-                        </button>
+                            <span>Translate</span>
+                        </a>
                     </mat-cell>
                 </ng-container>
 
@@ -90,9 +92,10 @@
                 <ng-container matColumnDef="download">
                     <mat-header-cell *matHeaderCellDef align="center"> Download </mat-header-cell>
                     <mat-cell *matCellDef="let translation" align="center">
-                        <button mat-icon-button (click)="downloadFile(translation.id)">
+                        <a (click)="downloadFile(translation.id)">
                             <mat-icon color="primary">file_download</mat-icon>
-                        </button>
+                            <span>Download</span>
+                        </a>
                     </mat-cell>
                 </ng-container>
 
@@ -100,15 +103,15 @@
                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
             </mat-table>
 
-            <div *ngIf="translationsList.length === 0" class="no-translations">
-                <mat-icon>playlist_add</mat-icon>
+            <div *ngIf="translationsList.length === 0" class="missing-data">
+                <mat-icon class="mat-48">playlist_add</mat-icon>
                 <p>No translations yet.
                     <a (click)="openAddTranslationDialog()">Add translation</a>
                 </p>
             </div>
         </div>
         <div align="end">
-            <button mat-button (click)="openAddTranslationDialog()" color="primary" class="button-round">
+            <button mat-button (click)="openAddTranslationDialog()" color="primary" class="button-round button-border">
                 Add translations
             </button>
         </div>
