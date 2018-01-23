@@ -14,7 +14,6 @@ export class TranslationListService {
   private translationUnits: TranslationUnit[];
 
   constructor(
-    private _fileUploadService: FileUploadService,
     private _translationUnitsService: TranslationUnitsService
   ) { }
 
@@ -56,10 +55,10 @@ export class TranslationListService {
   }
 
   // create new translation
-  public addTranslation(fileName: string, targetLang: string): void {
-    this.fileInfo = this._fileUploadService.getFileInfo();
+  public addTranslation(fileName: string, targetLang: string, useTranslationUnits: boolean): void {
+    this.fileInfo = JSON.parse(localStorage.getItem('fileInfo'));
     this.translationList = this.getTranslationList();
-    const translationUnits = this._fileUploadService.getTranslationUnits();
+    const translationUnits = JSON.parse(localStorage.getItem('translationUnits'));
     if (this.translationList === null) {
       this.translationList = [];
     }
@@ -75,7 +74,18 @@ export class TranslationListService {
     };
 
     this.saveCreatedTranslation(newTranslation);
-    this._translationUnitsService.addTraslationUnits(translationID, translationUnits);
+
+    if (!useTranslationUnits) {
+      console.log(translationUnits);
+      translationUnits.forEach((unit) => {
+        unit.target = '';
+        unit.targetState = 'new';
+        return unit;
+      });
+      this._translationUnitsService.addTraslationUnits(translationID, translationUnits);
+    } else {
+      this._translationUnitsService.addTraslationUnits(translationID, translationUnits);
+    }
   }
 
   // delete translation
