@@ -76,14 +76,14 @@ export class TranslationsComponent implements OnInit {
     const dialogRef = this._dialog.open(AddTranslationDialogComponent, {
       width: '500px',
       data: {
-        name: '',
+        fileName: '',
         targetLang: ``,
         useTranslationUnits: true
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.createTranslation(result.name, result.targetLang, result.useTranslationUnits);
+        this.createTranslation(result.fileName, result.targetLang, result.useTranslationUnits);
       }
     });
   }

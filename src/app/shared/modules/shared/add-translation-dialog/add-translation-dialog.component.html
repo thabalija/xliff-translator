@@ -13,7 +13,7 @@
     <div class="dialog-content">
         <div class="flex-row">
             <mat-form-field>
-                <input matInput placeholder="File name" [(ngModel)]="data.name">
+                <input matInput placeholder="File name" [(ngModel)]="data.fileName">
                 <mat-hint>File name must end with .xlf</mat-hint>
             </mat-form-field>
             <mat-form-field>
@@ -32,7 +32,11 @@
 
 <mat-dialog-actions align="end">
     <button mat-button (click)="dialogRef.close(false)" class="button-round">Cancel</button>
-    <button mat-button (click)="dialogRef.close(data)" color="primary" class="button-round button-border">
+    <button mat-button 
+        (click)="dialogRef.close(data)" 
+        color="primary" 
+        class="button-round button-border" 
+        [disabled]="data.fileName === '' || data.targetLang === ''">
         <mat-icon>add</mat-icon>
         <span>Create translation</span>
     </button>

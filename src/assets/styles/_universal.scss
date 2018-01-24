@@ -274,11 +274,7 @@ a:hover {
         }
     }
 }
-button.button-gradient.button-round {
-    background: $gradient-primary;
-    border-radius: 18px;
-    color: $white;
-}
+
 .flex-row {
     display: flex;
 }
@@ -292,6 +288,9 @@ button.button-gradient.button-round {
 }
 .mat-button.button-border {
     border: 1px solid $primary;
+    &:disabled {
+        border-color: #ccc;
+    }        
 }
 a {
     color: $primary;

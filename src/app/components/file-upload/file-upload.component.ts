@@ -14,8 +14,8 @@ import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dial
 })
 export class FileUploadComponent implements OnInit {
 
-  fileName: string;
-  fileSourceLang: string;
+  fileName = '';
+  fileSourceLang = '';
   htmlDocument: HTMLDocument;
   languages: Locale[];
   showComponent: boolean;
@@ -42,6 +42,7 @@ export class FileUploadComponent implements OnInit {
     if (uploadedFile.length === 0) {
       this.fileName = '';
       this.fileSourceLang = '';
+      this.htmlDocument = undefined;
     } else {
       const file = uploadedFile[0];
       this.fileName = file.name;

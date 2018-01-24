@@ -24,7 +24,11 @@
 			</mat-form-field>
 		</div>
 		<div align="end">
-			<button mat-button (click)="openUploadFileDialog()" color="primary" class="button-round button-border">
+			<button mat-button 
+				(click)="openUploadFileDialog()" 
+				color="primary" 
+				class="button-round button-border"
+				[disabled]="fileName === '' || fileSourceLang === '' || this.htmlDocument === undefined">
 				Create project
 			</button>
 		</div>
