@@ -9,7 +9,7 @@ import { EditorComponent } from './../../../components/editor/editor.component';
 
 const routes: Routes = [
   { path: '', component: LayoutComponent, children: [
-    { path: 'upload', component: FileUploadComponent},
+    { path: '', component: FileUploadComponent},
     { path: 'translations', component: TranslationsComponent},
     { path: 'edit-translation/:id', component: EditorComponent}
   ]},

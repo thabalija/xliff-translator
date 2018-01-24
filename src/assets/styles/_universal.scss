@@ -16,6 +16,7 @@ body {
 }
 .app-container {
     max-width: 1080px;
+    min-height: calc(100% - 158px);
     margin: 0 auto;
     height: auto;
     display: flex;
