@@ -69,11 +69,8 @@ export class TranslationListService {
       xliffVersion: this.fileInfo.xliffVersion,
       sourceLang: this.fileInfo.sourceLang,
       targetLang: targetLang,
-      totalUnits: this.fileInfo.totalUnits,
-      translatedUnits: 0
+      totalUnits: this.fileInfo.totalUnits
     };
-
-    this.saveCreatedTranslation(newTranslation);
 
     if (!useTranslationUnits) {
       console.log(translationUnits);
@@ -82,8 +79,12 @@ export class TranslationListService {
         unit.targetState = 'new';
         return unit;
       });
+      newTranslation.translatedUnits = 0;
+      this.saveCreatedTranslation(newTranslation);
       this._translationUnitsService.addTraslationUnits(translationID, translationUnits);
     } else {
+      newTranslation.translatedUnits = this.countTranslatedUnits(translationUnits);
+      this.saveCreatedTranslation(newTranslation);
       this._translationUnitsService.addTraslationUnits(translationID, translationUnits);
     }
   }
@@ -98,6 +99,16 @@ export class TranslationListService {
       }
     }
     localStorage.setItem('translationList', JSON.stringify(translationList));
+  }
+
+  public countTranslatedUnits(translationUnits: TranslationUnit[]): number {
+    let translatedUnitsCount = 0;
+    translationUnits.forEach(unit => {
+      if (unit.targetState === 'translated') {
+        translatedUnitsCount++;
+      }
+    });
+    return translatedUnitsCount;
   }
 
   // save translation to localstorage

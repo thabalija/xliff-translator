@@ -112,8 +112,10 @@ export class EditorComponent implements OnInit {
   }
 
   // focus textarea on mat-card click
-  focusTextarea(): void {
-    console.log('TODO set focus on textarea by clicking on mat-card');
+  focusTextarea(event): void {
+    if (event.target.tagName.toLowerCase() === 'mat-card') {
+      event.target.querySelector('textarea').focus();
+    }
   }
 
   // slice translation units on pagination event
