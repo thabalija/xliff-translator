@@ -43,9 +43,7 @@
                 <ng-container matColumnDef="language">
                     <mat-header-cell *matHeaderCellDef> Target language </mat-header-cell>
                     <mat-cell *matCellDef="let translation">
-                        <ng-container *ngFor="let locale of languages">
-                            <ng-container *ngIf="locale.locale === translation.targetLang">{{ locale.language}}</ng-container>
-                        </ng-container>
+                        {{ localeObject[translation.targetLang] }}
                     </mat-cell>
                 </ng-container>
 
@@ -112,7 +110,7 @@
         </div>
         <div align="end">
             <button mat-button (click)="openAddTranslationDialog()" color="primary" class="button-round button-border">
-                Add translations
+                Add translation
             </button>
         </div>
     </mat-card-content>

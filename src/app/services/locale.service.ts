@@ -11,4 +11,12 @@ export class LocaleService {
     return LOCALE;
   }
 
+  public getLocaleObject(): Object {
+    const locale = {};
+    LOCALE.forEach( (loc, i) => {
+      locale[loc.locale] = loc.language;
+    });
+    return locale;
+  }
+
 }

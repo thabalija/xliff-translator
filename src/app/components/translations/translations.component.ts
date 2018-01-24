@@ -26,7 +26,7 @@ export class TranslationsComponent implements OnInit {
   translationsList: FileInfo[] = [];
   displayedColumns = ['language', 'status', 'delete', 'translate', 'download'];
   dataSource = new MatTableDataSource<FileInfo>();
-  languages: Locale[];
+  localeObject: Object;
   translationStatus: number;
 
   constructor(
@@ -42,7 +42,7 @@ export class TranslationsComponent implements OnInit {
   ngOnInit() {
     this.loadBaseFileInfo();
     this.loadTranslations();
-    this.loadLanguages();
+    this.loadLocaleObject();
   }
 
   // load file info
@@ -67,8 +67,8 @@ export class TranslationsComponent implements OnInit {
   }
 
   // load locale in table
-  loadLanguages(): void {
-    this.languages = this._localeService.getLocale();
+  loadLocaleObject(): void {
+    this.localeObject = this._localeService.getLocaleObject();
   }
 
   // open add translation dialog
