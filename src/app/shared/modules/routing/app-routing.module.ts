@@ -13,7 +13,7 @@ const routes: Routes = [
     { path: 'translations', component: TranslationsComponent},
     { path: 'edit-translation/:id', component: EditorComponent}
   ]},
-  { path: '*', redirectTo: '', pathMatch: 'full'}
+  { path: '**', redirectTo: ''}
 ];
 
 @NgModule({
