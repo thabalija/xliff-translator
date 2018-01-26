@@ -1,5 +1,7 @@
 <header>
-  <img src="../../../assets/img/logo.png" alt="xliff-translator">
+  <a [routerLink]="['']">
+    <img src="../../../assets/img/logo.png" alt="xliff-translator">
+  </a>
   <div class="navigation">
     <!-- <a>
       <mat-icon>description</mat-icon>
@@ -9,7 +11,7 @@
       <mat-icon>file_upload</mat-icon>
       <span>Upload file</span>
     </a>
-    <a [routerLink]="['/translations']" > 
+    <a [routerLink]="['/translations']">
       <mat-icon>list</mat-icon>
       <span>My translations</span>
     </a>
@@ -21,6 +23,6 @@
 </div>
 
 <footer class="flex-row">
-  <span> Version 1.0</span> 
+  <span> Version 1.0</span>
   <a href="https://github.com/thabalija/xliff-translator" target="_blank">View on github</a>
 </footer>
