@@ -135,6 +135,13 @@ export class EditorComponent implements OnInit {
     let filteredUnits: TranslationUnit[];
     if (this.showUnits === 'all') {
       filteredUnits = this.translationUnits;
+    } else if (this.showUnits === 'other') {
+      filteredUnits = this.translationUnits.filter((el, i) => {
+        const isNotNew = this.translationUnits[i].targetState.toLocaleLowerCase() !== 'new';
+        const isNotTranslated = this.translationUnits[i].targetState.toLocaleLowerCase() !== 'translated';
+        const isOther = isNotNew && isNotTranslated;
+        return isOther;
+      });
     } else {
       filteredUnits = this.translationUnits.filter((el, i) => {
         return this.translationUnits[i].targetState === this.showUnits;
