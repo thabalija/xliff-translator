@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
-import { MatSnackBar, PageEvent, MatSelectChange } from '@angular/material';
+import { MatSnackBar, PageEvent, MatSelectChange, MatDialog } from '@angular/material';
 import { LocaleService } from './../../services/locale.service';
 import { FileDownloadService } from './../../services/file-download.service';
 import { FileUploadService } from './../../services/file-upload.service';
@@ -11,6 +11,7 @@ import { Locale } from './../../shared/interfaces/locale.interface';
 import { FileInfo } from './../../shared/interfaces/file-info.interface';
 import { TranslationUnit } from './../../shared/interfaces/translation-unit.interface';
 import { TranslationListService } from '../../services/translation-list.service';
+import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-editor',
@@ -35,7 +36,8 @@ export class EditorComponent implements OnInit {
     private _localeService: LocaleService,
     private _translationUnitsService: TranslationUnitsService,
     private _translationListService: TranslationListService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private _dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -150,6 +152,26 @@ export class EditorComponent implements OnInit {
     this.paginatedTranslationUnits = filteredUnits.slice(
       this.pageEvent.pageIndex * this.pageEvent.pageSize,
       (this.pageEvent.pageIndex + 1) * this.pageEvent.pageSize);
+  }
+
+  // ask user if he want to save data before he leaves
+  leaveEditorDialog(): void {
+    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: {
+        title: 'Please confirm',
+        content: `If you don't save changes all your unsaved translations will be lost.`,
+        confirm: `Save translation`
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('save data');
+        console.log('leave route afters save');
+      } else {
+        console.log('no need for saving');
+      }
+    });
   }
 
 }
