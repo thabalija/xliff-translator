@@ -201,6 +201,7 @@ a:hover {
                         padding: 0; 
                         textarea.mat-autosize{
                             overflow: hidden !important;
+                            min-height: 20px;
                         }
                         .mat-form-field-infix {
                             padding: 0;
