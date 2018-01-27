@@ -38,12 +38,25 @@ export class FileUploadService {
         targetElement = unit.getElementsByTagName('target')[0];
       }
 
+      const notesNodes = unit.getElementsByTagName('note');
+      const notesArray = Array.from(notesNodes);
+      const notes = [];
+
+      notesArray.forEach(note => {
+        const noteObject = {
+          from: note.getAttribute('from'),
+          note: note.innerHTML
+        };
+        notes.push(noteObject);
+      });
+
       const translationUnit = {
         id: unit.getAttribute('id'),
         source: unit.querySelector('source').innerHTML,
         target: targetElement.innerHTML,
         targetState: targetElement.getAttribute('state'),
-        note: unit.getElementsByTagName('note')
+        note: notes,
+        showNote: false
       };
       if (unit.querySelector('target').getAttribute('state') === 'translated') {
         translatedUnits++;
