@@ -3,5 +3,6 @@ export interface TranslationUnit {
     source: string;
     target: string;
     targetState: string;
-    note: NodeList;
+    note: any;
+    showNote: boolean;
 }
