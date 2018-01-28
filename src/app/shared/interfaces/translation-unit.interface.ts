@@ -3,6 +3,11 @@ export interface TranslationUnit {
     source: string;
     target: string;
     targetState: string;
-    note: any;
+    note: Note[];
     showNote: boolean;
+}
+
+export interface Note {
+    from: string;
+    note: string;
 }
