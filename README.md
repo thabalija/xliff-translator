@@ -18,7 +18,7 @@ Current version supports:
 
 ## Future versions
 
-* Current app is made for desktop only - focus was on getting it to wor properly. Responsive design will be added.
+* Current app is made for desktop only - focus was on getting it to work properly. Responsive design will be added.
 * Add canDeactivateRoute on editor with confirm dialog when user is set to leave editor before saving
 * Add pages with documentation - how to use xliff translator
 * Add animation on component interaction
