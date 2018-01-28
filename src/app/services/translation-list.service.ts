@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { FileInfo } from '../shared/interfaces/file-info.interface';
 import { TranslationUnit } from '../shared/interfaces/translation-unit.interface';
 import { FileUploadService } from './file-upload.service';
-import { TranslationUnitsService } from './translation-units.service';
 
 @Injectable()
 
@@ -11,10 +10,6 @@ export class TranslationListService {
 
   private fileInfo: FileInfo;
   private translationUnits: TranslationUnit[];
-
-  constructor(
-    private _translationUnitsService: TranslationUnitsService
-  ) { }
 
   // get list of translations
   public getTranslationList(): FileInfo[] {
@@ -41,7 +36,6 @@ export class TranslationListService {
   // update translation info
   public updateTranslationInfo(translationInfo: FileInfo): void {
     const translationList = JSON.parse(localStorage.getItem('translationList'));
-
     for (let i = 0; i < translationList.length; i++) {
       if (translationList[i].id === translationInfo.id) {
         translationList[i] = translationInfo;
@@ -51,35 +45,25 @@ export class TranslationListService {
     localStorage.setItem('translationList', JSON.stringify(translationList));
   }
 
-  // create new translation
+  // add new translation
   public addTranslation(fileName: string, targetLang: string, useTranslationUnits: boolean): void {
     this.fileInfo = JSON.parse(localStorage.getItem('fileInfo'));
     const translationList = this.getTranslationList();
     const translationUnits = JSON.parse(localStorage.getItem('translationUnits'));
     const translationID = + new Date;
-    const newTranslation: FileInfo = {
-      id: translationID,
-      fileName: fileName,
-      xliffVersion: this.fileInfo.xliffVersion,
-      sourceLang: this.fileInfo.sourceLang,
-      targetLang: targetLang,
-      totalUnits: this.fileInfo.totalUnits
-    };
+    const newTranslation = this.createNewTranslationInfo(translationID, fileName, targetLang);
 
     if (!useTranslationUnits) {
-      console.log(translationUnits);
-      translationUnits.forEach((unit) => {
-        unit.target = '';
-        unit.targetState = 'new';
-        return unit;
-      });
+      this.resetTargetElement(translationUnits);
       newTranslation.translatedUnits = 0;
+
       this.saveCreatedTranslation(newTranslation);
-      this._translationUnitsService.addTraslationUnits(translationID, translationUnits);
+      this.saveTraslationUnits(translationID, translationUnits);
     } else {
       newTranslation.translatedUnits = this.countTranslatedUnits(translationUnits);
+
       this.saveCreatedTranslation(newTranslation);
-      this._translationUnitsService.addTraslationUnits(translationID, translationUnits);
+      this.saveTraslationUnits(translationID, translationUnits);
     }
   }
 
@@ -106,11 +90,39 @@ export class TranslationListService {
     return translatedUnitsCount;
   }
 
+  // creates and returnes new Translation info object
+  private createNewTranslationInfo(translationID: number, fileName: string, targetLang: string): FileInfo {
+    const newFile = {
+      id: translationID,
+      fileName: fileName,
+      xliffVersion: this.fileInfo.xliffVersion,
+      sourceLang: this.fileInfo.sourceLang,
+      targetLang: targetLang,
+      totalUnits: this.fileInfo.totalUnits
+    };
+    return newFile;
+  }
+
+  // reset target element value to new, empty innerHtml
+  private resetTargetElement(translationUnits: TranslationUnit[]): TranslationUnit[] {
+    translationUnits.forEach((unit) => {
+      unit.target = '';
+      unit.targetState = 'new';
+      return unit;
+    });
+    return translationUnits;
+  }
+
   // save translation to localstorage
   private saveCreatedTranslation(translation: FileInfo): void {
     const translationList = this.getTranslationList();
     translationList.push(translation);
     localStorage.setItem('translationList', JSON.stringify(translationList));
+  }
+
+  // save Translation units to localstorage
+  private saveTraslationUnits(translationID: number, translationUnits: TranslationUnit[]): void {
+    localStorage.setItem(translationID.toString(), JSON.stringify(translationUnits));
   }
 
 }
