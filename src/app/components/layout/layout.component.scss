@@ -1,19 +1,18 @@
-header {
+header, footer {
     display: flex;
     justify-content: space-between;
+    width: 100%;
     max-width: 1080px;
     margin: 0 auto;
+}
+header {
     padding: 1em 0;
     margin-bottom: 1em;
     align-items: center;
 }
 footer {
-    color: #fff;
-    display: flex;
-    max-width: 1080px;
-    margin: 0 auto;
     padding: 1em;
-    justify-content: space-between;
+    color: #fff;
 }
 a { 
     padding: 0 1em;
