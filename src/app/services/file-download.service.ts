@@ -41,8 +41,6 @@ export class FileDownloadService {
       targetElement.setAttribute('state', transUnit.targetState);
     });
 
-    console.log(this.originalFile, this.translationUnits, this.fileInfo);
-
     const stringer = new XMLSerializer();
     const finalFile = stringer.serializeToString(this.originalFile);
 
