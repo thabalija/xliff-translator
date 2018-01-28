@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { FileInfo } from './../shared/interfaces/file-info.interface';
-import { TranslationUnit } from './../shared/interfaces/translation-unit.interface';
+import { TranslationUnit, Note } from './../shared/interfaces/translation-unit.interface';
 import { TranslationListService } from './translation-list.service';
 
 @Injectable()
@@ -38,17 +38,7 @@ export class FileUploadService {
         targetElement = unit.getElementsByTagName('target')[0];
       }
 
-      const notesNodes = unit.getElementsByTagName('note');
-      const notesArray = Array.from(notesNodes);
-      const notes = [];
-
-      notesArray.forEach(note => {
-        const noteObject = {
-          from: note.getAttribute('from'),
-          note: note.innerHTML
-        };
-        notes.push(noteObject);
-      });
+      const notes = this.getNotes(unit.getElementsByTagName('note'));
 
       const translationUnit = {
         id: unit.getAttribute('id'),
@@ -84,6 +74,7 @@ export class FileUploadService {
     // save original file
     localStorage.setItem('uploadedFile', this.xmlToString(htmlDoc));
 
+    // if file contains targetLang, create translation for that language
     if (fileInfo.targetLang) {
       this._translationListService.addTranslation(fileInfo.fileName, fileInfo.targetLang, true);
     }
@@ -112,6 +103,19 @@ export class FileUploadService {
   // get original file from local storage
   public getTranslationUnits(): TranslationUnit[] {
     return JSON.parse(localStorage.getItem('translationUnits'));
+  }
+
+  private getNotes(notesNodes: NodeListOf<Element>): Note[] {
+    const notesArray = Array.from(notesNodes);
+    const notes = [];
+    notesArray.forEach(note => {
+      const noteObject = {
+        from: note.getAttribute('from'),
+        note: note.innerHTML
+      };
+      notes.push(noteObject);
+    });
+    return notes;
   }
 
 }
