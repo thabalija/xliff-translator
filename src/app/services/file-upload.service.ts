@@ -58,7 +58,7 @@ export class FileUploadService {
         note: notes,
         showNote: false
       };
-      if (unit.querySelector('target').getAttribute('state') === 'translated') {
+      if (unit.querySelector('target').getAttribute('state').toLowerCase() === 'translated') {
         translatedUnits++;
       }
       translationUnits.push(translationUnit);

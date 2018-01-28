@@ -75,7 +75,7 @@ export class EditorComponent implements OnInit {
   countTranslatedUnits(): void {
     let translatedUnitsCount = 0;
     this.translationUnits.forEach(unit => {
-      if (unit.targetState === 'translated') {
+      if (unit.targetState.toLowerCase()  === 'translated') {
         translatedUnitsCount++;
       }
     });
@@ -139,8 +139,8 @@ export class EditorComponent implements OnInit {
       filteredUnits = this.translationUnits;
     } else if (this.showUnits === 'other') {
       filteredUnits = this.translationUnits.filter((el, i) => {
-        const isNotNew = this.translationUnits[i].targetState.toLocaleLowerCase() !== 'new';
-        const isNotTranslated = this.translationUnits[i].targetState.toLocaleLowerCase() !== 'translated';
+        const isNotNew = this.translationUnits[i].targetState.toLowerCase() !== 'new';
+        const isNotTranslated = this.translationUnits[i].targetState.toLowerCase() !== 'translated';
         const isOther = isNotNew && isNotTranslated;
         return isOther;
       });

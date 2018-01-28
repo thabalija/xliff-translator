@@ -101,10 +101,11 @@ export class TranslationListService {
     localStorage.setItem('translationList', JSON.stringify(translationList));
   }
 
+  // count how many units are marked as 'translated'
   public countTranslatedUnits(translationUnits: TranslationUnit[]): number {
     let translatedUnitsCount = 0;
     translationUnits.forEach(unit => {
-      if (unit.targetState === 'translated') {
+      if (unit.targetState.toLowerCase() === 'translated') {
         translatedUnitsCount++;
       }
     });
