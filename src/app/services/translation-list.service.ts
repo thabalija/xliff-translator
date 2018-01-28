@@ -10,7 +10,6 @@ import { TranslationUnitsService } from './translation-units.service';
 export class TranslationListService {
 
   private fileInfo: FileInfo;
-  private translationList: FileInfo[];
   private translationUnits: TranslationUnit[];
 
   constructor(
@@ -42,7 +41,6 @@ export class TranslationListService {
   // update translation info
   public updateTranslationInfo(translationInfo: FileInfo): void {
     const translationList = JSON.parse(localStorage.getItem('translationList'));
-    console.log(translationList);
 
     for (let i = 0; i < translationList.length; i++) {
       if (translationList[i].id === translationInfo.id) {
@@ -50,18 +48,14 @@ export class TranslationListService {
         break;
       }
     }
-
     localStorage.setItem('translationList', JSON.stringify(translationList));
   }
 
   // create new translation
   public addTranslation(fileName: string, targetLang: string, useTranslationUnits: boolean): void {
     this.fileInfo = JSON.parse(localStorage.getItem('fileInfo'));
-    this.translationList = this.getTranslationList();
+    const translationList = this.getTranslationList();
     const translationUnits = JSON.parse(localStorage.getItem('translationUnits'));
-    if (this.translationList === null) {
-      this.translationList = [];
-    }
     const translationID = + new Date;
     const newTranslation: FileInfo = {
       id: translationID,
