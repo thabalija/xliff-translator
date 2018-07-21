@@ -36,10 +36,12 @@ a {
     .mat-icon {     
         vertical-align: text-bottom;
     }
-    @media screen and (min-width: 768) {
+    @media screen and (min-width: 768px) {
         padding: 0 1em;
         span {
-            display: initial;
+            display: inline-block;
+            vertical-align: initial;
+            padding-left: 0.25em;
         }
     }
 }
