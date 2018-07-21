@@ -147,7 +147,14 @@ a:hover {
     }
 }
 
+
 .file-info {
+    .flex-row {
+        flex-direction: column;
+        @media screen and (min-width: 1080px) {
+            flex-direction: row;
+        }
+    }
     &.mat-card {
         margin-bottom: 1em;
     }
@@ -155,9 +162,12 @@ a:hover {
         padding: 0 0.75em;
         .file-info--title {
             font-size: 0.75em;
-            margin: 0;
+            margin: 1em 0 0 0;
             text-transform: uppercase;
             color: $text-gray;
+            @media screen and (min-width: 768px) {
+                margin: 0;
+            }
         }
         .file-info--value {
             font-size: 1.8em;
@@ -337,4 +347,11 @@ a {
     p {
         color: $text-gray;
     }
+}
+
+.flex-column-center {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
 }
