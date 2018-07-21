@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { FileUploadService } from './../../services/file-upload.service';
@@ -13,6 +13,8 @@ import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dial
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent implements OnInit {
+
+  @HostBinding('class.flex-column-center') flexClass = true;
 
   fileName = '';
   fileSourceLang = '';
