@@ -31,8 +31,10 @@
 			<h5 class="file-info--title">Translated</h5>
 			<h1 class="file-info--value">{{ (fileInfo.translatedUnits / fileInfo.totalUnits) * 100 | number:'0.0-0' }}%</h1>
 		</div>
-		<button mat-button color="primary" (click)="downloadFile(fileInfo.id)">Download</button>
-		<button mat-button color="primary" (click)="saveChanges()">Save</button>
+		<div class="file-info-actions">
+			<button mat-button color="primary" (click)="downloadFile(fileInfo.id)">Download</button>
+			<button mat-button color="primary" (click)="saveChanges()">Save</button>
+		</div>
 	</div>
 </mat-card>
 
@@ -63,7 +65,7 @@
 				</mat-card>
 				<div class="translation-unit--footer">
 					<mat-icon class="mat-icon--fingerprint">fingerprint</mat-icon>
-					<span>7102e04f1820726572933528b677a41baca8536d</span>
+					<span class="translation-unit--fingerprint">{{ unit.id }}</span>
 					<div class="flex-spacer"></div>
 					<button mat-icon-button *ngIf="unit.note.length > 0" (click)="unit.showNote = true">
 						<mat-icon>info_outline</mat-icon>
