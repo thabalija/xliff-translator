@@ -147,7 +147,6 @@ a:hover {
     }
 }
 
-
 .file-info {
     .flex-row {
         flex-direction: column;
@@ -165,7 +164,7 @@ a:hover {
             margin: 1em 0 0 0;
             text-transform: uppercase;
             color: $text-gray;
-            @media screen and (min-width: 768px) {
+            @media screen and (min-width: 1080px) {
                 margin: 0;
             }
         }
@@ -176,14 +175,27 @@ a:hover {
             font-weight: 300;
         }
     }
+    .file-info-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1em;
+        @media screen and (min-width: 1080px) {
+            margin-top: 0;
+        }
+    }
     &.file-info-editable {
         .file-info--group {
             padding: 0 2em 0 0;
         }
         .mat-form-field {
             align-self: flex-start;
-            margin-right: 20px;
-            min-width: 200px;
+            width: 100%;
+            margin-bottom: 1em;
+            @media screen and (min-width: 1080px) {
+                margin-right: 20px;
+                margin-bottom: 0;
+                width: auto;
+            }
             .mat-form-field-wrapper {
                 padding-bottom: 0;
             }
@@ -196,15 +208,23 @@ a:hover {
 
 .translation-unit {
     display: flex;
+    flex-direction: column;
     margin-bottom: 0.5em;
     align-items: stretch;
     align-content: space-around;
     justify-content: space-between;
+    @media screen and (min-width: 1080px) {
+        flex-direction: row;
+        margin-bottom: 2em;
+    }
     div.source,
     div.target {
-        width: calc( 50% - 1em);
         display: flex;
         flex-direction: column;
+        width: 100%;
+        @media screen and (min-width: 1080px) {
+            width: calc( 50% - 1em);
+        }
         .mat-card {
             box-shadow: none;
             border-radius: 2px;
@@ -246,11 +266,17 @@ a:hover {
             }
         }
         .translation-unit--footer {
-            height: 56px;
+            height: 3.5em;
             display: flex;
             align-items: center;
             padding: 1em;
             color: #B3B3B3;
+            span.translation-unit--fingerprint {
+                max-width: 80%;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
             .mat-icon--fingerprint {
                 margin-right: 0.25em;
             }

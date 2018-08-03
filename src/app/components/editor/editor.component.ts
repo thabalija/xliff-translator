@@ -71,7 +71,7 @@ export class EditorComponent implements OnInit {
     this._translationListService.updateTranslationInfo(this.fileInfo);
   }
 
-  // count translated units marked as translated
+  // count units marked as translated
   countTranslatedUnits(): void {
     let translatedUnitsCount = 0;
     this.translationUnits.forEach(unit => {
