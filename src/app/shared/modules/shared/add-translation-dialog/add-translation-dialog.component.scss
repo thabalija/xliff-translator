@@ -1,0 +1,14 @@
+.dialog-content {
+    .flex-row {
+        flex-direction: column;
+        @media screen and (min-width: 768px) {
+            flex-direction: row;
+        }
+        .mat-form-field {
+            width: 100%;
+            @media screen and (min-width: 768px) {
+                width: calc(50% - 0.15em);
+            }
+        }
+    }
+}

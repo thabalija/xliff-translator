@@ -5,7 +5,8 @@ import { Locale } from '../../../interfaces/locale.interface';
 import { LocaleService } from './../../../../services/locale.service';
 
 @Component({
-  templateUrl: './add-translation-dialog.component.html'
+  templateUrl: './add-translation-dialog.component.html',
+  styleUrls: ['./add-translation-dialog.component.scss']
 })
 export class AddTranslationDialogComponent {
 
