@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+   <file source-language="en-US" datatype="plaintext" original="ng2.template" target-language="hr">
+      <body>
+         <trans-unit id="7c2b090b790697442b77775ee7d472cc944f74dd" datatype="html">
+            <source>Welcome!</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">app/components/app.component.ts</context>
+               <context context-type="linenumber">11</context>
+            </context-group>
+            <target state="new"></target>
+         </trans-unit>
+         <trans-unit id="232e156a83242812617ef83a488ce7fd7d8016d2" datatype="html">
+            <source>I hope you like my translator</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">app/components/app.component.ts</context>
+               <context context-type="linenumber">28</context>
+            </context-group>
+            <target state="new"></target>
+         </trans-unit>
+         <trans-unit id="deef6ab540ff697e84f540d4daef64c9567b2565" datatype="html">
+            <source>If you have any suggestions please let me know.</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">app/components/app.component.ts</context>
+               <context context-type="linenumber">30</context>
+            </context-group>
+            <target state="new"></target>
+         </trans-unit>
+         <trans-unit id="a845abd6bd85ffccf0361a2d7960cea1bcdef73c" datatype="html">
+            <source>Keep in mind this is work in progress and many features are yet to be added.</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">app/components/app.component.ts</context>
+               <context context-type="linenumber">31</context>
+            </context-group>
+            <target state="new"></target>
+         </trans-unit>
+         <trans-unit id="9024a0fcb61a9edb007fc872334a8badbc660287" datatype="html">
+            <source>You can always star this project on github if you like it! :)</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">app/components/app.component.ts</context>
+               <context context-type="linenumber">39</context>
+            </context-group>
+            <target state="new"></target>
+         </trans-unit>
+      </body>
+   </file>
+</xliff>

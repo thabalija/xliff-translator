@@ -1,3 +1,5 @@
+@import 'variables';
+
 .dropzone {
     max-width: 100%;
     padding: 2em;
@@ -25,7 +27,7 @@
                 cursor: not-allowed;
         }
     }
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: $breakpoint-sm) {
         padding: 4em;
     }   
     #file-input {

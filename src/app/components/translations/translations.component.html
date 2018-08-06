@@ -41,17 +41,11 @@
 
                 <!-- language Column -->
                 <ng-container matColumnDef="language">
-                    <mat-header-cell *matHeaderCellDef> Target language </mat-header-cell>
-                    <mat-cell *matCellDef="let translation">
+                    <mat-header-cell *matHeaderCellDef class="mat-table--target-lang"> Target language </mat-header-cell>
+                    <mat-cell *matCellDef="let translation" class="mat-table--target-lang">
                         {{ localeObject[translation.targetLang] }}
                     </mat-cell>
                 </ng-container>
-
-                <!-- fileName Column -->
-                <!-- <ng-container matColumnDef="fileName">
-                    <mat-header-cell *matHeaderCellDef> File name </mat-header-cell>
-                    <mat-cell *matCellDef="let translation"> {{ translation.fileName }}.{{ translation.targetLang }}.xlf </mat-cell>
-                </ng-container> -->
 
                 <!-- status Column -->
                 <ng-container matColumnDef="status">
@@ -66,33 +60,33 @@
 
                 <!-- delete Column -->
                 <ng-container matColumnDef="delete">
-                    <mat-header-cell *matHeaderCellDef align="center"> Delete </mat-header-cell>
-                    <mat-cell *matCellDef="let translation" align="center">
+                    <mat-header-cell *matHeaderCellDef class="mat-table--action"> Delete </mat-header-cell>
+                    <mat-cell *matCellDef="let translation" class="mat-table--action">
                         <a (click)="openDeleteTranslationDialog(translation.id)">
                             <mat-icon color="primary">delete</mat-icon>
-                            <span>Delete</span>
+                            <span class="mat-table--info-label">Delete</span>
                         </a>
                     </mat-cell>
                 </ng-container>
 
                 <!-- translate Column -->
                 <ng-container matColumnDef="translate">
-                    <mat-header-cell *matHeaderCellDef align="center"> Translate </mat-header-cell>
-                    <mat-cell *matCellDef="let translation" align="center">
+                    <mat-header-cell *matHeaderCellDef class="mat-table--action"> Translate </mat-header-cell>
+                    <mat-cell *matCellDef="let translation" class="mat-table--action">
                         <a (click)="openTranslation(translation)">
                             <mat-icon color="primary">edit</mat-icon>
-                            <span>Translate</span>
+                            <span class="mat-table--info-label">Translate</span>
                         </a>
                     </mat-cell>
                 </ng-container>
 
                 <!-- download Column -->
                 <ng-container matColumnDef="download">
-                    <mat-header-cell *matHeaderCellDef align="center"> Download </mat-header-cell>
-                    <mat-cell *matCellDef="let translation" align="center">
+                    <mat-header-cell *matHeaderCellDef class="mat-table--action"> Download </mat-header-cell>
+                    <mat-cell *matCellDef="let translation" class="mat-table--action">
                         <a (click)="downloadFile(translation.id)">
                             <mat-icon color="primary">file_download</mat-icon>
-                            <span>Download</span>
+                            <span class="mat-table--info-label">Download</span>
                         </a>
                     </mat-cell>
                 </ng-container>
@@ -109,6 +103,9 @@
             </div>
         </div>
         <div align="end">
+            <button mat-button (click)="openDeleteFileDialog()" class="button-round">
+                Delete uploaded file
+            </button>
             <button mat-button (click)="openAddTranslationDialog()" color="primary" class="button-round button-border">
                 Add translation
             </button>

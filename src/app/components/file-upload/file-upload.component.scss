@@ -1,3 +1,5 @@
+@import 'variables';
+
 .app-description {
     max-width: 100%;
     color: #fff;
@@ -6,9 +8,9 @@
     flex-direction: column;
     justify-content: center;
     h1 {
-        margin-top: 0;
+        margin: 0;
     }
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: $breakpoint-sm) {
         max-width: 50%;
         padding-right: 2em;
     }
@@ -20,11 +22,14 @@ mat-card.get-started {
 .home-wrapper {
     display: flex;
     flex-direction: column;
-    padding: 1em;
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: $breakpoint-sm) {
         flex-direction: row;
     }
-    @media screen and (min-width: 1080px) {
-        padding: 0;
+}
+.get-started .flex-row{
+    display: flex;
+    flex-direction: column;
+    @media screen and (min-width: $breakpoint-sm) {
+        flex-direction: row;
     }
 }

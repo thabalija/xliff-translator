@@ -1,6 +1,6 @@
 {
   "name": "xliff-translator",
-  "version": "0.0.0",
+  "version": "2.0.2",
   "license": "MIT",
   "scripts": {
     "ng": "ng",

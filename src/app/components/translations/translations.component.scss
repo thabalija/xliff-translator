@@ -1,0 +1,44 @@
+@import 'variables';
+a {
+    mat-icon {
+        margin-right: 0.5em;
+    }
+}
+
+.mat-button:not(:last-of-type) {
+    @media screen and (min-width: $breakpoint-sm) {
+        margin-right: 1em;
+    }
+}
+
+.mat-table--target-lang {
+    display: flex;
+    flex: 1 0 4rem;
+}
+
+mat-header-cell.mat-table--action {
+    opacity: 0;
+    visibility: hidden;
+    @media screen and (min-width: $breakpoint-sm) {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+.mat-table--action {
+    justify-content: center;
+    span {
+        display: none;
+        @media screen and (min-width: $breakpoint-sm) {
+            display: inline;
+        }
+    }
+}
+
+mat-header-cell:first-of-type,
+mat-header-cell:last-of-type,
+mat-cell:first-of-type,
+mat-cell:last-of-type {
+    @media screen and (max-width: $breakpoint-sm) {
+        padding: 0;
+    }
+}

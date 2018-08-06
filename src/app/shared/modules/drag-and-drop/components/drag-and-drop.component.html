@@ -18,9 +18,10 @@
 
 	<input type="file" 
 		id="file-input" 
+		accept=".xlf"
 		#fileInput 
 		(change)="onBrowseFiles($event)" 
-		[multiple]="multiple" 
+		[multiple]="multiple"
 		[disabled]="disabled">
 
 	<p class="file-name">

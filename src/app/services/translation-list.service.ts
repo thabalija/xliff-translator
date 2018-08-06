@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { FileInfo } from '../shared/interfaces/file-info.interface';
 import { TranslationUnit } from '../shared/interfaces/translation-unit.interface';
-import { FileUploadService } from './file-upload.service';
 
 @Injectable()
 

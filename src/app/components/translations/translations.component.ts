@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
-import { Locale } from './../../shared/interfaces/locale.interface';
 import { FileInfo } from './../../shared/interfaces/file-info.interface';
-import { TranslationUnit } from './../../shared/interfaces/translation-unit.interface';
 import { LocaleService } from './../../services/locale.service';
 import { FileUploadService } from './../../services/file-upload.service';
 import { FileDownloadService } from './../../services/file-download.service';
@@ -50,7 +48,7 @@ export class TranslationsComponent implements OnInit {
     this.baseFileInfo = this._fileUploadService.getFileInfo();
   }
 
-  // create translations
+  // create translations from translation units
   loadTranslations(): void {
     this.translationsList = this._translationListService.getTranslationList();
     this.dataSource.data = this.translationsList;
@@ -107,6 +105,24 @@ export class TranslationsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.deleteTranslation(translationID);
+      }
+    });
+  }
+
+  // open delete file dialog
+  openDeleteFileDialog(): void {
+    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      width: '290px',
+      data: {
+        title: 'Delete file',
+        content: 'Are you sure you want to delete uploaded file and all translations?',
+        confirm: 'Delete'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this._fileUploadService.deleteFile();
+        this._router.navigate(['']);
       }
     });
   }

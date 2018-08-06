@@ -1,33 +1,7 @@
 @import 'variables';
-* {
-    box-sizing: border-box;
-}
-
-html,
-body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-}
-
-body {
-    background: $gradient-primary;
-}
-
-app-layout {
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    min-height: 100%;
-}
-
-.flex-spacer {
-    flex-grow: 1;
-}
-
 .app-container {
     width: 100%;
-    max-width: 1080px;
+    max-width: $breakpoint-md;
     margin: 0 auto;
     flex-grow: 1;
     height: auto;
@@ -94,17 +68,12 @@ app-layout {
     .flex-row {
         justify-content: space-between;
         .mat-form-field {
-            width: calc(50% - 1em);
+            width: 100%;
+            @media screen and (min-width: $breakpoint-sm) {
+                width: calc(50% - 1em);
+            }
         }
     }
-}
-
-mat-card.mat-card:not([class*=mat-elevation-z]) {
-    box-shadow: $box-shadow;
-}
-
-a:hover {
-    cursor: pointer;
 }
 
 .translation-list {
@@ -127,6 +96,7 @@ a:hover {
             .status {
                 display: flex;
                 align-items: center;
+                flex: 1;
                 .mat-progress-bar-buffer {
                     background-color: $light-gray;
                 }
@@ -150,7 +120,7 @@ a:hover {
 .file-info {
     .flex-row {
         flex-direction: column;
-        @media screen and (min-width: 1080px) {
+        @media screen and (min-width: $breakpoint-md) {
             flex-direction: row;
         }
     }
@@ -158,13 +128,20 @@ a:hover {
         margin-bottom: 1em;
     }
     .file-info--group {
-        padding: 0 0.75em;
+        @media screen and (min-width: $breakpoint-md) {
+            padding: 0 0.75em;
+        }
+        &:first-of-type {
+            .file-info--title {
+                margin-top: 0;
+            }
+        }
         .file-info--title {
             font-size: 0.75em;
             margin: 1em 0 0 0;
             text-transform: uppercase;
             color: $text-gray;
-            @media screen and (min-width: 1080px) {
+            @media screen and (min-width: $breakpoint-md) {
                 margin: 0;
             }
         }
@@ -179,7 +156,7 @@ a:hover {
         display: flex;
         justify-content: flex-end;
         margin-top: 1em;
-        @media screen and (min-width: 1080px) {
+        @media screen and (min-width: $breakpoint-md) {
             margin-top: 0;
         }
     }
@@ -191,7 +168,7 @@ a:hover {
             align-self: flex-start;
             width: 100%;
             margin-bottom: 1em;
-            @media screen and (min-width: 1080px) {
+            @media screen and (min-width: $breakpoint-md) {
                 margin-right: 20px;
                 margin-bottom: 0;
                 width: auto;
@@ -213,7 +190,7 @@ a:hover {
     align-items: stretch;
     align-content: space-around;
     justify-content: space-between;
-    @media screen and (min-width: 1080px) {
+    @media screen and (min-width: $breakpoint-md) {
         flex-direction: row;
         margin-bottom: 2em;
     }
@@ -222,7 +199,7 @@ a:hover {
         display: flex;
         flex-direction: column;
         width: 100%;
-        @media screen and (min-width: 1080px) {
+        @media screen and (min-width: $breakpoint-md) {
             width: calc( 50% - 1em);
         }
         .mat-card {
@@ -272,7 +249,7 @@ a:hover {
             padding: 1em;
             color: #B3B3B3;
             span.translation-unit--fingerprint {
-                max-width: 80%;
+                max-width: calc(100% - 4em);
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
@@ -310,55 +287,6 @@ a:hover {
     }
 }
 
-.cdk-overlay-container {
-    .mat-dialog-container {
-        .mat-dialog-title {
-            font-weight: 700;
-        }
-        .mat-dialog-content {
-            .mat-form-field {
-                width: calc(50% - 0.15em);
-            }
-        }
-        .mat-dialog-actions:last-child {
-            margin-bottom: -12px;
-        }
-    }
-}
-
-.flex-row {
-    display: flex;
-}
-
-.flex-spacer {
-    flex-grow: 1;
-}
-
-.mat-button.button-round {
-    border-radius: 19px;
-    overflow: hidden;
-}
-
-.mat-button.button-border {
-    border: 1px solid $primary;
-    &:disabled {
-        border-color: #ccc;
-    }
-}
-
-a {
-    color: $primary;
-    opacity: 0.9;
-    transition: 200ms opacity ease;
-    span,
-    .mat-icon {
-        vertical-align: middle;
-    }
-    &:hover {
-        opacity: 1;
-    }
-}
-
 .missing-data {
     display: flex;
     flex-direction: column;
@@ -373,11 +301,4 @@ a {
     p {
         color: $text-gray;
     }
-}
-
-.flex-column-center {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    justify-content: center;
 }

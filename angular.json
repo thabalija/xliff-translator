@@ -24,6 +24,11 @@
               "src/styles.scss",
               "node_modules/normalize.css/normalize.css"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./src/assets/styles"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -75,6 +80,11 @@
               "src/styles.scss",
               "node_modules/normalize.css/normalize.css"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./src/assets/styles"
+              ]
+            },
             "assets": [
               "src/assets",
               "src/favicon.ico"

@@ -3,10 +3,13 @@ import { Injectable } from '@angular/core';
 import { FileInfo } from './../shared/interfaces/file-info.interface';
 import { TranslationUnit, Note } from './../shared/interfaces/translation-unit.interface';
 import { TranslationListService } from './translation-list.service';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable()
 
 export class FileUploadService {
+
+  uploadedFile: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _translationListService: TranslationListService
@@ -16,7 +19,6 @@ export class FileUploadService {
 
     localStorage.clear();
 
-    const originalFile = htmlDoc;
     const fileElement = htmlDoc.getElementsByTagName('file')[0];
     const xliffElement = htmlDoc.getElementsByTagName('xliff')[0];
     const translationNodes = htmlDoc.getElementsByTagName('trans-unit');
@@ -78,6 +80,17 @@ export class FileUploadService {
     if (fileInfo.targetLang) {
       this._translationListService.addTranslation(fileInfo.fileName, fileInfo.targetLang, true);
     }
+
+    this.uploadedFile.next(true);
+  }
+
+  public deleteFile(): void {
+    localStorage.clear();
+    this.uploadedFile.next(false);
+  }
+
+  public isUploadedFile(): Observable<boolean> {
+    return this.uploadedFile.asObservable();
   }
 
   // converts xml to string
@@ -105,6 +118,7 @@ export class FileUploadService {
     return JSON.parse(localStorage.getItem('translationUnits'));
   }
 
+  // convert notes to needed format
   private getNotes(notesNodes: NodeListOf<Element>): Note[] {
     const notesArray = Array.from(notesNodes);
     const notes = [];

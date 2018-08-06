@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import 'rxjs/add/operator/switchMap';
 
-import { MatSnackBar, PageEvent, MatSelectChange, MatDialog } from '@angular/material';
+import { MatSnackBar, PageEvent, MatDialog } from '@angular/material';
 import { LocaleService } from './../../services/locale.service';
 import { FileDownloadService } from './../../services/file-download.service';
-import { FileUploadService } from './../../services/file-upload.service';
 import { TranslationUnitsService } from './../../services/translation-units.service';
 import { Locale } from './../../shared/interfaces/locale.interface';
 import { FileInfo } from './../../shared/interfaces/file-info.interface';
@@ -31,7 +29,6 @@ export class EditorComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private _fileUploadService: FileUploadService,
     private _fileDownloadService: FileDownloadService,
     private _localeService: LocaleService,
     private _translationUnitsService: TranslationUnitsService,

@@ -20,6 +20,7 @@ export class FileDownloadService {
     private _translationUnitsService: TranslationUnitsService
   ) { }
 
+  // prepare translations for download
   public downloadFile(translationID: number): void {
 
     this.originalFile = this._fileUploadService.getFile();
@@ -45,9 +46,9 @@ export class FileDownloadService {
     const finalFile = stringer.serializeToString(this.originalFile);
 
     this.fileDownloader(finalFile, this.fileInfo.fileName);
-
   }
 
+  // start file download in browser
   private fileDownloader(file: string, fileName: string) {
     const element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(file));
