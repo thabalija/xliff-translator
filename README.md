@@ -6,6 +6,11 @@ This project is currently in development phase. App goal is to simplify translat
 
 App is published on: [xliff-translator.firebaseapp.com](https://xliff-translator.firebaseapp.com/)
 
+## Testing file
+
+File for testing the app is located in `src/assets/docs/test_file.en.xlf`. You can also download it in the footer of the app by clicking on the `Test file` link
+
+
 ## Current version
 
 Current version supports:
