@@ -10,7 +10,7 @@ export class TranslationUnitsService {
   constructor() { }
 
   public getTraslationUnits(translationID: number): TranslationUnit[] {
-    return JSON.parse(localStorage.getItem(translationID.toString()));
+    return JSON.parse(localStorage.getItem(translationID.toString())) || [];
   }
 
   public addTraslationUnits(translationID: number, translationUnits: TranslationUnit[]): void {

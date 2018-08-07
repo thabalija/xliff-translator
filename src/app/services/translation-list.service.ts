@@ -21,7 +21,7 @@ export class TranslationListService {
 
   // get translation info
   public getTranslationInfo(translationID: number): FileInfo {
-    const translationList = JSON.parse(localStorage.getItem('translationList'));
+    const translationList = JSON.parse(localStorage.getItem('translationList')) || [];
     let translationFileInfo: FileInfo;
     for (let i = 0; i < translationList.length; i++) {
       if (translationList[i].id === translationID) {
