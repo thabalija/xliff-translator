@@ -27,7 +27,7 @@
 			</mat-select>
 		</mat-form-field>
 		<div class="flex-spacer"></div>
-		<div class="file-info--group">
+		<div class="file-info--group" *ngIf="fileInfo">
 			<h5 class="file-info--title">Translated</h5>
 			<h1 class="file-info--value">{{ (fileInfo.translatedUnits / fileInfo.totalUnits) * 100 | number:'0.0-0' }}%</h1>
 		</div>
