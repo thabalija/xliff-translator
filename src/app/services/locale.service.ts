@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Locale } from './../shared/interfaces/locale.interface';
-import { LOCALE } from './../shared/data/locales';
+import { Locale } from '../shared/interfaces/locale.interface';
+import { LOCALE } from '../shared/data/locales';
 
 @Injectable()
 

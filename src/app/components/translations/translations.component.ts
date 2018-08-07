@@ -3,14 +3,14 @@ import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
 
-import { FileInfo } from './../../shared/interfaces/file-info.interface';
-import { LocaleService } from './../../services/locale.service';
-import { FileUploadService } from './../../services/file-upload.service';
-import { FileDownloadService } from './../../services/file-download.service';
+import { FileInfo } from '../../shared/interfaces/file-info.interface';
+import { LocaleService } from '../../services/locale.service';
+import { FileUploadService } from '../../services/file-upload.service';
+import { FileDownloadService } from '../../services/file-download.service';
 import { TranslationListService } from '../../services/translation-list.service';
-import { ConfirmDialogComponent } from './../../shared/modules/shared/confirm-dialog/confirm-dialog.component';
-import { AddTranslationDialogComponent } from './../../shared/modules/shared/add-translation-dialog/add-translation-dialog.component';
-import { TranslationUnitsService } from './../../services/translation-units.service';
+import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dialog/confirm-dialog.component';
+import { AddTranslationDialogComponent } from '../../shared/modules/shared/add-translation-dialog/add-translation-dialog.component';
+import { TranslationUnitsService } from '../../services/translation-units.service';
 
 
 @Component({

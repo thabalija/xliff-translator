@@ -1,8 +1,8 @@
 import { Component, Injectable, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { Locale } from '../../../interfaces/locale.interface';
-import { LocaleService } from './../../../../services/locale.service';
+import { LocaleService } from '../../../../services/locale.service';
 
 @Component({
   templateUrl: './add-translation-dialog.component.html',

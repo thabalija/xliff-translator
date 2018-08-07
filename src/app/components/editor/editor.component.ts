@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatSnackBar, PageEvent, MatDialog } from '@angular/material';
-import { LocaleService } from './../../services/locale.service';
-import { FileDownloadService } from './../../services/file-download.service';
-import { TranslationUnitsService } from './../../services/translation-units.service';
-import { Locale } from './../../shared/interfaces/locale.interface';
-import { FileInfo } from './../../shared/interfaces/file-info.interface';
-import { TranslationUnit } from './../../shared/interfaces/translation-unit.interface';
+import { LocaleService } from '../../services/locale.service';
+import { FileDownloadService } from '../../services/file-download.service';
+import { TranslationUnitsService } from '../../services/translation-units.service';
+import { Locale } from '../../shared/interfaces/locale.interface';
+import { FileInfo } from '../../shared/interfaces/file-info.interface';
+import { TranslationUnit } from '../../shared/interfaces/translation-unit.interface';
 import { TranslationListService } from '../../services/translation-list.service';
 import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dialog/confirm-dialog.component';
 
@@ -76,7 +76,9 @@ export class EditorComponent implements OnInit {
         translatedUnitsCount++;
       }
     });
-    this.fileInfo.translatedUnits = translatedUnitsCount;
+    if (this.fileInfo) {
+      this.fileInfo.translatedUnits = translatedUnitsCount;
+    }
   }
 
   // download file

@@ -2,9 +2,9 @@ import { Router } from '@angular/router';
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
 
-import { FileUploadService } from './../../services/file-upload.service';
-import { LocaleService } from './../../services/locale.service';
-import { Locale } from './../../shared/interfaces/locale.interface';
+import { FileUploadService } from '../../services/file-upload.service';
+import { LocaleService } from '../../services/locale.service';
+import { Locale } from '../../shared/interfaces/locale.interface';
 import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({

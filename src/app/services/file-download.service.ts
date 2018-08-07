@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { FileInfo } from './../shared/interfaces/file-info.interface';
-import { TranslationUnit } from './../shared/interfaces/translation-unit.interface';
+import { FileInfo } from '../shared/interfaces/file-info.interface';
+import { TranslationUnit } from '../shared/interfaces/translation-unit.interface';
 import { FileUploadService } from './file-upload.service';
 import { TranslationUnitsService } from './translation-units.service';
 import { TranslationListService } from './translation-list.service';
@@ -49,7 +49,7 @@ export class FileDownloadService {
   }
 
   // start file download in browser
-  private fileDownloader(file: string, fileName: string) {
+  private fileDownloader(file: string, fileName: string): void {
     const element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(file));
     element.setAttribute('download', fileName);
