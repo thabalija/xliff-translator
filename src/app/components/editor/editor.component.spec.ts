@@ -13,11 +13,27 @@ import { TranslationUnitsService } from '../../services/translation-units.servic
 import { LocaleService } from '../../services/locale.service';
 import { EditorComponent } from './editor.component';
 import { TranslationUnit } from '../../shared/interfaces/translation-unit.interface';
+import { FileInfo } from '../../shared/interfaces/file-info.interface';
 
 describe('EditorComponent', () => {
   let component: EditorComponent;
   let fixture: ComponentFixture<EditorComponent>;
   const oldResetTestingModule = TestBed.resetTestingModule;
+  const fileInfo: FileInfo = {
+      id: 1,
+      fileName: 'Filename',
+      xliffVersion: '1.2',
+      sourceLang: 'en-US',
+      totalUnits: 1
+  };
+  const translationUnit: TranslationUnit = {
+    id: '1',
+    source: 'Just testing',
+    target: '',
+    targetState: 'new',
+    note: [],
+    showNote: false
+  };
 
   beforeAll(done => (async () => {
     TestBed.resetTestingModule();
@@ -73,14 +89,6 @@ describe('EditorComponent', () => {
 
   it('should load translation units from localstorage', () => {
     component.translationID = 1;
-    const translationUnit: TranslationUnit = {
-      id: '1',
-      source: 'Just testing',
-      target: '',
-      targetState: 'new',
-      note: [],
-      showNote: false
-    };
     localStorage.setItem('1', JSON.stringify([translationUnit]));
     spyOn(component, 'countTranslatedUnits');
     spyOn(component, 'refreshTranslationUnits');
@@ -89,6 +97,17 @@ describe('EditorComponent', () => {
     expect(component.countTranslatedUnits).toHaveBeenCalledTimes(1);
     expect(component.refreshTranslationUnits).toHaveBeenCalledTimes(1);
     expect(component.translationUnits.length).toBe(1);
+  });
+
+  it('should save changes to localstorage', () => {
+    component.translationUnits = [translationUnit];
+    component.translationID = 1;
+    component.fileInfo = fileInfo;
+    spyOn(component, 'countTranslatedUnits');
+    component.saveChanges();
+    fixture.detectChanges();
+    expect(component.countTranslatedUnits).toHaveBeenCalledTimes(1);
+    expect(localStorage.getItem('1')).toBeDefined();
   });
 
   // TODO: write rest of tests
