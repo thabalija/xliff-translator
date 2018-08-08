@@ -6,5 +6,5 @@ before_script:
   - npm install
 
 script:
-  - npm run test
+  - npm run test-headless
   - npm run build
