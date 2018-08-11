@@ -1,7 +1,6 @@
+import { Component, HostBinding, OnInit } from '@angular/core';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { Component, OnInit, HostBinding } from '@angular/core';
-import { MatSnackBar, MatDialog } from '@angular/material';
-
 import { FileUploadService } from '../../services/file-upload.service';
 import { LocaleService } from '../../services/locale.service';
 import { Locale } from '../../shared/interfaces/locale.interface';

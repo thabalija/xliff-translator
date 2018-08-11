@@ -10,7 +10,6 @@ import { MaterialModule } from './shared/modules/material/material.module';
 import { SharedModule } from './shared/modules/shared/shared.module';
 
 // Routing Modules
-import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './shared/modules/routing/app-routing.module';
 
 // Root Component

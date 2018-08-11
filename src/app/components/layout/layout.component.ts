@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FileUploadService } from '../../services/file-upload.service';
-import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-layout',

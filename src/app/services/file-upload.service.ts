@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-
+import { Observable, Subject } from 'rxjs';
 import { FileInfo } from './../shared/interfaces/file-info.interface';
-import { TranslationUnit, Note } from './../shared/interfaces/translation-unit.interface';
+import { Note, TranslationUnit } from './../shared/interfaces/translation-unit.interface';
 import { TranslationListService } from './translation-list.service';
-import { Subject, Observable } from 'rxjs';
 
 @Injectable()
 
