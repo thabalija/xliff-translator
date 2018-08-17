@@ -51,7 +51,11 @@ export class FileUploadComponent implements OnInit {
       reader.onload = () => {
         const fileContent = reader.result;
         const parser = new DOMParser();
-        this.htmlDocument = parser.parseFromString(fileContent, 'application/xhtml+xml');
+        if (typeof(fileContent) === 'string') {
+          this.htmlDocument = parser.parseFromString(fileContent, 'application/xhtml+xml');
+        } else {
+          console.log('We have a bug here...');
+        }
         const fileElement = this.htmlDocument.getElementsByTagName('file')[0];
         this.fileSourceLang = fileElement.getAttribute('source-language');
       };
