@@ -50,7 +50,7 @@ export class TranslationsComponent implements OnInit {
     this.translationsList = this._translationListService.getTranslationList();
     this.dataSource.data = this.translationsList;
 
-    if (this.translationsList.length > 0) {
+    if (this.translationsList.length) {
       let translatedUnits = 0;
       this.translationsList.forEach(translation => {
         translatedUnits = translatedUnits + translation.translatedUnits;
