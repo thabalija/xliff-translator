@@ -46,7 +46,6 @@ export class TranslationListService {
   // add new translation
   public addTranslation(fileName: string, targetLang: string, useTranslationUnits: boolean): void {
     this.fileInfo = JSON.parse(localStorage.getItem('fileInfo'));
-    const translationList = this.getTranslationList();
     const translationUnits = JSON.parse(localStorage.getItem('translationUnits'));
     const translationID = + new Date;
     const newTranslation = this.createNewTranslationInfo(translationID, fileName, targetLang);
@@ -54,15 +53,12 @@ export class TranslationListService {
     if (!useTranslationUnits) {
       this.resetTargetElement(translationUnits);
       newTranslation.translatedUnits = 0;
-
-      this.saveCreatedTranslation(newTranslation);
-      this.saveTraslationUnits(translationID, translationUnits);
     } else {
       newTranslation.translatedUnits = this.countTranslatedUnits(translationUnits);
-
-      this.saveCreatedTranslation(newTranslation);
-      this.saveTraslationUnits(translationID, translationUnits);
     }
+
+    this.saveCreatedTranslation(newTranslation);
+    this.saveTraslationUnits(translationID, translationUnits);
   }
 
   // delete translation
