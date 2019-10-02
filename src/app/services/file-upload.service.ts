@@ -39,7 +39,7 @@ export class FileUploadService {
         targetElement = unit.getElementsByTagName('target')[0];
       }
 
-      const notes = this.getNotes(unit.getElementsByTagName('note'));
+      const notes = this.getNotes(unit.getElementsByTagName('note') as any);
 
       const translationUnit = {
         id: unit.getAttribute('id'),

@@ -7,7 +7,7 @@ import { Component, Input, Output, OnInit, ViewChild, ElementRef, EventEmitter, 
 })
 export class DragAndDropComponent implements OnInit {
 
-  @ViewChild('fileInput') fileInput: ElementRef;
+  @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
   @Input() multiple: boolean;
   @Input() disabled: boolean;
   @Output() checkChange: EventEmitter<File[]> = new EventEmitter();
