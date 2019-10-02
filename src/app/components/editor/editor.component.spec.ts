@@ -20,11 +20,11 @@ describe('EditorComponent', () => {
   let fixture: ComponentFixture<EditorComponent>;
   const oldResetTestingModule = TestBed.resetTestingModule;
   const fileInfo: FileInfo = {
-      id: 1,
-      fileName: 'Filename',
-      xliffVersion: '1.2',
-      sourceLang: 'en-US',
-      totalUnits: 1
+    id: 1,
+    fileName: 'Filename',
+    xliffVersion: '1.2',
+    sourceLang: 'en-US',
+    totalUnits: 1
   };
   const translationUnit: TranslationUnit = {
     id: '1',
@@ -35,31 +35,35 @@ describe('EditorComponent', () => {
     showNote: false
   };
 
-  beforeAll(done => (async () => {
-    TestBed.resetTestingModule();
-    TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        FormsModule,
-        MaterialModule,
-        NoopAnimationsModule,
-        RouterTestingModule
-      ],
-      declarations: [EditorComponent],
-      providers: [
-        FileUploadService,
-        FileDownloadService,
-        TranslationListService,
-        TranslationUnitsService,
-        LocaleService
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    });
-    await TestBed.compileComponents();
+  beforeAll(done =>
+    (async () => {
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        imports: [
+          CommonModule,
+          FormsModule,
+          MaterialModule,
+          NoopAnimationsModule,
+          RouterTestingModule
+        ],
+        declarations: [EditorComponent],
+        providers: [
+          FileUploadService,
+          FileDownloadService,
+          TranslationListService,
+          TranslationUnitsService,
+          LocaleService
+        ],
+        schemas: [NO_ERRORS_SCHEMA]
+      });
+      await TestBed.compileComponents();
 
-    // prevent Angular from resetting testing module
-    TestBed.resetTestingModule = () => TestBed;
-  })().then(done).catch(done.fail));
+      // prevent Angular from resetting testing module
+      TestBed.resetTestingModule = () => TestBed;
+    })()
+      .then(done)
+      .catch(done.fail)
+  );
 
   afterAll(() => {
     // reinstate resetTestingModule method
@@ -79,7 +83,7 @@ describe('EditorComponent', () => {
   });
 
   it('should load fileinfo from localstorage', () => {
-    const translationList = [{id: 1}];
+    const translationList = [{ id: 1 }];
     component.translationID = 1;
     localStorage.setItem('translationList', JSON.stringify(translationList));
     component.loadTranslationInfo();
@@ -111,5 +115,4 @@ describe('EditorComponent', () => {
   });
 
   // TODO: write rest of tests
-
 });

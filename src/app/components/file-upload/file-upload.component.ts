@@ -13,7 +13,6 @@ import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dial
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent implements OnInit {
-
   @HostBinding('class.flex-column-center') flexClass = true;
 
   fileName = '';
@@ -28,7 +27,7 @@ export class FileUploadComponent implements OnInit {
     private _localeService: LocaleService,
     public snackBar: MatSnackBar,
     private _dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.loadLanguages();
@@ -52,8 +51,11 @@ export class FileUploadComponent implements OnInit {
       reader.onload = () => {
         const fileContent = reader.result;
         const parser = new DOMParser();
-        if (typeof(fileContent) === 'string') {
-          this.htmlDocument = parser.parseFromString(fileContent, 'application/xhtml+xml');
+        if (typeof fileContent === 'string') {
+          this.htmlDocument = parser.parseFromString(
+            fileContent,
+            'application/xhtml+xml'
+          );
         } else {
           console.log('We have a bug here...');
         }
@@ -86,21 +88,24 @@ export class FileUploadComponent implements OnInit {
       }
     } else {
       this.snackBar.open('Please choose a file', 'close', {
-        duration: 2000,
+        duration: 2000
       });
     }
   }
 
   // send file to service for uploading to localstorage
   uploadFile(): void {
-    this._fileUploadService.uploadFile(this.htmlDocument, this.fileName, this.fileSourceLang);
+    this._fileUploadService.uploadFile(
+      this.htmlDocument,
+      this.fileName,
+      this.fileSourceLang
+    );
     if (localStorage.getItem('fileInfo')) {
       this._router.navigate(['/translations']);
     } else {
       this.snackBar.open('Wild error occurred', 'close', {
-        duration: 2000,
+        duration: 2000
       });
     }
   }
-
 }

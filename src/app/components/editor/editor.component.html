@@ -1,114 +1,147 @@
 <mat-card class="file-info file-info-editable" *ngIf="fileInfo">
-	<div class="flex-row">
-		<mat-form-field>
-			<input matInput placeholder="File name" value="Sushi" [(ngModel)]="fileInfo.fileName">
-		</mat-form-field>
-		<mat-form-field>
-			<mat-select placeholder="Target language" [(ngModel)]="fileInfo.targetLang">
-				<mat-option *ngFor="let lang of languages" [value]="lang.locale">
-					{{ lang.language }}
-				</mat-option>
-			</mat-select>
-		</mat-form-field>
-		<mat-form-field>
-			<mat-select placeholder="Show" [(ngModel)]="showUnits" (selectionChange)="filterTranslations(showUnits)">
-				<mat-option [value]="'all'">
-					All
-				</mat-option>
-				<mat-option [value]="'new'">
-					New
-				</mat-option>
-				<mat-option [value]="'translated'">
-					Translated
-				</mat-option>
-				<mat-option [value]="'other'">
-					Other
-				</mat-option>
-			</mat-select>
-		</mat-form-field>
-		<div class="flex-spacer"></div>
-		<div class="file-info--group" *ngIf="fileInfo">
-			<h5 class="file-info--title">Translated</h5>
-			<h1 class="file-info--value">{{ (fileInfo.translatedUnits / fileInfo.totalUnits) * 100 | number:'0.0-0' }}%</h1>
-		</div>
-		<div class="file-info-actions">
-			<button mat-button color="primary" (click)="downloadFile(fileInfo.id)">Download</button>
-			<button mat-button color="primary" (click)="saveChanges()">Save</button>
-		</div>
-	</div>
+  <div class="flex-row">
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="File name"
+        value="Sushi"
+        [(ngModel)]="fileInfo.fileName"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select
+        placeholder="Target language"
+        [(ngModel)]="fileInfo.targetLang"
+      >
+        <mat-option *ngFor="let lang of languages" [value]="lang.locale">
+          {{ lang.language }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select
+        placeholder="Show"
+        [(ngModel)]="showUnits"
+        (selectionChange)="filterTranslations(showUnits)"
+      >
+        <mat-option [value]="'all'">
+          All
+        </mat-option>
+        <mat-option [value]="'new'">
+          New
+        </mat-option>
+        <mat-option [value]="'translated'">
+          Translated
+        </mat-option>
+        <mat-option [value]="'other'">
+          Other
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="flex-spacer"></div>
+    <div class="file-info--group" *ngIf="fileInfo">
+      <h5 class="file-info--title">Translated</h5>
+      <h1 class="file-info--value">
+        {{
+          (fileInfo.translatedUnits / fileInfo.totalUnits) * 100
+            | number: "0.0-0"
+        }}%
+      </h1>
+    </div>
+    <div class="file-info-actions">
+      <button mat-button color="primary" (click)="downloadFile(fileInfo.id)">
+        Download
+      </button>
+      <button mat-button color="primary" (click)="saveChanges()">Save</button>
+    </div>
+  </div>
 </mat-card>
 
 <mat-card class="editor">
-	<mat-card-header>
-		<mat-card-title>
-			Translate strings
-		</mat-card-title>
-		<div class="progress" align="end">
-			<mat-icon class="inactive">lens</mat-icon>
-			<mat-icon class="inactive">lens</mat-icon>
-			<mat-icon class="active">lens</mat-icon>
-		</div>
-	</mat-card-header>
+  <mat-card-header>
+    <mat-card-title>
+      Translate strings
+    </mat-card-title>
+    <div class="progress" align="end">
+      <mat-icon class="inactive">lens</mat-icon>
+      <mat-icon class="inactive">lens</mat-icon>
+      <mat-icon class="active">lens</mat-icon>
+    </div>
+  </mat-card-header>
 
-	<ng-container *ngFor="let unit of paginatedTranslationUnits">
-		<div class="translation-unit" id="unit.id">
-			<div class="source">
-				<mat-card class="">
-					<mat-card-content>
-						<p>{{unit.source}}</p>
-					</mat-card-content>
-					<mat-card-actions align="end">
-						<button mat-icon-button (click)="copy(unit.source)" tabindex="-1">
-							<mat-icon>content_copy</mat-icon>
-						</button>
-					</mat-card-actions>
-				</mat-card>
-				<div class="translation-unit--footer">
-					<mat-icon class="mat-icon--fingerprint">fingerprint</mat-icon>
-					<span class="translation-unit--fingerprint">{{ unit.id }}</span>
-					<div class="flex-spacer"></div>
-					<button mat-icon-button *ngIf="unit.note.length > 0" (click)="unit.showNote = true">
-						<mat-icon>info_outline</mat-icon>
-					</button>
-					<div class="info-popup" *ngIf="unit.note.length > 0 && unit.showNote">
-						<button mat-icon-button (click)="unit.showNote = false">
-							<mat-icon>close</mat-icon>
-						</button>
-						<ng-container *ngFor="let note of unit.note">
-							<h3>{{ note.from | titlecase }}</h3>
-							<p>{{ note.note }}</p>
-						</ng-container>
-					</div>
-				</div>
-			</div>
+  <ng-container *ngFor="let unit of paginatedTranslationUnits">
+    <div class="translation-unit" id="unit.id">
+      <div class="source">
+        <mat-card class="">
+          <mat-card-content>
+            <p>{{ unit.source }}</p>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-icon-button (click)="copy(unit.source)" tabindex="-1">
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+        <div class="translation-unit--footer">
+          <mat-icon class="mat-icon--fingerprint">fingerprint</mat-icon>
+          <span class="translation-unit--fingerprint">{{ unit.id }}</span>
+          <div class="flex-spacer"></div>
+          <button
+            mat-icon-button
+            *ngIf="unit.note.length > 0"
+            (click)="unit.showNote = true"
+          >
+            <mat-icon>info_outline</mat-icon>
+          </button>
+          <div class="info-popup" *ngIf="unit.note.length > 0 && unit.showNote">
+            <button mat-icon-button (click)="unit.showNote = false">
+              <mat-icon>close</mat-icon>
+            </button>
+            <ng-container *ngFor="let note of unit.note">
+              <h3>{{ note.from | titlecase }}</h3>
+              <p>{{ note.note }}</p>
+            </ng-container>
+          </div>
+        </div>
+      </div>
 
-			<div class="target">
-				<mat-card class="target-input" (click)="focusTextarea($event)">
-					<mat-card-content>
-						<mat-form-field>
-							<textarea matInput matTextareaAutosize matAutosizeMinRows="1" [(ngModel)]="unit.target"></textarea>
-						</mat-form-field>
-					</mat-card-content>
-				</mat-card>
-				<div class="translation-unit--footer">
-					<mat-radio-group [(ngModel)]="unit.targetState">
-						<mat-radio-button color="primary" [value]="'new'">New</mat-radio-button>
-						<mat-radio-button color="primary" [value]="'translated'">Translated</mat-radio-button>
-					</mat-radio-group>
-				</div>
-			</div>
-		</div>
-	</ng-container>
+      <div class="target">
+        <mat-card class="target-input" (click)="focusTextarea($event)">
+          <mat-card-content>
+            <mat-form-field>
+              <textarea
+                matInput
+                matTextareaAutosize
+                matAutosizeMinRows="1"
+                [(ngModel)]="unit.target"
+              ></textarea>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+        <div class="translation-unit--footer">
+          <mat-radio-group [(ngModel)]="unit.targetState">
+            <mat-radio-button color="primary" [value]="'new'"
+              >New</mat-radio-button
+            >
+            <mat-radio-button color="primary" [value]="'translated'"
+              >Translated</mat-radio-button
+            >
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 
-	<div class="missing-data" *ngIf="paginatedTranslationUnits.length === 0">
-		<mat-icon class="mat-48">speaker_notes_off</mat-icon>
-		<p>You have 0 translation units matching your parameters.</p>
-	</div>
-	
-	<mat-paginator 
-	  [length]="translationUnits.length" 
-	  [pageSize]="pageEvent.pageSize"
-	  [pageSizeOptions]="pageSizeOptions" 
-	  (page)="onPageChange($event)">
-	</mat-paginator>
+  <div class="missing-data" *ngIf="paginatedTranslationUnits.length === 0">
+    <mat-icon class="mat-48">speaker_notes_off</mat-icon>
+    <p>You have 0 translation units matching your parameters.</p>
+  </div>
+
+  <mat-paginator
+    [length]="translationUnits.length"
+    [pageSize]="pageEvent.pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
 </mat-card>

@@ -56,5 +56,4 @@ import { TranslationUnitsService } from './services/translation-units.service';
   entryComponents: [],
   bootstrap: [AppComponent]
 })
-
-export class AppModule { }
+export class AppModule {}

@@ -1,42 +1,42 @@
 .mat-button.button-round {
-    border-radius: 19px;
-    overflow: hidden;
+  border-radius: 19px;
+  overflow: hidden;
 }
 
 .mat-button.button-border {
-    border: 1px solid $primary;
-    &:disabled {
-        border-color: #ccc;
-    }
+  border: 1px solid $primary;
+  &:disabled {
+    border-color: #ccc;
+  }
 }
 
 .cdk-overlay-container {
-    .mat-dialog-container {
-        .mat-dialog-title {
-            font-weight: 700;
-        }
-        .mat-dialog-content {
-            .mat-form-field {
-                width: calc(50% - 0.15em);
-            }
-        }
-        .mat-dialog-actions:last-child {
-            margin-bottom: -12px;
-        }
+  .mat-dialog-container {
+    .mat-dialog-title {
+      font-weight: 700;
     }
+    .mat-dialog-content {
+      .mat-form-field {
+        width: calc(50% - 0.15em);
+      }
+    }
+    .mat-dialog-actions:last-child {
+      margin-bottom: -12px;
+    }
+  }
 }
 
-mat-card.mat-card:not([class*=mat-elevation-z]) {
-    box-shadow: $box-shadow;
+mat-card.mat-card:not([class*='mat-elevation-z']) {
+  box-shadow: $box-shadow;
 }
 
 mat-paginator .mat-paginator-range-label {
-    margin: 0 0px 0 8px;
-    @media screen and (min-width: $breakpoint-md) {
-        margin: 0 32px 0 24px;
-    }
+  margin: 0 0px 0 8px;
+  @media screen and (min-width: $breakpoint-md) {
+    margin: 0 32px 0 24px;
+  }
 }
 
 mat-checkbox .mat-checkbox-label {
-    white-space: initial;
+  white-space: initial;
 }

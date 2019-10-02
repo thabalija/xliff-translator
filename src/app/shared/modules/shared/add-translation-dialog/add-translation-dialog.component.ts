@@ -9,14 +9,14 @@ import { LocaleService } from '../../../../services/locale.service';
   styleUrls: ['./add-translation-dialog.component.scss']
 })
 export class AddTranslationDialogComponent {
-
   languages: Locale[] = [];
 
   constructor(
     private _localeService: LocaleService,
     public dialogRef: MatDialogRef<AddTranslationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.loadLanguages();
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.loadLanguages();
   }
 
   onNoClick(): void {
@@ -27,5 +27,4 @@ export class AddTranslationDialogComponent {
   loadLanguages(): void {
     this.languages = this._localeService.getLocale();
   }
-
 }

@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { FileInfo } from './../shared/interfaces/file-info.interface';
-import { Note, TranslationUnit } from './../shared/interfaces/translation-unit.interface';
+import {
+  Note,
+  TranslationUnit
+} from './../shared/interfaces/translation-unit.interface';
 import { TranslationListService } from './translation-list.service';
 
 @Injectable()
-
 export class FileUploadService {
-
   uploadedFile: Subject<boolean> = new Subject<boolean>();
 
-  constructor(
-    private _translationListService: TranslationListService
-  ) {}
+  constructor(private _translationListService: TranslationListService) {}
 
-  public uploadFile(htmlDoc: HTMLDocument, fileName: string, sourceLang: string) {
-
+  public uploadFile(
+    htmlDoc: HTMLDocument,
+    fileName: string,
+    sourceLang: string
+  ) {
     localStorage.clear();
 
     const fileElement = htmlDoc.getElementsByTagName('file')[0];
@@ -25,13 +27,12 @@ export class FileUploadService {
     const translationUnits: TranslationUnit[] = [];
     let translatedUnits = 0;
 
-    translationArray.forEach((unit) => {
-
+    translationArray.forEach(unit => {
       const targetElementList = unit.getElementsByTagName('target');
       let targetElement: Element;
 
       // if target element does not exist create one, if exist select it
-      if (targetElementList.length ===  0) {
+      if (targetElementList.length === 0) {
         targetElement = document.createElement('TARGET');
         targetElement.setAttribute('state', 'new');
         unit.appendChild(targetElement);
@@ -49,7 +50,12 @@ export class FileUploadService {
         note: notes,
         showNote: false
       };
-      if (unit.querySelector('target').getAttribute('state').toLowerCase() === 'translated') {
+      if (
+        unit
+          .querySelector('target')
+          .getAttribute('state')
+          .toLowerCase() === 'translated'
+      ) {
         translatedUnits++;
       }
       translationUnits.push(translationUnit);
@@ -77,7 +83,11 @@ export class FileUploadService {
 
     // if file contains targetLang, create translation for that language
     if (fileInfo.targetLang) {
-      this._translationListService.addTranslation(fileInfo.fileName, fileInfo.targetLang, true);
+      this._translationListService.addTranslation(
+        fileInfo.fileName,
+        fileInfo.targetLang,
+        true
+      );
     }
 
     this.uploadedFile.next(true);
@@ -94,12 +104,12 @@ export class FileUploadService {
 
   // converts xml to string
   public xmlToString(file: HTMLDocument): string {
-    return (new XMLSerializer()).serializeToString(file);
+    return new XMLSerializer().serializeToString(file);
   }
 
   // converts string to xml
   public stringToXml(file: string): HTMLDocument {
-    return (new DOMParser()).parseFromString(file, 'text/xml');
+    return new DOMParser().parseFromString(file, 'text/xml');
   }
 
   // get file info from local storage
@@ -130,5 +140,4 @@ export class FileUploadService {
     });
     return notes;
   }
-
 }

@@ -14,24 +14,15 @@ import { AddTranslationDialogComponent } from './add-translation-dialog/add-tran
 // Services
 
 @NgModule({
-    declarations: [
-        ConfirmDialogComponent,
-        AddTranslationDialogComponent
-    ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        DragAndDropModule
-    ],
-    exports: [
-        DragAndDropModule
-    ],
-    entryComponents: [
-        ConfirmDialogComponent,
-        AddTranslationDialogComponent
-    ]
+  declarations: [ConfirmDialogComponent, AddTranslationDialogComponent],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    DragAndDropModule
+  ],
+  exports: [DragAndDropModule],
+  entryComponents: [ConfirmDialogComponent, AddTranslationDialogComponent]
 })
-
-export class SharedModule { }
+export class SharedModule {}

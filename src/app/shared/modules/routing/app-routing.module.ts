@@ -8,17 +8,20 @@ import { TranslationsComponent } from '../../../components/translations/translat
 import { EditorComponent } from '../../../components/editor/editor.component';
 
 const routes: Routes = [
-  { path: '', component: LayoutComponent, children: [
-    { path: '', component: FileUploadComponent},
-    { path: 'translations', component: TranslationsComponent},
-    { path: 'edit-translation/:id', component: EditorComponent}
-  ]},
-  { path: '**', redirectTo: ''}
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: '', component: FileUploadComponent },
+      { path: 'translations', component: TranslationsComponent },
+      { path: 'edit-translation/:id', component: EditorComponent }
+    ]
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-
 export class AppRoutingModule {}

@@ -1,10 +1,25 @@
 <h1 class="mat-dialog-title">{{ data.title }}</h1>
 
 <mat-dialog-content>
-    <p>{{ data.content }}</p>
+  <p>{{ data.content }}</p>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-button (click)="dialogRef.close(false)"  class="button-round" tabindex="-1">Cancel</button>
-    <button mat-button color="primary" class="button-round button-border" (click)="dialogRef.close(true)" tabindex="-1">{{ data.confirm }}</button>
+  <button
+    mat-button
+    (click)="dialogRef.close(false)"
+    class="button-round"
+    tabindex="-1"
+  >
+    Cancel
+  </button>
+  <button
+    mat-button
+    color="primary"
+    class="button-round button-border"
+    (click)="dialogRef.close(true)"
+    tabindex="-1"
+  >
+    {{ data.confirm }}
+  </button>
 </mat-dialog-actions>
