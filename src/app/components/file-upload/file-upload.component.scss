@@ -1,35 +1,35 @@
 @import 'variables';
 
 .app-description {
-    max-width: 100%;
-    color: #fff;
-    font-size: 1.2em;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    h1 {
-        margin: 0;
-    }
-    @media screen and (min-width: $breakpoint-sm) {
-        max-width: 50%;
-        padding-right: 2em;
-    }
+  max-width: 100%;
+  color: #fff;
+  font-size: 1.2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  h1 {
+    margin: 0;
+  }
+  @media screen and (min-width: $breakpoint-sm) {
+    max-width: 50%;
+    padding-right: 2em;
+  }
 }
 mat-card.get-started {
-    align-self: center;
-    width: 100%;
+  align-self: center;
+  width: 100%;
 }
 .home-wrapper {
-    display: flex;
-    flex-direction: column;
-    @media screen and (min-width: $breakpoint-sm) {
-        flex-direction: row;
-    }
+  display: flex;
+  flex-direction: column;
+  @media screen and (min-width: $breakpoint-sm) {
+    flex-direction: row;
+  }
 }
-.get-started .flex-row{
-    display: flex;
-    flex-direction: column;
-    @media screen and (min-width: $breakpoint-sm) {
-        flex-direction: row;
-    }
+.get-started .flex-row {
+  display: flex;
+  flex-direction: column;
+  @media screen and (min-width: $breakpoint-sm) {
+    flex-direction: row;
+  }
 }

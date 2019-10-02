@@ -1,43 +1,48 @@
 <mat-dialog-content class="dialog">
-
-    <div class="dialog-header">
-        <h1 class="dialog-title">
-            Add translation
-        </h1>
-        <div class="progress" align="end">
-            <mat-icon class="inactive">lens</mat-icon>
-            <mat-icon class="active">lens</mat-icon>
-            <mat-icon class="inactive">lens</mat-icon>
-        </div>
+  <div class="dialog-header">
+    <h1 class="dialog-title">
+      Add translation
+    </h1>
+    <div class="progress" align="end">
+      <mat-icon class="inactive">lens</mat-icon>
+      <mat-icon class="active">lens</mat-icon>
+      <mat-icon class="inactive">lens</mat-icon>
     </div>
-    <div class="dialog-content">
-        <div class="flex-row">
-            <mat-form-field>
-                <input matInput placeholder="File name" [(ngModel)]="data.fileName">
-                <mat-hint>File name must end with .xlf</mat-hint>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-select placeholder="Target language" [(ngModel)]="data.targetLang">
-                    <mat-option *ngFor="let lang of languages" [value]="lang.locale">
-                        {{ lang.language }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="flex-row">
-            <mat-checkbox [(ngModel)]="data.useTranslationUnits" color="primary">Use translation target values from uploaded file</mat-checkbox>
-        </div>
+  </div>
+  <div class="dialog-content">
+    <div class="flex-row">
+      <mat-form-field>
+        <input matInput placeholder="File name" [(ngModel)]="data.fileName" />
+        <mat-hint>File name must end with .xlf</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Target language" [(ngModel)]="data.targetLang">
+          <mat-option *ngFor="let lang of languages" [value]="lang.locale">
+            {{ lang.language }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
+    <div class="flex-row">
+      <mat-checkbox [(ngModel)]="data.useTranslationUnits" color="primary"
+        >Use translation target values from uploaded file</mat-checkbox
+      >
+    </div>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-button (click)="dialogRef.close(false)" class="button-round">Cancel</button>
-    <button mat-button 
-        (click)="dialogRef.close(data)" 
-        color="primary" 
-        class="button-round button-border" 
-        [disabled]="data.fileName === '' || data.targetLang === ''">
-        <mat-icon>add</mat-icon>
-        <span>Create translation</span>
-    </button>
+  <button mat-button (click)="dialogRef.close(false)" class="button-round">
+    Cancel
+  </button>
+  <button
+    mat-button
+    (click)="dialogRef.close(data)"
+    color="primary"
+    class="button-round button-border"
+    [disabled]="data.fileName === '' || data.targetLang === ''"
+  >
+    <mat-icon>add</mat-icon>
+    <span>Create translation</span>
+  </button>
 </mat-dialog-actions>

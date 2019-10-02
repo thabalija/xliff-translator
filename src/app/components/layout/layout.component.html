@@ -1,13 +1,16 @@
 <header>
   <a [routerLink]="['']" class="header-logo">
-    <img src="../../../assets/img/logo.png" alt="xliff-translator">
+    <img src="../../../assets/img/logo.png" alt="xliff-translator" />
   </a>
   <div class="navigation">
     <a [routerLink]="['']">
       <mat-icon>file_upload</mat-icon>
       <span>Upload file</span>
     </a>
-    <a [ngClass]="{'disabled': !isUploadedFile}" [routerLink]="['/translations']">
+    <a
+      [ngClass]="{ disabled: !isUploadedFile }"
+      [routerLink]="['/translations']"
+    >
       <mat-icon>list</mat-icon>
       <span>My translations</span>
     </a>
@@ -21,5 +24,7 @@
 <footer class="flex-row">
   <span>Version 2.0.2</span>
   <a href="../../../assets//docs/test_file.en.xlf" target="_blank">Test file</a>
-  <a href="https://github.com/thabalija/xliff-translator" target="_blank">View on github</a>
+  <a href="https://github.com/thabalija/xliff-translator" target="_blank"
+    >View on github</a
+  >
 </footer>

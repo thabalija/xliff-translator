@@ -19,7 +19,6 @@ import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dial
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit {
-
   translationID: number;
   fileInfo: FileInfo;
   translationUnits: TranslationUnit[] = [];
@@ -37,7 +36,7 @@ export class EditorComponent implements OnInit {
     private _translationListService: TranslationListService,
     public snackBar: MatSnackBar,
     private _dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.translationID = Number(this.route.snapshot.paramMap.get('id'));
@@ -53,12 +52,16 @@ export class EditorComponent implements OnInit {
 
   // get translation info from localstorage
   loadTranslationInfo(): void {
-    this.fileInfo = this._translationListService.getTranslationInfo(this.translationID);
+    this.fileInfo = this._translationListService.getTranslationInfo(
+      this.translationID
+    );
   }
 
   // get translation units from localstorage
   loadTranslationUnits(): void {
-    this.translationUnits = this._translationUnitsService.getTraslationUnits(this.translationID);
+    this.translationUnits = this._translationUnitsService.getTraslationUnits(
+      this.translationID
+    );
     this.countTranslatedUnits();
     this.refreshTranslationUnits();
   }
@@ -66,7 +69,10 @@ export class EditorComponent implements OnInit {
   // save changes to localstorage
   saveChanges(): void {
     this.countTranslatedUnits();
-    this._translationUnitsService.addTraslationUnits(this.translationID, this.translationUnits);
+    this._translationUnitsService.addTraslationUnits(
+      this.translationID,
+      this.translationUnits
+    );
     this._translationListService.updateTranslationInfo(this.fileInfo);
   }
 
@@ -74,7 +80,7 @@ export class EditorComponent implements OnInit {
   countTranslatedUnits(): void {
     let translatedUnitsCount = 0;
     this.translationUnits.forEach(unit => {
-      if (unit.targetState.toLowerCase()  === 'translated') {
+      if (unit.targetState.toLowerCase() === 'translated') {
         translatedUnitsCount++;
       }
     });
@@ -103,12 +109,12 @@ export class EditorComponent implements OnInit {
       const successful = document.execCommand('copy');
       if (successful) {
         this.snackBar.open('Source text copied', 'close', {
-          duration: 2000,
+          duration: 2000
         });
       }
     } catch (err) {
       this.snackBar.open('Wild error occurred', 'close', {
-        duration: 2000,
+        duration: 2000
       });
     }
     document.body.removeChild(textArea);
@@ -140,8 +146,10 @@ export class EditorComponent implements OnInit {
       filteredUnits = this.translationUnits;
     } else if (this.showUnits === 'other') {
       filteredUnits = this.translationUnits.filter((el, i) => {
-        const isNotNew = this.translationUnits[i].targetState.toLowerCase() !== 'new';
-        const isNotTranslated = this.translationUnits[i].targetState.toLowerCase() !== 'translated';
+        const isNotNew =
+          this.translationUnits[i].targetState.toLowerCase() !== 'new';
+        const isNotTranslated =
+          this.translationUnits[i].targetState.toLowerCase() !== 'translated';
         const isOther = isNotNew && isNotTranslated;
         return isOther;
       });
@@ -152,7 +160,8 @@ export class EditorComponent implements OnInit {
     }
     this.paginatedTranslationUnits = filteredUnits.slice(
       this.pageEvent.pageIndex * this.pageEvent.pageSize,
-      (this.pageEvent.pageIndex + 1) * this.pageEvent.pageSize);
+      (this.pageEvent.pageIndex + 1) * this.pageEvent.pageSize
+    );
   }
 
   // ask user if he want to save data before he leaves
@@ -174,5 +183,4 @@ export class EditorComponent implements OnInit {
       }
     });
   }
-
 }

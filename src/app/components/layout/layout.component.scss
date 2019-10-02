@@ -1,59 +1,60 @@
 @import 'variables';
 
-header, footer {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1080px;
-    margin: 0 auto;
+header,
+footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
 }
 header {
-    padding: 1em;
-    align-items: center;
-    .navigation {
-        a:not(:last-of-type) {
-            padding: 0 1em;        
-        }
+  padding: 1em;
+  align-items: center;
+  .navigation {
+    a:not(:last-of-type) {
+      padding: 0 1em;
     }
+  }
 }
 .app-container {
-    padding: 0 1em;
+  padding: 0 1em;
 }
 footer {
-    padding: 1em;
-    color: #fff;
+  padding: 1em;
+  color: #fff;
 }
-a { 
-    color: rgba(255, 255 ,255, 0.85);
-    transition: 200ms color ease;
-    text-decoration: none;
-    &:hover {
-        color: rgba(255, 255 ,255, 1);
+a {
+  color: rgba(255, 255, 255, 0.85);
+  transition: 200ms color ease;
+  text-decoration: none;
+  &:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+  &.header-logo {
+    max-width: 60%;
+    display: block;
+    padding-left: 0;
+    img {
+      max-width: 100%;
     }
-    &.header-logo {
-        max-width: 60%;
-        display: block;
-        padding-left: 0;
-        img {
-            max-width: 100%; 
-        }
-    }
-    &.disabled {
-        color: rgba(255, 255 ,255, 0.5);
-        opacity: 0.9;
-        pointer-events: none;
-    }
+  }
+  &.disabled {
+    color: rgba(255, 255, 255, 0.5);
+    opacity: 0.9;
+    pointer-events: none;
+  }
+  span {
+    display: none;
+  }
+  .mat-icon {
+    vertical-align: text-bottom;
+  }
+  @media screen and (min-width: $breakpoint-sm) {
     span {
-        display: none;
+      display: inline-block;
+      vertical-align: initial;
+      padding-left: 0.25em;
     }
-    .mat-icon {     
-        vertical-align: text-bottom;
-    }
-    @media screen and (min-width: $breakpoint-sm) {
-        span {
-            display: inline-block;
-            vertical-align: initial;
-            padding-left: 0.25em;
-        }
-    }
+  }
 }

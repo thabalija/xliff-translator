@@ -18,31 +18,35 @@ describe('TranslationsComponent', () => {
   let fixture: ComponentFixture<TranslationsComponent>;
   const oldResetTestingModule = TestBed.resetTestingModule;
 
-  beforeAll(done => (async () => {
-    TestBed.resetTestingModule();
-    TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        FormsModule,
-        MaterialModule,
-        NoopAnimationsModule,
-        RouterTestingModule
-      ],
-      declarations: [TranslationsComponent],
-      providers: [
-        FileUploadService,
-        FileDownloadService,
-        TranslationListService,
-        TranslationUnitsService,
-        LocaleService
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    });
-    await TestBed.compileComponents();
+  beforeAll(done =>
+    (async () => {
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        imports: [
+          CommonModule,
+          FormsModule,
+          MaterialModule,
+          NoopAnimationsModule,
+          RouterTestingModule
+        ],
+        declarations: [TranslationsComponent],
+        providers: [
+          FileUploadService,
+          FileDownloadService,
+          TranslationListService,
+          TranslationUnitsService,
+          LocaleService
+        ],
+        schemas: [NO_ERRORS_SCHEMA]
+      });
+      await TestBed.compileComponents();
 
-    // prevent Angular from resetting testing module
-    TestBed.resetTestingModule = () => TestBed;
-  })().then(done).catch(done.fail));
+      // prevent Angular from resetting testing module
+      TestBed.resetTestingModule = () => TestBed;
+    })()
+      .then(done)
+      .catch(done.fail)
+  );
 
   afterAll(() => {
     // reinstate resetTestingModule method
@@ -61,6 +65,4 @@ describe('TranslationsComponent', () => {
   });
 
   // TODO: write tests
-
 });
-

@@ -17,7 +17,6 @@ import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dial
   styleUrls: ['./translations.component.scss']
 })
 export class TranslationsComponent implements OnInit {
-
   baseFileInfo: FileInfo;
   translationsList: FileInfo[] = [];
   displayedColumns = ['language', 'status', 'delete', 'translate', 'download'];
@@ -33,7 +32,7 @@ export class TranslationsComponent implements OnInit {
     private _translationUnitsService: TranslationUnitsService,
     private _localeService: LocaleService,
     private _dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.loadBaseFileInfo();
@@ -56,7 +55,10 @@ export class TranslationsComponent implements OnInit {
       this.translationsList.forEach(translation => {
         translatedUnits = translatedUnits + translation.translatedUnits;
       });
-      this.translationStatus = (translatedUnits / (this.baseFileInfo.totalUnits * this.translationsList.length)) * 100;
+      this.translationStatus =
+        (translatedUnits /
+          (this.baseFileInfo.totalUnits * this.translationsList.length)) *
+        100;
     } else {
       this.translationStatus = 0;
     }
@@ -79,14 +81,26 @@ export class TranslationsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.createTranslation(result.fileName, result.targetLang, result.useTranslationUnits);
+        this.createTranslation(
+          result.fileName,
+          result.targetLang,
+          result.useTranslationUnits
+        );
       }
     });
   }
 
   // create new translation
-  createTranslation(fileName: string, targetLang: string, useTranslationUnits: boolean): void {
-    this._translationListService.addTranslation(fileName, targetLang, useTranslationUnits);
+  createTranslation(
+    fileName: string,
+    targetLang: string,
+    useTranslationUnits: boolean
+  ): void {
+    this._translationListService.addTranslation(
+      fileName,
+      targetLang,
+      useTranslationUnits
+    );
     this.loadTranslations();
   }
 
@@ -113,7 +127,8 @@ export class TranslationsComponent implements OnInit {
       width: '290px',
       data: {
         title: 'Delete file',
-        content: 'Are you sure you want to delete uploaded file and all translations?',
+        content:
+          'Are you sure you want to delete uploaded file and all translations?',
         confirm: 'Delete'
       }
     });
@@ -141,5 +156,4 @@ export class TranslationsComponent implements OnInit {
   downloadFile(fileID: number): void {
     this._fileDownloadService.downloadFile(fileID);
   }
-
 }

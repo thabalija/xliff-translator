@@ -3,9 +3,7 @@ import { FileInfo } from '../shared/interfaces/file-info.interface';
 import { TranslationUnit } from '../shared/interfaces/translation-unit.interface';
 
 @Injectable()
-
 export class TranslationListService {
-
   private fileInfo: FileInfo;
   private translationUnits: TranslationUnit[];
 
@@ -20,7 +18,8 @@ export class TranslationListService {
 
   // get translation info
   public getTranslationInfo(translationID: number): FileInfo {
-    const translationList = JSON.parse(localStorage.getItem('translationList')) || [];
+    const translationList =
+      JSON.parse(localStorage.getItem('translationList')) || [];
     let translationFileInfo: FileInfo;
     for (let i = 0; i < translationList.length; i++) {
       if (translationList[i].id === translationID) {
@@ -44,17 +43,29 @@ export class TranslationListService {
   }
 
   // add new translation
-  public addTranslation(fileName: string, targetLang: string, useTranslationUnits: boolean): void {
+  public addTranslation(
+    fileName: string,
+    targetLang: string,
+    useTranslationUnits: boolean
+  ): void {
     this.fileInfo = JSON.parse(localStorage.getItem('fileInfo'));
-    const translationUnits = JSON.parse(localStorage.getItem('translationUnits'));
-    const translationID = + new Date;
-    const newTranslation = this.createNewTranslationInfo(translationID, fileName, targetLang);
+    const translationUnits = JSON.parse(
+      localStorage.getItem('translationUnits')
+    );
+    const translationID = +new Date();
+    const newTranslation = this.createNewTranslationInfo(
+      translationID,
+      fileName,
+      targetLang
+    );
 
     if (!useTranslationUnits) {
       this.resetTargetElement(translationUnits);
       newTranslation.translatedUnits = 0;
     } else {
-      newTranslation.translatedUnits = this.countTranslatedUnits(translationUnits);
+      newTranslation.translatedUnits = this.countTranslatedUnits(
+        translationUnits
+      );
     }
 
     this.saveCreatedTranslation(newTranslation);
@@ -85,7 +96,11 @@ export class TranslationListService {
   }
 
   // creates and returnes new Translation info object
-  private createNewTranslationInfo(translationID: number, fileName: string, targetLang: string): FileInfo {
+  private createNewTranslationInfo(
+    translationID: number,
+    fileName: string,
+    targetLang: string
+  ): FileInfo {
     const newFile = {
       id: translationID,
       fileName: fileName,
@@ -98,8 +113,10 @@ export class TranslationListService {
   }
 
   // reset target element value to new, empty innerHtml
-  private resetTargetElement(translationUnits: TranslationUnit[]): TranslationUnit[] {
-    translationUnits.forEach((unit) => {
+  private resetTargetElement(
+    translationUnits: TranslationUnit[]
+  ): TranslationUnit[] {
+    translationUnits.forEach(unit => {
       unit.target = '';
       unit.targetState = 'new';
       return unit;
@@ -115,9 +132,13 @@ export class TranslationListService {
   }
 
   // save Translation units to localstorage
-  private saveTraslationUnits(translationID: number, translationUnits: TranslationUnit[]): void {
-    localStorage.setItem(translationID.toString(), JSON.stringify(translationUnits));
+  private saveTraslationUnits(
+    translationID: number,
+    translationUnits: TranslationUnit[]
+  ): void {
+    localStorage.setItem(
+      translationID.toString(),
+      JSON.stringify(translationUnits)
+    );
   }
-
 }
-

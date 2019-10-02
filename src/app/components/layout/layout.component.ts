@@ -8,19 +8,18 @@ import { FileUploadService } from '../../services/file-upload.service';
   styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent implements OnInit, OnDestroy {
-
   isUploadedFile: boolean;
   isUploadedFileSubscription: Subscription;
 
-  constructor(
-    private _fileUploadService: FileUploadService
-  ) { }
+  constructor(private _fileUploadService: FileUploadService) {}
 
   ngOnInit() {
     this.checkIfFileExist();
-    this.isUploadedFileSubscription = this._fileUploadService.isUploadedFile().subscribe((uploadedFile: boolean) => {
-      this.isUploadedFile = uploadedFile;
-    });
+    this.isUploadedFileSubscription = this._fileUploadService
+      .isUploadedFile()
+      .subscribe((uploadedFile: boolean) => {
+        this.isUploadedFile = uploadedFile;
+      });
   }
 
   // check if user has uploaded file or not
@@ -31,5 +30,4 @@ export class LayoutComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.isUploadedFileSubscription.unsubscribe();
   }
-
 }

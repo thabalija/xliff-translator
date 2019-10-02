@@ -1,4 +1,13 @@
-import { Component, Input, Output, OnInit, ViewChild, ElementRef, EventEmitter, HostListener } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  EventEmitter,
+  HostListener
+} from '@angular/core';
 
 @Component({
   selector: 'app-drag-and-drop',
@@ -6,7 +15,6 @@ import { Component, Input, Output, OnInit, ViewChild, ElementRef, EventEmitter, 
   styleUrls: ['./drag-and-drop.component.scss']
 })
 export class DragAndDropComponent implements OnInit {
-
   @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
   @Input() multiple: boolean;
   @Input() disabled: boolean;
@@ -15,7 +23,7 @@ export class DragAndDropComponent implements OnInit {
   files: File[];
   isDraggedOver: Boolean;
 
-  constructor() { }
+  constructor() {}
 
   // open native file dialog
   openFileDialog(): void {
@@ -40,6 +48,5 @@ export class DragAndDropComponent implements OnInit {
     this.isDraggedOver = event;
   }
 
-  ngOnInit() { }
-
+  ngOnInit() {}
 }

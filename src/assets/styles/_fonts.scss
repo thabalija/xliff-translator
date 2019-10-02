@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,700&subset=latin-ext');
 
 @font-face {
-    font-family: 'Material Icons';
-    font-style: normal;
-    font-weight: 400;
-    src: url('./assets/fonts/material-icons.woff2') format('woff2');
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/material-icons.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Nunito';
-  font-style: normal; 
+  font-style: normal;
   font-weight: 400;
   src: url('./assets/fonts/nunito-regular.ttf') format('ttf');
 }
@@ -28,60 +28,76 @@
 /* Material icons */
 
 mat-icon {
-font-family: 'Material Icons';
-font-weight: normal;
-font-style: normal;
-font-size: 24px;  /* Preferred icon size */
-display: inline-block;
-line-height: 1;
-text-transform: none;
-letter-spacing: normal;
-word-wrap: normal;
-white-space: nowrap;
-direction: ltr;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
 
-/* Support for all WebKit browsers. */
--webkit-font-smoothing: antialiased;
-/* Support for Safari and Chrome. */
-text-rendering: optimizeLegibility;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
 
-/* Support for Firefox. */
--moz-osx-font-smoothing: grayscale;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
 
-/* Support for IE. */
-font-feature-settings: 'liga';
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }
 
 /* Rules for sizing the icon. */
-mat-icon.mat-18 { font-size: 18px; }
-mat-icon.mat-24 { font-size: 24px; }
-mat-icon.mat-36 { font-size: 36px; }
-mat-icon.mat-48 { font-size: 48px; }
+mat-icon.mat-18 {
+  font-size: 18px;
+}
+mat-icon.mat-24 {
+  font-size: 24px;
+}
+mat-icon.mat-36 {
+  font-size: 36px;
+}
+mat-icon.mat-48 {
+  font-size: 48px;
+}
 
 /* Rules for using icons as black on a light background. */
-mat-icon.mat-dark { color: rgba(0, 0, 0, 0.54); }
-mat-icon.mat-dark.mat-inactive { color: rgba(0, 0, 0, 0.26); }
+mat-icon.mat-dark {
+  color: rgba(0, 0, 0, 0.54);
+}
+mat-icon.mat-dark.mat-inactive {
+  color: rgba(0, 0, 0, 0.26);
+}
 
 /* Rules for using icons as white on a dark background. */
-mat-icon.mat-light { color: rgba(255, 255, 255, 1); }
-mat-icon.mat-light.mat-inactive { color: rgba(255, 255, 255, 0.3); }
+mat-icon.mat-light {
+  color: rgba(255, 255, 255, 1);
+}
+mat-icon.mat-light.mat-inactive {
+  color: rgba(255, 255, 255, 0.3);
+}
 
 /* Set Nunito as base font */
-html,body {
+html,
+body {
   font-family: 'Nunito', Helvetica, Arial, Sans-Serif;
   font-weight: 400;
 }
-strong,b{
+strong,
+b {
   font-family: 'Nunito', Helvetica, Arial, Sans-Serif;
   font-weight: 700;
 }
-.font-light{
+.font-light {
   font-family: 'Nunito', Helvetica, Arial, Sans-Serif;
   font-weight: 300;
 }
-.font-bold{
+.font-bold {
   font-family: 'Nunito', Helvetica, Arial, Sans-Serif;
   font-weight: 700;
 }
-
-
