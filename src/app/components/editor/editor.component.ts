@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { MatSnackBar, PageEvent, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocaleService } from '../../services/locale.service';
 import { FileDownloadService } from '../../services/file-download.service';
 import { TranslationUnitsService } from '../../services/translation-units.service';
