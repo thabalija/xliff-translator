@@ -24,6 +24,12 @@ footer {
   padding: 1em;
   color: #fff;
 }
+.navigation {
+  display: flex;
+  a {
+    display: flex;
+  }
+}
 a {
   color: rgba(255, 255, 255, 0.85);
   transition: 200ms color ease;
