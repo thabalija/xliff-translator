@@ -22,19 +22,39 @@ export class FileDownloadService {
     this.translationUnits = this.translationUnitsService.getTraslationUnits(translationID);
     this.fileInfo = this.translationListService.getTranslationInfo(translationID);
 
+    const xliffElement = this.originalFile.getElementsByTagName('xliff')[0];
+    xliffElement.setAttribute('trgLang', this.fileInfo.targetLang);
+
     this.translationUnits.forEach((transUnit: TranslationUnit) => {
-      const targetElementList = this.originalFile.getElementById(transUnit.id).getElementsByTagName('target');
-      let targetElement: Element;
+      const segmentElementList: HTMLCollectionOf<Element> = this.originalFile.getElementById(
+        transUnit.unitId
+      ).getElementsByTagName('segment');
 
-      if (!targetElementList.length) {
-        targetElement = document.createElement('TARGET');
-        this.originalFile.getElementById(transUnit.id).appendChild(targetElement);
-      } else {
-        targetElement = this.originalFile.getElementById(transUnit.id).getElementsByTagName('target')[0];
-      }
+      Array.from(segmentElementList).forEach((segment: Element) => {
+        const targetElementList = segment.getElementsByTagName('target');
+        const originalFileUnitElement: Element = this.originalFile.getElementById(transUnit.unitId);
+        let targetElement: Element;
 
-      targetElement.innerHTML = transUnit.target;
-      targetElement.setAttribute('state', transUnit.targetState);
+        if (!targetElementList.length) {
+          targetElement = document.createElement('TARGET');
+          const originalFileSegmentElementList: Element[] = Array.from(originalFileUnitElement.getElementsByTagName('segment'));
+
+          if (originalFileSegmentElementList.length === 1) {
+            originalFileSegmentElementList[0].appendChild(targetElement);
+          } else {
+            const originalFileSegmentElement: Element = originalFileSegmentElementList.find((originalSegment: Element) => {
+              return originalSegment.getAttribute('id') === transUnit.segmentId;
+            });
+
+            originalFileSegmentElement.appendChild(targetElement);
+          }
+        } else {
+          targetElement = originalFileUnitElement.getElementsByTagName('target')[0];
+        }
+
+        targetElement.innerHTML = transUnit.target;
+        targetElement.setAttribute('state', transUnit.targetState);
+      });
     });
 
     const stringer = new XMLSerializer();
@@ -49,7 +69,7 @@ export class FileDownloadService {
       'href',
       'data:text/plain;charset=utf-8,' + encodeURIComponent(file)
     );
-    element.setAttribute('download', fileName);
+    element.setAttribute('download', `${fileName}.xml`);
     element.style.display = 'none';
     document.body.appendChild(element);
     element.click();

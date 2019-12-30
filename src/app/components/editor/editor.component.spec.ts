@@ -26,10 +26,10 @@ describe('EditorComponent', () => {
     totalUnits: 1
   };
   const translationUnit: TranslationUnit = {
-    id: '1',
+    unitId: '1',
     source: 'Just testing',
     target: '',
-    targetState: 'new',
+    targetState: 'initial',
     note: [],
     showNote: false
   };

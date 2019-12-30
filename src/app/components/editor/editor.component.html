@@ -17,7 +17,7 @@
         (selectionChange)="filterTranslations(showUnits)"
       >
         <mat-option [value]="'all'">All</mat-option>
-        <mat-option [value]="'new'">New</mat-option>
+        <mat-option [value]="'initial'">Initial</mat-option>
         <mat-option [value]="'translated'">Translated</mat-option>
         <mat-option [value]="'other'">Other</mat-option>
       </mat-select>
@@ -51,7 +51,7 @@
   </mat-card-header>
 
   <ng-container *ngFor="let unit of paginatedTranslationUnits">
-    <div class="translation-unit" id="unit.id">
+    <div class="translation-unit" id="unit.unitId">
       <div class="source">
         <mat-card class="">
           <mat-card-content>
@@ -67,7 +67,7 @@
 
         <div class="translation-unit--footer">
           <mat-icon class="mat-icon--fingerprint">fingerprint</mat-icon>
-          <span class="translation-unit--fingerprint">{{ unit.id }}</span>
+          <span class="translation-unit--fingerprint">{{ unit.unitId }} {{ unit.segmentId ? unit.segmentId : '' }}</span>
           <div class="flex-spacer"></div>
           <button
             mat-icon-button
@@ -103,7 +103,7 @@
         </mat-card>
         <div class="translation-unit--footer">
           <mat-radio-group [(ngModel)]="unit.targetState">
-            <mat-radio-button color="primary" [value]="'new'">New</mat-radio-button>
+            <mat-radio-button color="primary" [value]="'initial'">Initial</mat-radio-button>
             <mat-radio-button color="primary" [value]="'translated'">Translated</mat-radio-button>
           </mat-radio-group>
         </div>

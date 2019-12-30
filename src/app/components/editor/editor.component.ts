@@ -119,7 +119,7 @@ export class EditorComponent implements OnInit {
     } else if (this.showUnits === 'other') {
       filteredUnits = this.translationUnits.filter((el, i) => {
         const isNotNew =
-          this.translationUnits[i].targetState.toLowerCase() !== 'new';
+          this.translationUnits[i].targetState.toLowerCase() !== 'initial';
         const isNotTranslated =
           this.translationUnits[i].targetState.toLowerCase() !== 'translated';
         const isOther = isNotNew && isNotTranslated;

@@ -12,40 +12,43 @@ export class FileUploadService {
 
   public uploadFile(htmlDoc: HTMLDocument, fileName: string, sourceLang: string) {
     localStorage.clear();
-
-    const translationNodes = htmlDoc.getElementsByTagName('trans-unit');
-    const translationArray = Array.from(translationNodes);
+    const unitNodes = htmlDoc.getElementsByTagName('unit');
     const translationUnits: TranslationUnit[] = [];
     let translatedUnits = 0;
 
-    translationArray.forEach((unit: Element) => {
-      const targetElementList = unit.getElementsByTagName('target');
-      let targetElement: Element;
+    Array.from(unitNodes).forEach((unit: Element) => {
+      const segmentElementList: HTMLCollectionOf<Element> = unit.getElementsByTagName('segment');
 
-      if (!targetElementList) {
-        targetElement = document.createElement('TARGET');
-        targetElement.setAttribute('state', 'new');
-        unit.appendChild(targetElement);
-      } else {
-        targetElement = unit.getElementsByTagName('target')[0];
-      }
+      Array.from(segmentElementList).forEach((segment: Element) => {
+        const targetElementList = segment.getElementsByTagName('target');
+        let targetElement: Element;
 
-      const notes = this.getNotes(unit.getElementsByTagName('note') as any);
+        if (!targetElementList.length) {
+          targetElement = document.createElement('TARGET');
+          targetElement.setAttribute('state', 'initial');
+          segment.appendChild(targetElement);
+        } else {
+          targetElement = segment.getElementsByTagName('target')[0];
+        }
 
-      const translationUnit = {
-        id: unit.getAttribute('id'),
-        source: unit.querySelector('source').innerHTML,
-        target: targetElement.innerHTML,
-        targetState: targetElement.getAttribute('state'),
-        note: notes,
-        showNote: false
-      };
+        const translationUnit: TranslationUnit = {
+          unitId: unit.getAttribute('id'),
+          segmentId: segment.getAttribute('id'),
+          source: segment.querySelector('source').innerHTML,
+          target: targetElement.innerHTML,
+          targetState: targetElement.getAttribute('state') || 'initial',
+          note: this.getNotes(unit.getElementsByTagName('note') as any),
+          showNote: false
+        };
 
-      if (unit.querySelector('target').getAttribute('state').toLowerCase() === 'translated') {
-        translatedUnits++;
-      }
+        const segmentState: string = segment.getAttribute('state');
 
-      translationUnits.push(translationUnit);
+        if (segmentState && segmentState.toLowerCase() === 'translated') {
+          translatedUnits++;
+        }
+
+        translationUnits.push(translationUnit);
+      });
     });
 
     const fileElement = htmlDoc.getElementsByTagName('file')[0];
@@ -57,8 +60,8 @@ export class FileUploadService {
       translatedUnits,
       datatype: fileElement.getAttribute('datatype'),
       original: fileElement.getAttribute('original'),
-      targetLang: fileElement.getAttribute('target-language'),
-      totalUnits: htmlDoc.getElementsByTagName('trans-unit').length,
+      targetLang: fileElement.getAttribute('trgLang'),
+      totalUnits: htmlDoc.getElementsByTagName('unit').length,
       xliffVersion: xliffElement.getAttribute('version'),
     };
 
