@@ -18,11 +18,11 @@
       </div>
     </mat-card-header>
     <mat-card-content>
-      <app-drag-and-drop
+      <drag-and-drop
         [multiple]="false"
         [disabled]="false"
         (checkChange)="onFileChange($event)"
-      ></app-drag-and-drop>
+      ></drag-and-drop>
       <div class="flex-row">
         <mat-form-field>
           <input
@@ -52,7 +52,7 @@
           [disabled]="
             fileName === '' ||
             fileSourceLang === '' ||
-            this.htmlDocument === undefined
+            htmlDocument === undefined
           "
         >
           Create project

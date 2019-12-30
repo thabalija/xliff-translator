@@ -1,38 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { FileInfo } from './../shared/interfaces/file-info.interface';
-import {
-  Note,
-  TranslationUnit
-} from './../shared/interfaces/translation-unit.interface';
+import { Note, TranslationUnit } from './../shared/interfaces/translation-unit.interface';
 import { TranslationListService } from './translation-list.service';
 
 @Injectable()
 export class FileUploadService {
-  uploadedFile: Subject<boolean> = new Subject<boolean>();
+  private uploadedFile: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private _translationListService: TranslationListService) {}
+  constructor(private translationListService: TranslationListService) {}
 
-  public uploadFile(
-    htmlDoc: HTMLDocument,
-    fileName: string,
-    sourceLang: string
-  ) {
+  public uploadFile(htmlDoc: HTMLDocument, fileName: string, sourceLang: string) {
     localStorage.clear();
 
-    const fileElement = htmlDoc.getElementsByTagName('file')[0];
-    const xliffElement = htmlDoc.getElementsByTagName('xliff')[0];
     const translationNodes = htmlDoc.getElementsByTagName('trans-unit');
     const translationArray = Array.from(translationNodes);
     const translationUnits: TranslationUnit[] = [];
     let translatedUnits = 0;
 
-    translationArray.forEach(unit => {
+    translationArray.forEach((unit: Element) => {
       const targetElementList = unit.getElementsByTagName('target');
       let targetElement: Element;
 
-      // if target element does not exist create one, if exist select it
-      if (targetElementList.length === 0) {
+      if (!targetElementList) {
         targetElement = document.createElement('TARGET');
         targetElement.setAttribute('state', 'new');
         unit.appendChild(targetElement);
@@ -50,40 +40,34 @@ export class FileUploadService {
         note: notes,
         showNote: false
       };
-      if (
-        unit
-          .querySelector('target')
-          .getAttribute('state')
-          .toLowerCase() === 'translated'
-      ) {
+
+      if (unit.querySelector('target').getAttribute('state').toLowerCase() === 'translated') {
         translatedUnits++;
       }
+
       translationUnits.push(translationUnit);
     });
 
+    const fileElement = htmlDoc.getElementsByTagName('file')[0];
+    const xliffElement = htmlDoc.getElementsByTagName('xliff')[0];
+
     const fileInfo: FileInfo = {
-      fileName: fileName,
-      sourceLang: sourceLang,
-      xliffVersion: xliffElement.getAttribute('version'),
-      targetLang: fileElement.getAttribute('target-language'),
-      totalUnits: htmlDoc.getElementsByTagName('trans-unit').length,
+      fileName,
+      sourceLang,
+      translatedUnits,
       datatype: fileElement.getAttribute('datatype'),
       original: fileElement.getAttribute('original'),
-      translatedUnits: translatedUnits
+      targetLang: fileElement.getAttribute('target-language'),
+      totalUnits: htmlDoc.getElementsByTagName('trans-unit').length,
+      xliffVersion: xliffElement.getAttribute('version'),
     };
 
-    // save file info
     localStorage.setItem('fileInfo', JSON.stringify(fileInfo));
-
-    // save translation units
     localStorage.setItem('translationUnits', JSON.stringify(translationUnits));
-
-    // save original file
     localStorage.setItem('uploadedFile', this.xmlToString(htmlDoc));
 
-    // if file contains targetLang, create translation for that language
     if (fileInfo.targetLang) {
-      this._translationListService.addTranslation(
+      this.translationListService.addTranslation(
         fileInfo.fileName,
         fileInfo.targetLang,
         true
@@ -102,32 +86,26 @@ export class FileUploadService {
     return this.uploadedFile.asObservable();
   }
 
-  // converts xml to string
   public xmlToString(file: HTMLDocument): string {
     return new XMLSerializer().serializeToString(file);
   }
 
-  // converts string to xml
   public stringToXml(file: string): HTMLDocument {
     return new DOMParser().parseFromString(file, 'text/xml');
   }
 
-  // get file info from local storage
   public getFileInfo(): FileInfo {
     return JSON.parse(localStorage.getItem('fileInfo'));
   }
 
-  // get original file from local storage
   public getFile(): HTMLDocument {
     return this.stringToXml(localStorage.getItem('uploadedFile'));
   }
 
-  // get original file from local storage
   public getTranslationUnits(): TranslationUnit[] {
     return JSON.parse(localStorage.getItem('translationUnits'));
   }
 
-  // convert notes to needed format
   private getNotes(notesNodes: NodeListOf<Element>): Note[] {
     const notesArray = Array.from(notesNodes);
     const notes = [];

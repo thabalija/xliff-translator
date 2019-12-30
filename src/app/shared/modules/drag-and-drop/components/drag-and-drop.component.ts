@@ -1,52 +1,36 @@
-import {
-  Component,
-  Input,
-  Output,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  EventEmitter,
-  HostListener
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-drag-and-drop',
+  selector: 'drag-and-drop',
   templateUrl: './drag-and-drop.component.html',
-  styleUrls: ['./drag-and-drop.component.scss']
+  styleUrls: ['./drag-and-drop.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DragAndDropComponent implements OnInit {
+export class DragAndDropComponent {
   @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
   @Input() multiple: boolean;
   @Input() disabled: boolean;
   @Output() checkChange: EventEmitter<File[]> = new EventEmitter();
 
-  files: File[];
-  isDraggedOver: Boolean;
+  public files: File[];
+  public isDraggedOver: boolean;
 
-  constructor() {}
-
-  // open native file dialog
-  openFileDialog(): void {
+  public openFileDialog(): void {
     const event = new MouseEvent('click', { bubbles: false });
     this.fileInput.nativeElement.dispatchEvent(event);
   }
 
-  // assign selected file to file variable, emit new file
-  onBrowseFiles(event: File[]): void {
+  public onBrowseFiles(event: File[]): void {
     this.files = this.fileInput.nativeElement.files;
     this.checkChange.emit(this.files);
   }
 
-  // assign dropped file to file variable, emit new file
-  onDropFiles(event: File[]): void {
+  public onDropFiles(event: File[]): void {
     this.files = event;
     this.checkChange.emit(this.files);
   }
 
-  // detect if file is being dragged
-  onDragOver(event: boolean) {
-    this.isDraggedOver = event;
+  public onDragOver(isDraggedOver: boolean) {
+    this.isDraggedOver = isDraggedOver;
   }
-
-  ngOnInit() {}
 }

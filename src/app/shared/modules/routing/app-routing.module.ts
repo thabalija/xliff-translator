@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-// Components
-import { LayoutComponent } from '../../../components/layout/layout.component';
-import { FileUploadComponent } from '../../../components/file-upload/file-upload.component';
-import { TranslationsComponent } from '../../../components/translations/translations.component';
 import { EditorComponent } from '../../../components/editor/editor.component';
+import { FileUploadComponent } from '../../../components/file-upload/file-upload.component';
+import { LayoutComponent } from '../../../components/layout/layout.component';
+import { TranslationsComponent } from '../../../components/translations/translations.component';
 
 const routes: Routes = [
   {

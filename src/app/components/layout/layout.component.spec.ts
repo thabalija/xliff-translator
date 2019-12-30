@@ -1,14 +1,13 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-
-import { LayoutComponent } from './layout.component';
-import { MaterialModule } from '../../shared/modules/material/material.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FileUploadService } from '../../services/file-upload.service';
 import { TranslationListService } from '../../services/translation-list.service';
+import { MaterialModule } from '../../shared/modules/material/material.module';
+import { LayoutComponent } from './layout.component';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;
@@ -32,7 +31,6 @@ describe('LayoutComponent', () => {
       });
       await TestBed.compileComponents();
 
-      // prevent Angular from resetting testing module
       TestBed.resetTestingModule = () => TestBed;
     })()
       .then(done)
@@ -40,7 +38,6 @@ describe('LayoutComponent', () => {
   );
 
   afterAll(() => {
-    // reinstate resetTestingModule method
     TestBed.resetTestingModule = oldResetTestingModule;
     TestBed.resetTestingModule();
   });
@@ -53,12 +50,5 @@ describe('LayoutComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should check if file exist in localstorage', () => {
-    localStorage.setItem('fileInfo', JSON.stringify(true));
-    component.checkIfFileExist();
-    fixture.detectChanges();
-    expect(component.isUploadedFile).toBe(true);
   });
 });

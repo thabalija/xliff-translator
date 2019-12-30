@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -8,39 +8,38 @@ import { Locale } from '../../shared/interfaces/locale.interface';
 import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
-  selector: 'app-file-upload',
+  selector: 'file-upload',
   templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.scss']
+  styleUrls: ['./file-upload.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileUploadComponent implements OnInit {
   @HostBinding('class.flex-column-center') flexClass = true;
 
-  fileName = '';
-  fileSourceLang = '';
-  htmlDocument: HTMLDocument;
-  languages: Locale[];
-  showComponent: boolean;
+  public fileName = '';
+  public fileSourceLang = '';
+  public htmlDocument: HTMLDocument;
+  public languages: Locale[];
 
   constructor(
-    public _router: Router,
-    private _fileUploadService: FileUploadService,
-    private _localeService: LocaleService,
+    public router: Router,
     public snackBar: MatSnackBar,
-    private _dialog: MatDialog
+    private localeService: LocaleService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private dialog: MatDialog,
+    private fileUploadService: FileUploadService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadLanguages();
   }
 
-  // loads locale in select
-  loadLanguages(): void {
-    this.languages = this._localeService.getLocale();
+  private loadLanguages(): void {
+    this.languages = this.localeService.getLocale();
   }
 
-  // read file info, fill name, language input fields with values from file
-  onFileChange(uploadedFile: File[]): void {
-    if (uploadedFile.length === 0) {
+  public onFileChange(uploadedFile: File[]): void {
+    if (!uploadedFile.length) {
       this.fileName = '';
       this.fileSourceLang = '';
       this.htmlDocument = undefined;
@@ -61,16 +60,18 @@ export class FileUploadComponent implements OnInit {
         }
         const fileElement = this.htmlDocument.getElementsByTagName('file')[0];
         this.fileSourceLang = fileElement.getAttribute('source-language');
+        this.changeDetectorRef.markForCheck();
       };
       reader.readAsText(uploadedFile[0]);
     }
   }
 
-  // open upload file dialog
-  openUploadFileDialog(): void {
+  public openUploadFileDialog(): void {
     if (this.htmlDocument) {
-      if (localStorage.getItem('fileInfo')) {
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      const hasUploadedFile: boolean = Boolean(localStorage.getItem('fileInfo'));
+
+      if (hasUploadedFile) {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
           width: '350px',
           data: {
             title: 'Please confirm',
@@ -78,8 +79,8 @@ export class FileUploadComponent implements OnInit {
             confirm: `Upload`
           }
         });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result) {
+        dialogRef.afterClosed().subscribe((shouldUploadNewFile: boolean) => {
+          if (shouldUploadNewFile) {
             this.uploadFile();
           }
         });
@@ -93,19 +94,13 @@ export class FileUploadComponent implements OnInit {
     }
   }
 
-  // send file to service for uploading to localstorage
-  uploadFile(): void {
-    this._fileUploadService.uploadFile(
-      this.htmlDocument,
-      this.fileName,
-      this.fileSourceLang
-    );
+  private uploadFile(): void {
+    this.fileUploadService.uploadFile(this.htmlDocument, this.fileName, this.fileSourceLang);
+
     if (localStorage.getItem('fileInfo')) {
-      this._router.navigate(['/translations']);
+      this.router.navigate(['/translations']);
     } else {
-      this.snackBar.open('Wild error occurred', 'close', {
-        duration: 2000
-      });
+      this.snackBar.open('Wild error occurred', 'close', { duration: 2000 });
     }
   }
 }

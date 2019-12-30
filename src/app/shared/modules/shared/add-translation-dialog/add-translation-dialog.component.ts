@@ -1,30 +1,21 @@
-import { Component, Injectable, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-import { Locale } from '../../../interfaces/locale.interface';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LocaleService } from '../../../../services/locale.service';
+import { Locale } from '../../../interfaces/locale.interface';
 
 @Component({
   templateUrl: './add-translation-dialog.component.html',
-  styleUrls: ['./add-translation-dialog.component.scss']
+  styleUrls: ['./add-translation-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddTranslationDialogComponent {
-  languages: Locale[] = [];
+  public languages: Locale[] = [];
 
   constructor(
-    private _localeService: LocaleService,
+    private localeService: LocaleService,
     public dialogRef: MatDialogRef<AddTranslationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.loadLanguages();
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  // loads locale in select
-  loadLanguages(): void {
-    this.languages = this._localeService.getLocale();
+    this.languages = this.localeService.getLocale();
   }
 }

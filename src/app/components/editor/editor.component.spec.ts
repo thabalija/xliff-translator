@@ -1,19 +1,18 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-
-import { MaterialModule } from '../../shared/modules/material/material.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FileUploadService } from '../../services/file-upload.service';
-import { TranslationListService } from '../../services/translation-list.service';
 import { FileDownloadService } from '../../services/file-download.service';
-import { TranslationUnitsService } from '../../services/translation-units.service';
+import { FileUploadService } from '../../services/file-upload.service';
 import { LocaleService } from '../../services/locale.service';
-import { EditorComponent } from './editor.component';
-import { TranslationUnit } from '../../shared/interfaces/translation-unit.interface';
+import { TranslationListService } from '../../services/translation-list.service';
+import { TranslationUnitsService } from '../../services/translation-units.service';
 import { FileInfo } from '../../shared/interfaces/file-info.interface';
+import { TranslationUnit } from '../../shared/interfaces/translation-unit.interface';
+import { MaterialModule } from '../../shared/modules/material/material.module';
+import { EditorComponent } from './editor.component';
 
 describe('EditorComponent', () => {
   let component: EditorComponent;
@@ -58,7 +57,6 @@ describe('EditorComponent', () => {
       });
       await TestBed.compileComponents();
 
-      // prevent Angular from resetting testing module
       TestBed.resetTestingModule = () => TestBed;
     })()
       .then(done)
@@ -66,7 +64,6 @@ describe('EditorComponent', () => {
   );
 
   afterAll(() => {
-    // reinstate resetTestingModule method
     TestBed.resetTestingModule = oldResetTestingModule;
     TestBed.resetTestingModule();
     localStorage.clear();
@@ -81,38 +78,4 @@ describe('EditorComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should load fileinfo from localstorage', () => {
-    const translationList = [{ id: 1 }];
-    component.translationID = 1;
-    localStorage.setItem('translationList', JSON.stringify(translationList));
-    component.loadTranslationInfo();
-    fixture.detectChanges();
-    expect(component.fileInfo.id).toBe(1);
-  });
-
-  it('should load translation units from localstorage', () => {
-    component.translationID = 1;
-    localStorage.setItem('1', JSON.stringify([translationUnit]));
-    spyOn(component, 'countTranslatedUnits');
-    spyOn(component, 'refreshTranslationUnits');
-    component.loadTranslationUnits();
-    fixture.detectChanges();
-    expect(component.countTranslatedUnits).toHaveBeenCalledTimes(1);
-    expect(component.refreshTranslationUnits).toHaveBeenCalledTimes(1);
-    expect(component.translationUnits.length).toBe(1);
-  });
-
-  it('should save changes to localstorage', () => {
-    component.translationUnits = [translationUnit];
-    component.translationID = 1;
-    component.fileInfo = fileInfo;
-    spyOn(component, 'countTranslatedUnits');
-    component.saveChanges();
-    fixture.detectChanges();
-    expect(component.countTranslatedUnits).toHaveBeenCalledTimes(1);
-    expect(localStorage.getItem('1')).toBeDefined();
-  });
-
-  // TODO: write rest of tests
 });

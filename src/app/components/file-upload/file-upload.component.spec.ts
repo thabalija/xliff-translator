@@ -1,15 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-
-import { FileUploadComponent } from './file-upload.component';
-import { MaterialModule } from '../../shared/modules/material/material.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FileUploadService } from '../../services/file-upload.service';
 import { LocaleService } from '../../services/locale.service';
 import { TranslationListService } from '../../services/translation-list.service';
+import { MaterialModule } from '../../shared/modules/material/material.module';
+import { FileUploadComponent } from './file-upload.component';
 
 describe('FileUploadComponent', () => {
   let component: FileUploadComponent;
@@ -57,7 +56,7 @@ describe('FileUploadComponent', () => {
   });
 
   it('should set language locales', () => {
-    component.loadLanguages();
+    component['loadLanguages']();
     fixture.detectChanges();
     expect(component.languages.length).toBeGreaterThan(0);
   });

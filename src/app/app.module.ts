@@ -1,32 +1,21 @@
-// Angular Modules
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-// Feature Modules
-import { MaterialModule } from './shared/modules/material/material.module';
-import { SharedModule } from './shared/modules/shared/shared.module';
-
-// Routing Modules
-import { AppRoutingModule } from './shared/modules/routing/app-routing.module';
-
-// Root Component
 import { AppComponent } from './app.component';
-
-// App Components
-import { LayoutComponent } from './components/layout/layout.component';
-import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { EditorComponent } from './components/editor/editor.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { LayoutComponent } from './components/layout/layout.component';
 import { TranslationsComponent } from './components/translations/translations.component';
-
-// Services
-import { LocaleService } from './services/locale.service';
-import { FileUploadService } from './services/file-upload.service';
 import { FileDownloadService } from './services/file-download.service';
+import { FileUploadService } from './services/file-upload.service';
+import { LocaleService } from './services/locale.service';
 import { TranslationListService } from './services/translation-list.service';
 import { TranslationUnitsService } from './services/translation-units.service';
+import { MaterialModule } from './shared/modules/material/material.module';
+import { AppRoutingModule } from './shared/modules/routing/app-routing.module';
+import { SharedModule } from './shared/modules/shared/shared.module';
 
 @NgModule({
   declarations: [

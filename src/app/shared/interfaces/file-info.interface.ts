@@ -1,11 +1,11 @@
 export interface FileInfo {
-  id?: number;
+  datatype?: string;
   fileName: string;
-  xliffVersion: string;
+  id?: number;
+  original?: string;
   sourceLang: string;
   targetLang?: string;
   totalUnits: number;
-  datatype?: string;
-  original?: string;
   translatedUnits?: number;
+  xliffVersion: string;
 }

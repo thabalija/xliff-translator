@@ -12,38 +12,27 @@ export class FileDownloadService {
   private fileInfo: FileInfo;
 
   constructor(
-    private _fileUploadService: FileUploadService,
-    private _translationListService: TranslationListService,
-    private _translationUnitsService: TranslationUnitsService
+    private fileUploadService: FileUploadService,
+    private translationListService: TranslationListService,
+    private translationUnitsService: TranslationUnitsService
   ) {}
 
-  // prepare translations for download
   public downloadFile(translationID: number): void {
-    this.originalFile = this._fileUploadService.getFile();
-    this.translationUnits = this._translationUnitsService.getTraslationUnits(
-      translationID
-    );
-    this.fileInfo = this._translationListService.getTranslationInfo(
-      translationID
-    );
+    this.originalFile = this.fileUploadService.getFile();
+    this.translationUnits = this.translationUnitsService.getTraslationUnits(translationID);
+    this.fileInfo = this.translationListService.getTranslationInfo(translationID);
 
-    this.translationUnits.forEach(transUnit => {
-      const targetElementList = this.originalFile
-        .getElementById(transUnit.id)
-        .getElementsByTagName('target');
+    this.translationUnits.forEach((transUnit: TranslationUnit) => {
+      const targetElementList = this.originalFile.getElementById(transUnit.id).getElementsByTagName('target');
       let targetElement: Element;
 
-      // if target element does not exist create one, if exist select it
-      if (targetElementList.length === 0) {
+      if (!targetElementList.length) {
         targetElement = document.createElement('TARGET');
-        this.originalFile
-          .getElementById(transUnit.id)
-          .appendChild(targetElement);
+        this.originalFile.getElementById(transUnit.id).appendChild(targetElement);
       } else {
-        targetElement = this.originalFile
-          .getElementById(transUnit.id)
-          .getElementsByTagName('target')[0];
+        targetElement = this.originalFile.getElementById(transUnit.id).getElementsByTagName('target')[0];
       }
+
       targetElement.innerHTML = transUnit.target;
       targetElement.setAttribute('state', transUnit.targetState);
     });
@@ -51,11 +40,10 @@ export class FileDownloadService {
     const stringer = new XMLSerializer();
     const finalFile = stringer.serializeToString(this.originalFile);
 
-    this.fileDownloader(finalFile, this.fileInfo.fileName);
+    this.triggerBrowserFileDownload(finalFile, this.fileInfo.fileName);
   }
 
-  // start file download in browser
-  private fileDownloader(file: string, fileName: string): void {
+  private triggerBrowserFileDownload(file: string, fileName: string): void {
     const element = document.createElement('a');
     element.setAttribute(
       'href',

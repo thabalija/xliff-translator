@@ -1,83 +1,61 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
-import { MatDialog } from '@angular/material/dialog';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LocaleService } from '../../services/locale.service';
+import { ActivatedRoute } from '@angular/router';
 import { FileDownloadService } from '../../services/file-download.service';
-import { TranslationUnitsService } from '../../services/translation-units.service';
-import { Locale } from '../../shared/interfaces/locale.interface';
-import { FileInfo } from '../../shared/interfaces/file-info.interface';
-import { TranslationUnit } from '../../shared/interfaces/translation-unit.interface';
+import { LocaleService } from '../../services/locale.service';
 import { TranslationListService } from '../../services/translation-list.service';
-import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dialog/confirm-dialog.component';
+import { TranslationUnitsService } from '../../services/translation-units.service';
+import { FileInfo } from '../../shared/interfaces/file-info.interface';
+import { Locale } from '../../shared/interfaces/locale.interface';
+import { TranslationUnit } from '../../shared/interfaces/translation-unit.interface';
 
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.scss']
+  styleUrls: ['./editor.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorComponent implements OnInit {
-  translationID: number;
-  fileInfo: FileInfo;
-  translationUnits: TranslationUnit[] = [];
-  paginatedTranslationUnits: TranslationUnit[] = [];
-  pageEvent: PageEvent = { pageIndex: 0, pageSize: 5, length: 0 };
-  pageSizeOptions = [5, 10, 25, 50];
-  languages: Locale[];
-  showUnits = 'all';
+  public fileInfo: FileInfo;
+  public translationUnits: TranslationUnit[] = [];
+  public paginatedTranslationUnits: TranslationUnit[] = [];
+  public pageEvent: PageEvent = { pageIndex: 0, pageSize: 5, length: 0 };
+  public pageSizeOptions = [5, 10, 25, 50];
+  public languages: Locale[];
+  public showUnits = 'all';
+  private translationID: number;
 
   constructor(
-    private route: ActivatedRoute,
-    private _fileDownloadService: FileDownloadService,
-    private _localeService: LocaleService,
-    private _translationUnitsService: TranslationUnitsService,
-    private _translationListService: TranslationListService,
     public snackBar: MatSnackBar,
-    private _dialog: MatDialog
+    private fileDownloadService: FileDownloadService,
+    private localeService: LocaleService,
+    private route: ActivatedRoute,
+    private translationListService: TranslationListService,
+    private translationUnitsService: TranslationUnitsService
   ) {}
 
   ngOnInit() {
     this.translationID = Number(this.route.snapshot.paramMap.get('id'));
-    this.loadLanguages();
-    this.loadTranslationInfo();
-    this.loadTranslationUnits();
-  }
-
-  // loads locale in select
-  loadLanguages(): void {
-    this.languages = this._localeService.getLocale();
-  }
-
-  // get translation info from localstorage
-  loadTranslationInfo(): void {
-    this.fileInfo = this._translationListService.getTranslationInfo(
-      this.translationID
-    );
-  }
-
-  // get translation units from localstorage
-  loadTranslationUnits(): void {
-    this.translationUnits = this._translationUnitsService.getTraslationUnits(
+    this.languages = this.localeService.getLocale();
+    this.fileInfo = this.translationListService.getTranslationInfo(this.translationID);
+    this.translationUnits = this.translationUnitsService.getTraslationUnits(
       this.translationID
     );
     this.countTranslatedUnits();
     this.refreshTranslationUnits();
   }
 
-  // save changes to localstorage
-  saveChanges(): void {
+  public saveChanges(): void {
     this.countTranslatedUnits();
-    this._translationUnitsService.addTraslationUnits(
+    this.translationUnitsService.addTraslationUnits(
       this.translationID,
       this.translationUnits
     );
-    this._translationListService.updateTranslationInfo(this.fileInfo);
+    this.translationListService.updateTranslationInfo(this.fileInfo);
   }
 
-  // count units marked as translated
-  countTranslatedUnits(): void {
+  private countTranslatedUnits(): void {
     let translatedUnitsCount = 0;
     this.translationUnits.forEach(unit => {
       if (unit.targetState.toLowerCase() === 'translated') {
@@ -89,14 +67,12 @@ export class EditorComponent implements OnInit {
     }
   }
 
-  // download file
-  downloadFile(translationID: number): void {
+  public downloadFile(translationID: number): void {
     this.saveChanges();
-    this._fileDownloadService.downloadFile(translationID);
+    this.fileDownloadService.downloadFile(translationID);
   }
 
-  // copies input text to clipboard
-  copy(text): void {
+  public copy(text: string): void {
     const textArea = document.createElement('textarea');
     textArea.style.position = 'fixed';
     textArea.style.top = '0';
@@ -120,27 +96,23 @@ export class EditorComponent implements OnInit {
     document.body.removeChild(textArea);
   }
 
-  // focus textarea on mat-card click
-  focusTextarea(event): void {
+  public focusTextarea(event: any): void {
     if (event.target.tagName.toLowerCase() === 'mat-card') {
       event.target.querySelector('textarea').focus();
     }
   }
 
-  // slice translation units on pagination event
-  onPageChange(event: PageEvent): void {
+  public onPageChange(event: PageEvent): void {
     this.pageEvent = event;
     this.refreshTranslationUnits();
   }
 
-  // filter translation units on selection event (show all/new/translated)
-  filterTranslations(showUnits: string): void {
+  public filterTranslations(showUnits: string): void {
     this.showUnits = showUnits;
     this.refreshTranslationUnits();
   }
 
-  // filter and slice
-  refreshTranslationUnits(): void {
+  public refreshTranslationUnits(): void {
     let filteredUnits: TranslationUnit[];
     if (this.showUnits === 'all') {
       filteredUnits = this.translationUnits;
@@ -162,25 +134,5 @@ export class EditorComponent implements OnInit {
       this.pageEvent.pageIndex * this.pageEvent.pageSize,
       (this.pageEvent.pageIndex + 1) * this.pageEvent.pageSize
     );
-  }
-
-  // ask user if he want to save data before he leaves
-  leaveEditorDialog(): void {
-    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-      width: '350px',
-      data: {
-        title: 'Please confirm',
-        content: `If you don't save changes all your unsaved translations will be lost.`,
-        confirm: `Save translation`
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('save data');
-        console.log('leave route afters save');
-      } else {
-        console.log('no need for saving');
-      }
-    });
   }
 }

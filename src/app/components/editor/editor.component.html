@@ -1,57 +1,39 @@
 <mat-card class="file-info file-info-editable" *ngIf="fileInfo">
   <div class="flex-row">
     <mat-form-field>
-      <input
-        matInput
-        placeholder="File name"
-        value="Sushi"
-        [(ngModel)]="fileInfo.fileName"
-      />
+      <input matInput placeholder="File name" [(ngModel)]="fileInfo.fileName"/>
     </mat-form-field>
+
     <mat-form-field>
-      <mat-select
-        placeholder="Target language"
-        [(ngModel)]="fileInfo.targetLang"
-      >
-        <mat-option *ngFor="let lang of languages" [value]="lang.locale">
-          {{ lang.language }}
-        </mat-option>
+      <mat-select placeholder="Target language" [(ngModel)]="fileInfo.targetLang">
+        <mat-option *ngFor="let lang of languages" [value]="lang.locale">{{ lang.language }}</mat-option>
       </mat-select>
     </mat-form-field>
+
     <mat-form-field>
       <mat-select
         placeholder="Show"
         [(ngModel)]="showUnits"
         (selectionChange)="filterTranslations(showUnits)"
       >
-        <mat-option [value]="'all'">
-          All
-        </mat-option>
-        <mat-option [value]="'new'">
-          New
-        </mat-option>
-        <mat-option [value]="'translated'">
-          Translated
-        </mat-option>
-        <mat-option [value]="'other'">
-          Other
-        </mat-option>
+        <mat-option [value]="'all'">All</mat-option>
+        <mat-option [value]="'new'">New</mat-option>
+        <mat-option [value]="'translated'">Translated</mat-option>
+        <mat-option [value]="'other'">Other</mat-option>
       </mat-select>
     </mat-form-field>
+
     <div class="flex-spacer"></div>
+
     <div class="file-info--group" *ngIf="fileInfo">
       <h5 class="file-info--title">Translated</h5>
       <h1 class="file-info--value">
-        {{
-          (fileInfo.translatedUnits / fileInfo.totalUnits) * 100
-            | number: "0.0-0"
-        }}%
+        {{ (fileInfo.translatedUnits / fileInfo.totalUnits) * 100 | number: "0.0-0" }}%
       </h1>
     </div>
+
     <div class="file-info-actions">
-      <button mat-button color="primary" (click)="downloadFile(fileInfo.id)">
-        Download
-      </button>
+      <button mat-button color="primary" (click)="downloadFile(fileInfo.id)">Download</button>
       <button mat-button color="primary" (click)="saveChanges()">Save</button>
     </div>
   </div>
@@ -59,9 +41,8 @@
 
 <mat-card class="editor">
   <mat-card-header>
-    <mat-card-title>
-      Translate strings
-    </mat-card-title>
+    <mat-card-title>Translate strings</mat-card-title>
+
     <div class="progress" align="end">
       <mat-icon class="inactive">lens</mat-icon>
       <mat-icon class="inactive">lens</mat-icon>
@@ -76,12 +57,14 @@
           <mat-card-content>
             <p>{{ unit.source }}</p>
           </mat-card-content>
+
           <mat-card-actions align="end">
             <button mat-icon-button (click)="copy(unit.source)" tabindex="-1">
               <mat-icon>content_copy</mat-icon>
             </button>
           </mat-card-actions>
         </mat-card>
+
         <div class="translation-unit--footer">
           <mat-icon class="mat-icon--fingerprint">fingerprint</mat-icon>
           <span class="translation-unit--fingerprint">{{ unit.id }}</span>
@@ -120,12 +103,8 @@
         </mat-card>
         <div class="translation-unit--footer">
           <mat-radio-group [(ngModel)]="unit.targetState">
-            <mat-radio-button color="primary" [value]="'new'"
-              >New</mat-radio-button
-            >
-            <mat-radio-button color="primary" [value]="'translated'"
-              >Translated</mat-radio-button
-            >
+            <mat-radio-button color="primary" [value]="'new'">New</mat-radio-button>
+            <mat-radio-button color="primary" [value]="'translated'">Translated</mat-radio-button>
           </mat-radio-group>
         </div>
       </div>
@@ -142,6 +121,5 @@
     [pageSize]="pageEvent.pageSize"
     [pageSizeOptions]="pageSizeOptions"
     (page)="onPageChange($event)"
-  >
-  </mat-paginator>
+  ></mat-paginator>
 </mat-card>

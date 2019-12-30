@@ -8,9 +8,9 @@ export class LocaleService {
     return LOCALE;
   }
 
-  public getLocaleObject(): Object {
+  public getLocaleObject(): object {
     const locale = {};
-    LOCALE.forEach((loc, i) => {
+    LOCALE.forEach((loc) => {
       locale[loc.locale] = loc.language;
     });
     return locale;

@@ -21,7 +21,7 @@ export class TranslationsComponent implements OnInit {
   translationsList: FileInfo[] = [];
   displayedColumns = ['language', 'status', 'delete', 'translate', 'download'];
   dataSource = new MatTableDataSource<FileInfo>();
-  localeObject: Object;
+  localeObject: object;
   translationStatus: number;
 
   constructor(
@@ -40,13 +40,11 @@ export class TranslationsComponent implements OnInit {
     this.loadLocaleObject();
   }
 
-  // load file info
-  loadBaseFileInfo(): void {
+  private loadBaseFileInfo(): void {
     this.baseFileInfo = this._fileUploadService.getFileInfo();
   }
 
-  // create translations from translation units
-  loadTranslations(): void {
+  private loadTranslations(): void {
     this.translationsList = this._translationListService.getTranslationList();
     this.dataSource.data = this.translationsList;
 
@@ -64,13 +62,11 @@ export class TranslationsComponent implements OnInit {
     }
   }
 
-  // load locale in table
-  loadLocaleObject(): void {
+  private loadLocaleObject(): void {
     this.localeObject = this._localeService.getLocaleObject();
   }
 
-  // open add translation dialog
-  openAddTranslationDialog(): void {
+  public openAddTranslationDialog(): void {
     const dialogRef = this._dialog.open(AddTranslationDialogComponent, {
       width: '500px',
       data: {
@@ -79,7 +75,7 @@ export class TranslationsComponent implements OnInit {
         useTranslationUnits: true
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.createTranslation(
           result.fileName,
@@ -90,22 +86,12 @@ export class TranslationsComponent implements OnInit {
     });
   }
 
-  // create new translation
-  createTranslation(
-    fileName: string,
-    targetLang: string,
-    useTranslationUnits: boolean
-  ): void {
-    this._translationListService.addTranslation(
-      fileName,
-      targetLang,
-      useTranslationUnits
-    );
+  private createTranslation(fileName: string, targetLang: string, useTranslationUnits: boolean): void {
+    this._translationListService.addTranslation(fileName, targetLang, useTranslationUnits);
     this.loadTranslations();
   }
 
-  // open add translation dialog
-  openDeleteTranslationDialog(translationID: number): void {
+  public openDeleteTranslationDialog(translationID: number): void {
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '290px',
       data: {
@@ -114,15 +100,14 @@ export class TranslationsComponent implements OnInit {
         confirm: 'Delete'
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+    dialogRef.afterClosed().subscribe((shouldDelete: boolean) => {
+      if (shouldDelete) {
         this.deleteTranslation(translationID);
       }
     });
   }
 
-  // open delete file dialog
-  openDeleteFileDialog(): void {
+  public openDeleteFileDialog(): void {
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '290px',
       data: {
@@ -132,28 +117,25 @@ export class TranslationsComponent implements OnInit {
         confirm: 'Delete'
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+    dialogRef.afterClosed().subscribe((shouldDelete: boolean) => {
+      if (shouldDelete) {
         this._fileUploadService.deleteFile();
         this._router.navigate(['']);
       }
     });
   }
 
-  // delete translation
-  deleteTranslation(translationID: number): void {
+  public deleteTranslation(translationID: number): void {
     this._translationListService.deleteTranslation(translationID);
     this._translationUnitsService.deleteTraslationUnits(translationID);
     this.loadTranslations();
   }
 
-  // open selected translation
-  openTranslation(translation: FileInfo): void {
+  public openTranslation(translation: FileInfo): void {
     this._router.navigate([`/edit-translation/${translation.id}`]);
   }
 
-  // download file
-  downloadFile(fileID: number): void {
+  public downloadFile(fileID: number): void {
     this._fileDownloadService.downloadFile(fileID);
   }
 }

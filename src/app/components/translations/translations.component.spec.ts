@@ -1,17 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-
-import { TranslationsComponent } from './translations.component';
-import { MaterialModule } from '../../shared/modules/material/material.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FileUploadService } from '../../services/file-upload.service';
-import { TranslationListService } from '../../services/translation-list.service';
 import { FileDownloadService } from '../../services/file-download.service';
-import { TranslationUnitsService } from '../../services/translation-units.service';
+import { FileUploadService } from '../../services/file-upload.service';
 import { LocaleService } from '../../services/locale.service';
+import { TranslationListService } from '../../services/translation-list.service';
+import { TranslationUnitsService } from '../../services/translation-units.service';
+import { MaterialModule } from '../../shared/modules/material/material.module';
+import { TranslationsComponent } from './translations.component';
 
 describe('TranslationsComponent', () => {
   let component: TranslationsComponent;
