@@ -1,5 +1,6 @@
 export interface TranslationUnit {
-  id: string;
+  unitId: string;
+  segmentId?: string;
   source: string;
   target: string;
   targetState: string;

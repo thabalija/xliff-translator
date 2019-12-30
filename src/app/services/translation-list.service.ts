@@ -92,7 +92,7 @@ export class TranslationListService {
   private resetTargetElement(translationUnits: TranslationUnit[]): TranslationUnit[] {
     translationUnits.forEach(unit => {
       unit.target = '';
-      unit.targetState = 'new';
+      unit.targetState = 'initial';
       return unit;
     });
     return translationUnits;

@@ -17,21 +17,21 @@ import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dial
   styleUrls: ['./translations.component.scss']
 })
 export class TranslationsComponent implements OnInit {
-  baseFileInfo: FileInfo;
-  translationsList: FileInfo[] = [];
-  displayedColumns = ['language', 'status', 'delete', 'translate', 'download'];
-  dataSource = new MatTableDataSource<FileInfo>();
-  localeObject: object;
-  translationStatus: number;
+  public baseFileInfo: FileInfo;
+  public translationsList: FileInfo[] = [];
+  public displayedColumns = ['language', 'status', 'delete', 'translate', 'download'];
+  public dataSource = new MatTableDataSource<FileInfo>();
+  public localeObject: object;
+  public translationStatus: number;
 
   constructor(
-    public _router: Router,
-    private _fileUploadService: FileUploadService,
-    private _fileDownloadService: FileDownloadService,
-    private _translationListService: TranslationListService,
-    private _translationUnitsService: TranslationUnitsService,
-    private _localeService: LocaleService,
-    private _dialog: MatDialog
+    private dialog: MatDialog,
+    private fileDownloadService: FileDownloadService,
+    private fileUploadService: FileUploadService,
+    private localeService: LocaleService,
+    private router: Router,
+    private translationListService: TranslationListService,
+    private translationUnitsService: TranslationUnitsService
   ) {}
 
   ngOnInit() {
@@ -41,11 +41,11 @@ export class TranslationsComponent implements OnInit {
   }
 
   private loadBaseFileInfo(): void {
-    this.baseFileInfo = this._fileUploadService.getFileInfo();
+    this.baseFileInfo = this.fileUploadService.getFileInfo();
   }
 
   private loadTranslations(): void {
-    this.translationsList = this._translationListService.getTranslationList();
+    this.translationsList = this.translationListService.getTranslationList();
     this.dataSource.data = this.translationsList;
 
     if (this.translationsList.length) {
@@ -63,11 +63,11 @@ export class TranslationsComponent implements OnInit {
   }
 
   private loadLocaleObject(): void {
-    this.localeObject = this._localeService.getLocaleObject();
+    this.localeObject = this.localeService.getLocaleObject();
   }
 
   public openAddTranslationDialog(): void {
-    const dialogRef = this._dialog.open(AddTranslationDialogComponent, {
+    const dialogRef = this.dialog.open(AddTranslationDialogComponent, {
       width: '500px',
       data: {
         fileName: '',
@@ -87,12 +87,12 @@ export class TranslationsComponent implements OnInit {
   }
 
   private createTranslation(fileName: string, targetLang: string, useTranslationUnits: boolean): void {
-    this._translationListService.addTranslation(fileName, targetLang, useTranslationUnits);
+    this.translationListService.addTranslation(fileName, targetLang, useTranslationUnits);
     this.loadTranslations();
   }
 
   public openDeleteTranslationDialog(translationID: number): void {
-    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '290px',
       data: {
         title: 'Delete translation',
@@ -108,7 +108,7 @@ export class TranslationsComponent implements OnInit {
   }
 
   public openDeleteFileDialog(): void {
-    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '290px',
       data: {
         title: 'Delete file',
@@ -119,23 +119,23 @@ export class TranslationsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((shouldDelete: boolean) => {
       if (shouldDelete) {
-        this._fileUploadService.deleteFile();
-        this._router.navigate(['']);
+        this.fileUploadService.deleteFile();
+        this.router.navigate(['']);
       }
     });
   }
 
   public deleteTranslation(translationID: number): void {
-    this._translationListService.deleteTranslation(translationID);
-    this._translationUnitsService.deleteTraslationUnits(translationID);
+    this.translationListService.deleteTranslation(translationID);
+    this.translationUnitsService.deleteTraslationUnits(translationID);
     this.loadTranslations();
   }
 
   public openTranslation(translation: FileInfo): void {
-    this._router.navigate([`/edit-translation/${translation.id}`]);
+    this.router.navigate([`/edit-translation/${translation.id}`]);
   }
 
   public downloadFile(fileID: number): void {
-    this._fileDownloadService.downloadFile(fileID);
+    this.fileDownloadService.downloadFile(fileID);
   }
 }
