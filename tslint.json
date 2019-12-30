@@ -2,6 +2,7 @@
   "rulesDirectory": ["node_modules/codelyzer"],
   "rules": {
     "arrow-return-shorthand": true,
+    "array-type": false,
     "callable-types": true,
     "class-name": true,
     "comment-format": [true, "check-space"],

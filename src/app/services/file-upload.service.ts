@@ -60,7 +60,7 @@ export class FileUploadService {
       translatedUnits,
       datatype: fileElement.getAttribute('datatype'),
       original: fileElement.getAttribute('original'),
-      targetLang: fileElement.getAttribute('trgLang'),
+      targetLang: xliffElement.getAttribute('trgLang'),
       totalUnits: htmlDoc.getElementsByTagName('unit').length,
       xliffVersion: xliffElement.getAttribute('version'),
     };

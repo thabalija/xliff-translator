@@ -73,18 +73,10 @@
             mat-icon-button
             *ngIf="unit.note.length > 0"
             (click)="unit.showNote = true"
+            matTooltip="{{ getNote(unit.note) }}"
           >
             <mat-icon>info_outline</mat-icon>
           </button>
-          <div class="info-popup" *ngIf="unit.note.length > 0 && unit.showNote">
-            <button mat-icon-button (click)="unit.showNote = false">
-              <mat-icon>close</mat-icon>
-            </button>
-            <ng-container *ngFor="let note of unit.note">
-              <h3>{{ note.from | titlecase }}</h3>
-              <p>{{ note.note }}</p>
-            </ng-container>
-          </div>
         </div>
       </div>
 

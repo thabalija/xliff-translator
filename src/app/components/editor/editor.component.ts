@@ -8,7 +8,7 @@ import { TranslationListService } from '../../services/translation-list.service'
 import { TranslationUnitsService } from '../../services/translation-units.service';
 import { FileInfo } from '../../shared/interfaces/file-info.interface';
 import { Locale } from '../../shared/interfaces/locale.interface';
-import { TranslationUnit } from '../../shared/interfaces/translation-unit.interface';
+import { Note, TranslationUnit } from '../../shared/interfaces/translation-unit.interface';
 
 @Component({
   selector: 'app-editor',
@@ -18,11 +18,11 @@ import { TranslationUnit } from '../../shared/interfaces/translation-unit.interf
 })
 export class EditorComponent implements OnInit {
   public fileInfo: FileInfo;
-  public translationUnits: TranslationUnit[] = [];
-  public paginatedTranslationUnits: TranslationUnit[] = [];
+  public translationUnits: Array<TranslationUnit> = [];
+  public paginatedTranslationUnits: Array<TranslationUnit> = [];
   public pageEvent: PageEvent = { pageIndex: 0, pageSize: 5, length: 0 };
   public pageSizeOptions = [5, 10, 25, 50];
-  public languages: Locale[];
+  public languages: Array<Locale>;
   public showUnits = 'all';
   private translationID: number;
 
@@ -134,5 +134,9 @@ export class EditorComponent implements OnInit {
       this.pageEvent.pageIndex * this.pageEvent.pageSize,
       (this.pageEvent.pageIndex + 1) * this.pageEvent.pageSize
     );
+  }
+
+  public getNote(notes: Array<Note>): string {
+    return notes.map((noteObject: Note) => noteObject.note).join(', ');
   }
 }
