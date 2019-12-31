@@ -3,15 +3,17 @@ import { TranslationUnit } from '../shared/interfaces/translation-unit.interface
 
 @Injectable()
 export class TranslationUnitsService {
-  public getTraslationUnits(translationID: number): TranslationUnit[] {
-    return JSON.parse(localStorage.getItem(translationID.toString())) || [];
+  public getTraslationUnits(translationId?: number): TranslationUnit[] {
+    return translationId
+      ? JSON.parse(localStorage.getItem(translationId.toString())) || []
+      : JSON.parse(localStorage.getItem('translationUnits'));
   }
 
-  public addTraslationUnits(translationID: number, translationUnits: TranslationUnit[]): void {
-    localStorage.setItem(translationID.toString(), JSON.stringify(translationUnits));
+  public addTraslationUnits(translationId: number, translationUnits: TranslationUnit[]): void {
+    localStorage.setItem(translationId.toString(), JSON.stringify(translationUnits));
   }
 
-  public deleteTraslationUnits(translationID: number): void {
-    localStorage.removeItem(translationID.toString());
+  public deleteTraslationUnits(translationId: number): void {
+    localStorage.removeItem(translationId.toString());
   }
 }

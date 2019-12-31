@@ -8,16 +8,25 @@
     <div class="flex-row">
       <mat-form-field>
         <mat-select placeholder="Target language" [(ngModel)]="data.targetLang">
-          <mat-option *ngFor="let lang of languages" [value]="lang.locale">
-            {{ lang.language }}
+          <mat-option *ngFor="let language of languages" [value]="language.locale">
+            {{ language.language }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div class="flex-row">
-      <mat-checkbox [(ngModel)]="data.useTranslationUnits" color="primary"
-        >Use translation target values from source file</mat-checkbox
-      >
+      <mat-checkbox *ngIf="data.translatedLanguages.length" [(ngModel)]="data.useTranslationUnits" color="primary">
+        Copy translations from translated file
+      </mat-checkbox>
+    </div>
+    <div *ngIf="data.useTranslationUnits" class="flex-row">
+      <mat-form-field>
+        <mat-select placeholder="Choose translation" [(ngModel)]="data.translationToCopy">
+          <mat-option *ngFor="let language of data.translatedLanguages" [value]="language">
+            {{ localeObject[language.targetLang] }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
 </mat-dialog-content>
@@ -31,9 +40,8 @@
     (click)="dialogRef.close(data)"
     color="primary"
     class="button-round button-border"
-    [disabled]="data.targetLang === ''"
+    [disabled]="data.targetLang === '' || data.useTranslationUnits && !data.translationToCopy"
   >
-    <mat-icon>add</mat-icon>
     <span>Create translation</span>
   </button>
 </mat-dialog-actions>

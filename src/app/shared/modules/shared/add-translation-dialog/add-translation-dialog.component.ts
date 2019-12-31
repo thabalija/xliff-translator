@@ -10,12 +10,14 @@ import { Locale } from '../../../interfaces/locale.interface';
 })
 export class AddTranslationDialogComponent {
   public languages: Locale[] = [];
+  public localeObject: object;
 
   constructor(
     private localeService: LocaleService,
     public dialogRef: MatDialogRef<AddTranslationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.languages = this.localeService.getLocale();
+    this.localeObject = this.localeService.getLocaleObject();
   }
 }

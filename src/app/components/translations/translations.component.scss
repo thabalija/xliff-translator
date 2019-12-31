@@ -83,3 +83,27 @@ a {
     }
   }
 }
+
+.empty-state {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .icon {
+    width: 62px;
+    height: 62px;
+    font-size: 62px;
+    color: $light-gray;
+  }
+
+  h1 {
+    color: $text-gray;
+    margin-bottom: 0.5em;
+  }
+
+  p {
+    color: $text-gray;
+  }
+}

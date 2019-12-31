@@ -7,6 +7,7 @@ import { LocaleService } from '../../services/locale.service';
 import { TranslationListService } from '../../services/translation-list.service';
 import { TranslationUnitsService } from '../../services/translation-units.service';
 import { FileInfo } from '../../shared/interfaces/file-info.interface';
+import { TranslationUnit } from '../../shared/interfaces/translation-unit.interface';
 import { AddTranslationDialogComponent } from '../../shared/modules/shared/add-translation-dialog/add-translation-dialog.component';
 import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dialog/confirm-dialog.component';
 
@@ -67,18 +68,27 @@ export class TranslationsComponent implements OnInit {
       width: '400px',
       data: {
         targetLang: ``,
-        useTranslationUnits: true
+        useTranslationUnits: false,
+        translatedLanguages: this.translationsList,
       }
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.createTranslation(result.targetLang, result.useTranslationUnits);
+        const translationUnits: Array<TranslationUnit> = result.translationToCopy
+          ? this.translationUnitsService.getTraslationUnits(result.translationToCopy.id)
+          : this.translationListService.resetTargetElement(this.getBaseTranslationUnits());
+
+        this.createTranslation(result.targetLang, translationUnits);
       }
     });
   }
 
-  private createTranslation(targetLang: string, useTranslationUnits: boolean): void {
-    this.translationListService.addTranslation(targetLang, useTranslationUnits);
+  private getBaseTranslationUnits(): Array<TranslationUnit> {
+    return this.translationUnitsService.getTraslationUnits();
+  }
+
+  private createTranslation(targetLang: string, translationUnits: Array<TranslationUnit> = []): void {
+    this.translationListService.addTranslation(targetLang, translationUnits);
     this.loadTranslations();
   }
 
@@ -128,5 +138,11 @@ export class TranslationsComponent implements OnInit {
 
   public downloadFile(fileID: number): void {
     this.fileDownloadService.downloadFile(fileID);
+  }
+
+  public getTranslationTitle(translationInfo: FileInfo): string {
+    return translationInfo.targetLang
+      ? this.localeObject[translationInfo.targetLang]
+      : `${this.localeObject[translationInfo.sourceLang]} (Source)`;
   }
 }

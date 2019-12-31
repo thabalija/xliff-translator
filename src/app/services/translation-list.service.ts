@@ -24,18 +24,16 @@ export class TranslationListService {
     localStorage.setItem('translationList', JSON.stringify(translationList));
   }
 
-  public addTranslation(targetLang: string, useTranslationUnits: boolean, fileName?: string): void {
+  public addTranslation(targetLang: string, translationUnits: Array<TranslationUnit> = [], fileName?: string): void {
     this.fileInfo = JSON.parse(localStorage.getItem('fileInfo'));
-    const translationUnits = JSON.parse(localStorage.getItem('translationUnits'));
     const translationID = +new Date();
     const newTranslation = this.createNewTranslationInfo(translationID, targetLang, fileName);
 
-    if (!useTranslationUnits) {
+    if (!translationUnits.length) {
       this.resetTargetElement(translationUnits);
-      newTranslation.translatedUnits = 0;
-    } else {
-      newTranslation.translatedUnits = this.countTranslatedUnits(translationUnits);
     }
+
+    newTranslation.translatedUnits = this.countTranslatedUnits(translationUnits);
 
     this.saveCreatedTranslation(newTranslation);
     this.saveTraslationUnits(translationID, translationUnits);
@@ -47,13 +45,13 @@ export class TranslationListService {
     localStorage.setItem('translationList', JSON.stringify(translationList));
   }
 
-  public countTranslatedUnits(translationUnits: TranslationUnit[]): number {
+  public countTranslatedUnits(translationUnits: Array<TranslationUnit>): number {
     return translationUnits.reduce((count: number, unit: TranslationUnit) => {
-      return unit.targetState.toLowerCase() === 'translated' ? count++ : count;
+      return unit.targetState.toLowerCase() === 'translated' ? count + 1 : count;
     }, 0);
   }
 
-  private createNewTranslationInfo(translationID: number, targetLang: string, fileName?: string): FileInfo {
+  private createNewTranslationInfo(translationID: number, targetLang?: string, fileName?: string): FileInfo {
     return {
       fileName,
       targetLang,
@@ -63,13 +61,12 @@ export class TranslationListService {
     };
   }
 
-  private resetTargetElement(translationUnits: TranslationUnit[]): TranslationUnit[] {
-    translationUnits.forEach(unit => {
-      unit.target = '';
+  public resetTargetElement(translationUnits: Array<TranslationUnit>): Array<TranslationUnit> {
+    return translationUnits.map((unit: TranslationUnit) => {
+      unit.target = null;
       unit.targetState = 'initial';
       return unit;
     });
-    return translationUnits;
   }
 
   private saveCreatedTranslation(translation: FileInfo): void {
@@ -78,7 +75,7 @@ export class TranslationListService {
     localStorage.setItem('translationList', JSON.stringify(translationList));
   }
 
-  private saveTraslationUnits(translationID: number, translationUnits: TranslationUnit[]): void {
+  private saveTraslationUnits(translationID: number, translationUnits: Array<TranslationUnit>): void {
     localStorage.setItem(translationID.toString(), JSON.stringify(translationUnits));
   }
 }

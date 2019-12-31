@@ -1,4 +1,4 @@
-<div class="card-wrapper file-info" *ngIf="baseFileInfo">
+<div class="card-wrapper file-info">
   <div class="flex-row">
     <div class="file-info--group">
       <h5 class="file-info--title">Uploaded file</h5>
@@ -31,14 +31,14 @@
   <div class="card-content">
     <div class="translation--list">
       <div class="translation--header-row">
-        <div class="translation--cell translation--cell__header">Target language</div>
+        <div class="translation--cell translation--cell__header">Language</div>
         <div class="translation--cell translation--cell__header translation--cell__status">Status</div>
       </div>
       <div *ngFor="let translation of translationsList" class="translation--row">
-        <div class="translation--cell translation--title">{{ localeObject[translation.targetLang] }}</div>
+        <div class="translation--cell translation--title">{{ getTranslationTitle(translation) }}</div>
 
         <div class="translation--cell translation--status">
-          <div class="status">
+          <div *ngIf="translation.targetLang" class="status">
             <mat-progress-bar
               mode="determinate"
               [value]="(translation.translatedUnits / translation.totalUnits) * 100"
@@ -48,27 +48,31 @@
         </div>
 
         <div class="translation--cell translation--cell__center">
-          <a (click)="openDeleteTranslationDialog(translation.id)">
+          <a *ngIf="translation.targetLang" (click)="openDeleteTranslationDialog(translation.id)">
             <mat-icon color="primary">delete</mat-icon>
             <span class="mat-table--info-label">Delete</span>
           </a>
         </div>
 
         <div class="translation--cell translation--cell__center">
-          <a (click)="openTranslation(translation)">
+          <a *ngIf="translation.targetLang" (click)="openTranslation(translation)">
             <mat-icon color="primary">edit</mat-icon>
             <span class="mat-table--info-label">Translate</span>
           </a>
         </div>
         <div class="translation--cell translation--cell__center">
-          <a (click)="downloadFile(translation.id)">
+          <a *ngIf="translation.targetLang" (click)="downloadFile(translation.id)">
             <mat-icon color="primary">file_download</mat-icon>
             <span class="mat-table--info-label">Download</span>
           </a>
         </div>
       </div>
+      <div *ngIf="!translationsList.length" class="empty-state">
+        <mat-icon class="icon">playlist_add</mat-icon>
+        <h1>Start translating</h1>
+        <p>You have no translations yet. <a class="font-bold" (click)="openAddTranslationDialog()">Create new translation.</a></p>
+      </div>
     </div>
-
     <div align="end">
       <button mat-button (click)="openDeleteFileDialog()" class="button-round">Delete uploaded file</button>
       <button

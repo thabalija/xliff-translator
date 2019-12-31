@@ -36,8 +36,9 @@ export class FileUploadService {
     const fileInfo: FileInfo = this.createFileInfo(htmlDoc, fileName, sourceLang, translatedUnits);
     this.saveUploadedFile(fileInfo, translationUnits, htmlDoc);
 
-    const newTranslationLanguage: string = fileInfo.targetLang || fileInfo.sourceLang;
-    this.translationListService.addTranslation(newTranslationLanguage, true, fileInfo.fileName);
+    if (fileInfo.targetLang) {
+      this.translationListService.addTranslation(fileInfo.targetLang, translationUnits, fileInfo.fileName);
+    }
 
     this.uploadedFile.next(true);
   }
@@ -83,7 +84,6 @@ export class FileUploadService {
   private createTranslationUnit(unit: Element, segment: Element): TranslationUnit {
     const targetElementList = segment.getElementsByTagName('target');
     const targetElement: Element = targetElementList.length ? segment.getElementsByTagName('target')[0] : null;
-    const targetElementState: string = targetElementList.length ? targetElement.getAttribute('state') : null;
 
     return {
       note: this.getNotes(unit.getElementsByTagName('note') as any),
@@ -91,7 +91,7 @@ export class FileUploadService {
       showNote: false,
       source: segment.querySelector('source').innerHTML,
       target: targetElement ? targetElement.innerHTML : null,
-      targetState: targetElementState || 'initial',
+      targetState: segment.getAttribute('state') || 'initial',
       unitId: unit.getAttribute('id'),
     };
   }
@@ -112,7 +112,7 @@ export class FileUploadService {
       datatype: fileElement.getAttribute('datatype'),
       original: fileElement.getAttribute('original'),
       targetLang: xliffElement.getAttribute('trgLang'),
-      totalUnits: htmlDoc.getElementsByTagName('unit').length,
+      totalUnits: htmlDoc.getElementsByTagName('segment').length,
     };
   }
 
