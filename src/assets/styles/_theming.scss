@@ -26,10 +26,6 @@
   }
 }
 
-mat-card.mat-card:not([class*='mat-elevation-z']) {
-  box-shadow: $box-shadow;
-}
-
 mat-paginator .mat-paginator-range-label {
   margin: 0 0px 0 8px;
   @media screen and (min-width: $breakpoint-md) {
@@ -41,6 +37,6 @@ mat-checkbox .mat-checkbox-label {
   white-space: initial;
 }
 
-mat-card .mat-card-header-text {
-  margin: 0;
+mat-progress-bar .mat-progress-bar-buffer {
+  background-color: $light-gray;
 }

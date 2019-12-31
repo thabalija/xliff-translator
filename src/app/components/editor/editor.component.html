@@ -1,4 +1,4 @@
-<mat-card class="file-info file-info-editable" *ngIf="fileInfo">
+<div *ngIf="fileInfo" class="card-wrapper file-info file-info-editable">
   <div class="flex-row">
     <mat-form-field>
       <mat-select placeholder="Target language" [(ngModel)]="fileInfo.targetLang">
@@ -33,27 +33,27 @@
       <button mat-button color="primary" (click)="saveChanges()">Save</button>
     </div>
   </div>
-</mat-card>
+</div>
 
-<mat-card class="editor">
-  <mat-card-header>
-    <mat-card-title>Translate strings</mat-card-title>
-  </mat-card-header>
+<div class="card-wrapper editor">
+  <div class="card-header">
+    <div class="card-header--title">Translate strings</div>
+  </div>
 
   <ng-container *ngFor="let unit of paginatedTranslationUnits">
     <div class="translation-unit" id="unit.unitId">
       <div class="source">
-        <mat-card class="">
-          <mat-card-content>
+        <div class="card-wrapper">
+          <div class="card-content">
             <p>{{ unit.source }}</p>
-          </mat-card-content>
+          </div>
 
-          <mat-card-actions align="end">
+          <div class="card-actions" align="end">
             <button mat-icon-button (click)="copy(unit.source)" tabindex="-1">
               <mat-icon>content_copy</mat-icon>
             </button>
-          </mat-card-actions>
-        </mat-card>
+          </div>
+        </div>
 
         <div class="translation-unit--footer">
           <mat-icon class="mat-icon--fingerprint">fingerprint</mat-icon>
@@ -71,8 +71,8 @@
       </div>
 
       <div class="target">
-        <mat-card class="target-input" (click)="focusTextarea($event)">
-          <mat-card-content>
+        <div class="card-wrapper target-input" (click)="focusTextarea($event)">
+          <div class="card-content">
             <mat-form-field>
               <textarea
                 matInput
@@ -81,8 +81,8 @@
                 [(ngModel)]="unit.target"
               ></textarea>
             </mat-form-field>
-          </mat-card-content>
-        </mat-card>
+          </div>
+        </div>
         <div class="translation-unit--footer">
           <mat-radio-group [(ngModel)]="unit.targetState">
             <mat-radio-button color="primary" [value]="'initial'">Initial</mat-radio-button>
@@ -104,4 +104,4 @@
     [pageSizeOptions]="pageSizeOptions"
     (page)="onPageChange($event)"
   ></mat-paginator>
-</mat-card>
+</div>

@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FileDownloadService } from '../../services/file-download.service';
 import { FileUploadService } from '../../services/file-upload.service';
@@ -14,24 +13,24 @@ import { ConfirmDialogComponent } from '../../shared/modules/shared/confirm-dial
 @Component({
   selector: 'app-translations',
   templateUrl: './translations.component.html',
-  styleUrls: ['./translations.component.scss']
+  styleUrls: ['./translations.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TranslationsComponent implements OnInit {
   public baseFileInfo: FileInfo;
-  public translationsList: FileInfo[] = [];
-  public displayedColumns = ['language', 'status', 'delete', 'translate', 'download'];
-  public dataSource = new MatTableDataSource<FileInfo>();
   public localeObject: object;
+  public translationsList: Array<FileInfo> = [];
   public translationStatus: number;
 
   constructor(
+    private changeDetectorRef: ChangeDetectorRef,
     private dialog: MatDialog,
     private fileDownloadService: FileDownloadService,
     private fileUploadService: FileUploadService,
     private localeService: LocaleService,
     private router: Router,
     private translationListService: TranslationListService,
-    private translationUnitsService: TranslationUnitsService
+    private translationUnitsService: TranslationUnitsService,
   ) {}
 
   ngOnInit() {
@@ -46,20 +45,17 @@ export class TranslationsComponent implements OnInit {
 
   private loadTranslations(): void {
     this.translationsList = this.translationListService.getTranslationList();
-    this.dataSource.data = this.translationsList;
 
     if (this.translationsList.length) {
-      let translatedUnits = 0;
-      this.translationsList.forEach(translation => {
-        translatedUnits = translatedUnits + translation.translatedUnits;
-      });
-      this.translationStatus =
-        (translatedUnits /
-          (this.baseFileInfo.totalUnits * this.translationsList.length)) *
-        100;
+      const translatedUnits: number = this.translationsList.reduce((count: number, translation: FileInfo) => {
+        return count + translation.translatedUnits;
+      }, 0);
+      this.translationStatus = (translatedUnits / (this.baseFileInfo.totalUnits * this.translationsList.length)) * 100;
     } else {
       this.translationStatus = 0;
     }
+
+    this.changeDetectorRef.markForCheck();
   }
 
   private loadLocaleObject(): void {
@@ -76,10 +72,7 @@ export class TranslationsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.createTranslation(
-          result.targetLang,
-          result.useTranslationUnits
-        );
+        this.createTranslation(result.targetLang, result.useTranslationUnits);
       }
     });
   }

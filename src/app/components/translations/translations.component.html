@@ -1,4 +1,4 @@
-<mat-card class="file-info" *ngIf="baseFileInfo">
+<div class="card-wrapper file-info" *ngIf="baseFileInfo">
   <div class="flex-row">
     <div class="file-info--group">
       <h5 class="file-info--title">Uploaded file</h5>
@@ -22,106 +22,55 @@
       <h1 class="file-info--value">{{ baseFileInfo.sourceLang }}</h1>
     </div>
   </div>
-</mat-card>
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>
-      My translations
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div class="translation-list">
-      <mat-table #table [dataSource]="dataSource">
-        <!-- language Column -->
-        <ng-container matColumnDef="language">
-          <mat-header-cell *matHeaderCellDef class="mat-table--target-lang">
-            Target language
-          </mat-header-cell>
-          <mat-cell
-            *matCellDef="let translation"
-            class="mat-table--target-lang"
-          >
-            {{ localeObject[translation.targetLang] }}
-          </mat-cell>
-        </ng-container>
+</div>
 
-        <!-- status Column -->
-        <ng-container matColumnDef="status">
-          <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-          <mat-cell *matCellDef="let translation">
-            <div class="status">
-              <mat-progress-bar
-                mode="determinate"
-                [value]="
-                  (translation.translatedUnits / translation.totalUnits) * 100
-                "
-              ></mat-progress-bar>
-              <p>
-                {{
-                  (translation.translatedUnits / translation.totalUnits) * 100
-                    | number: '0.0-0'
-                }}
-                %
-              </p>
-            </div>
-          </mat-cell>
-        </ng-container>
+<div class="card-wrapper">
+  <div class="card-header">
+    <div class="card-header--title">My translations</div>
+  </div>
+  <div class="card-content">
+    <div class="translation--list">
+      <div class="translation--header-row">
+        <div class="translation--cell translation--cell__header">Target language</div>
+        <div class="translation--cell translation--cell__header translation--cell__status">Status</div>
+      </div>
+      <div *ngFor="let translation of translationsList" class="translation--row">
+        <div class="translation--cell translation--title">{{ localeObject[translation.targetLang] }}</div>
 
-        <!-- delete Column -->
-        <ng-container matColumnDef="delete">
-          <mat-header-cell *matHeaderCellDef class="mat-table--action">
-            Delete
-          </mat-header-cell>
-          <mat-cell *matCellDef="let translation" class="mat-table--action">
-            <a (click)="openDeleteTranslationDialog(translation.id)">
-              <mat-icon color="primary">delete</mat-icon>
-              <span class="mat-table--info-label">Delete</span>
-            </a>
-          </mat-cell>
-        </ng-container>
+        <div class="translation--cell translation--status">
+          <div class="status">
+            <mat-progress-bar
+              mode="determinate"
+              [value]="(translation.translatedUnits / translation.totalUnits) * 100"
+            ></mat-progress-bar>
+            <p>{{ (translation.translatedUnits / translation.totalUnits) * 100 | number: '0.0-0' }}%</p>
+          </div>
+        </div>
 
-        <!-- translate Column -->
-        <ng-container matColumnDef="translate">
-          <mat-header-cell *matHeaderCellDef class="mat-table--action">
-            Translate
-          </mat-header-cell>
-          <mat-cell *matCellDef="let translation" class="mat-table--action">
-            <a (click)="openTranslation(translation)">
-              <mat-icon color="primary">edit</mat-icon>
-              <span class="mat-table--info-label">Translate</span>
-            </a>
-          </mat-cell>
-        </ng-container>
+        <div class="translation--cell translation--cell__center">
+          <a (click)="openDeleteTranslationDialog(translation.id)">
+            <mat-icon color="primary">delete</mat-icon>
+            <span class="mat-table--info-label">Delete</span>
+          </a>
+        </div>
 
-        <!-- download Column -->
-        <ng-container matColumnDef="download">
-          <mat-header-cell *matHeaderCellDef class="mat-table--action">
-            Download
-          </mat-header-cell>
-          <mat-cell *matCellDef="let translation" class="mat-table--action">
-            <a (click)="downloadFile(translation.id)">
-              <mat-icon color="primary">file_download</mat-icon>
-              <span class="mat-table--info-label">Download</span>
-            </a>
-          </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-      </mat-table>
-
-      <div *ngIf="translationsList.length === 0" class="missing-data">
-        <mat-icon class="mat-48">playlist_add</mat-icon>
-        <p>
-          No translations yet.
-          <a (click)="openAddTranslationDialog()">Add translation</a>
-        </p>
+        <div class="translation--cell translation--cell__center">
+          <a (click)="openTranslation(translation)">
+            <mat-icon color="primary">edit</mat-icon>
+            <span class="mat-table--info-label">Translate</span>
+          </a>
+        </div>
+        <div class="translation--cell translation--cell__center">
+          <a (click)="downloadFile(translation.id)">
+            <mat-icon color="primary">file_download</mat-icon>
+            <span class="mat-table--info-label">Download</span>
+          </a>
+        </div>
       </div>
     </div>
+
     <div align="end">
-      <button mat-button (click)="openDeleteFileDialog()" class="button-round">
-        Delete uploaded file
-      </button>
+      <button mat-button (click)="openDeleteFileDialog()" class="button-round">Delete uploaded file</button>
       <button
         mat-button
         (click)="openAddTranslationDialog()"
@@ -131,5 +80,5 @@
         Add translation
       </button>
     </div>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>

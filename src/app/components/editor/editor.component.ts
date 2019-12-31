@@ -97,7 +97,7 @@ export class EditorComponent implements OnInit {
   }
 
   public focusTextarea(event: any): void {
-    if (event.target.tagName.toLowerCase() === 'mat-card') {
+    if (event.target.classList.contains('target-input')) {
       event.target.querySelector('textarea').focus();
     }
   }

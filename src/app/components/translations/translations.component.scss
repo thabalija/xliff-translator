@@ -1,4 +1,5 @@
 @import 'variables';
+
 a {
   mat-icon {
     margin-right: 0.5em;
@@ -11,34 +12,74 @@ a {
   }
 }
 
-.mat-table--target-lang {
-  display: flex;
-  flex: 1 0 4rem;
-}
+.translation--list {
+  margin: 0 -1em;
+  margin-bottom: 1em;
+  min-height: 250px;
 
-mat-header-cell.mat-table--action {
-  opacity: 0;
-  visibility: hidden;
-  @media screen and (min-width: $breakpoint-sm) {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-.mat-table--action {
-  justify-content: center;
-  span {
-    display: none;
-    @media screen and (min-width: $breakpoint-sm) {
-      display: inline;
+  .translation--header-row {
+    border-bottom: $border-dotted;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+
+    .translation--cell__header {
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.54);
+    }
+
+    .translation--cell__status {
+      flex: 4;
     }
   }
-}
 
-mat-header-cell:first-of-type,
-mat-header-cell:last-of-type,
-mat-cell:first-of-type,
-mat-cell:last-of-type {
-  @media screen and (max-width: $breakpoint-sm) {
-    padding: 0;
+  .translation--row {
+    min-height: 72px;
+    border-bottom: $border-dotted;
+    align-items: center;
+    display: flex;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+
+  .translation--cell {
+    color: $text-gray;
+    font-size: 1.1em;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    min-height: inherit;
+
+    &:first-of-type {
+      flex: 1 0 4rem;
+      padding-left: 24px;
+    }
+
+    &:last-of-type {
+      padding-right: 24px;
+    }
+
+    &__center {
+      justify-content: center;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      flex: 1;
+
+      .mat-progress-bar-buffer {
+        background-color: $light-gray;
+      }
+
+      p {
+        flex: 1 0 75px;
+        padding-left: 1em;
+      }
+    }
   }
 }

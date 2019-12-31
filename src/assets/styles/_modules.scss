@@ -9,16 +9,29 @@
   flex-direction: column;
 }
 
-.mat-card {
+.card-wrapper {
+  background: $white;
   max-width: 100%;
   margin-bottom: 2em;
-  .mat-card-header {
+  transition: box-shadow 280ms cubic-bezier(.4,0,.2,1);
+  display: block;
+  position: relative;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+
+  .card-header {
     justify-content: space-between;
-    .mat-card-title {
+    .card-header--title {
       font-size: 1.4em;
       font-weight: 700;
       color: $primary;
+      margin-bottom: 1em;
     }
+  }
+  .card-content {
+    display: block;
+    font-size: 14px;
   }
 }
 
@@ -62,39 +75,6 @@
   }
 }
 
-.translation-list {
-  margin: 0 -1em;
-  margin-bottom: 1em;
-  min-height: 250px;
-  .mat-header-row {
-    border-bottom: $border-dotted;
-    min-height: 60px;
-  }
-  .mat-row {
-    min-height: 72px;
-    border-bottom: $border-dotted;
-    &:last-of-type {
-      border-bottom: none;
-    }
-    .mat-cell {
-      color: $text-gray;
-      font-size: 1.1em;
-      .status {
-        display: flex;
-        align-items: center;
-        flex: 1;
-        .mat-progress-bar-buffer {
-          background-color: $light-gray;
-        }
-        p {
-          flex: 1 0 75px;
-          padding-left: 1em;
-        }
-      }
-    }
-  }
-}
-
 .file-info {
   .flex-row {
     flex-direction: column;
@@ -102,7 +82,7 @@
       flex-direction: row;
     }
   }
-  &.mat-card {
+  &.card-wrapper {
     margin-bottom: 1em;
   }
   .file-info--group {
@@ -130,10 +110,11 @@
       }
     }
     .file-info--value {
-      font-size: 1.8em;
+      font-size: 1.5em;
       margin: 0;
       color: $primary;
       font-weight: 300;
+      margin-top: 0.25em;
     }
   }
   .file-info-actions {
@@ -186,12 +167,12 @@
     @media screen and (min-width: $breakpoint-md) {
       width: calc(50% - 1em);
     }
-    .mat-card {
+    .card-wrapper {
       box-shadow: none;
       border-radius: 2px;
       flex-grow: 1;
       margin-bottom: 0;
-      .mat-card-content {
+      .card-content {
         margin: 0;
         p {
           width: calc(100% - 3em);
@@ -218,7 +199,7 @@
           }
         }
       }
-      .mat-card-actions {
+      .card-actions {
         position: absolute;
         right: 13px;
         margin: 0;
@@ -250,7 +231,7 @@
     }
   }
   div.source {
-    .mat-card {
+    .card-wrapper {
       background: #f2f2f2;
       p,
       .mat-icon-button {
@@ -259,7 +240,7 @@
     }
   }
   div.target {
-    .mat-card {
+    .card-wrapper {
       border: $border-dotted;
       &:hover {
         cursor: text;
