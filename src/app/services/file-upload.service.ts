@@ -8,39 +8,21 @@ import { TranslationListService } from './translation-list.service';
 export class FileUploadService {
   private uploadedFile: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private translationListService: TranslationListService) {}
+  constructor(
+    private translationListService: TranslationListService,
+  ) {}
 
   public uploadFile(htmlDoc: HTMLDocument, fileName: string, sourceLang: string) {
     localStorage.clear();
-    const unitNodes = htmlDoc.getElementsByTagName('unit');
-    const translationUnits: TranslationUnit[] = [];
+    const unitNodes: Array<Element> = Array.from(htmlDoc.getElementsByTagName('unit'));
+    const translationUnits: Array<TranslationUnit> = [];
     let translatedUnits = 0;
 
-    Array.from(unitNodes).forEach((unit: Element) => {
+    unitNodes.forEach((unit: Element) => {
       const segmentElementList: HTMLCollectionOf<Element> = unit.getElementsByTagName('segment');
 
       Array.from(segmentElementList).forEach((segment: Element) => {
-        const targetElementList = segment.getElementsByTagName('target');
-        let targetElement: Element;
-
-        if (!targetElementList.length) {
-          targetElement = document.createElement('TARGET');
-          targetElement.setAttribute('state', 'initial');
-          segment.appendChild(targetElement);
-        } else {
-          targetElement = segment.getElementsByTagName('target')[0];
-        }
-
-        const translationUnit: TranslationUnit = {
-          unitId: unit.getAttribute('id'),
-          segmentId: segment.getAttribute('id'),
-          source: segment.querySelector('source').innerHTML,
-          target: targetElement.innerHTML,
-          targetState: targetElement.getAttribute('state') || 'initial',
-          note: this.getNotes(unit.getElementsByTagName('note') as any),
-          showNote: false
-        };
-
+        const translationUnit: TranslationUnit = this.createTranslationUnit(unit, segment);
         const segmentState: string = segment.getAttribute('state');
 
         if (segmentState && segmentState.toLowerCase() === 'translated') {
@@ -51,31 +33,11 @@ export class FileUploadService {
       });
     });
 
-    const fileElement = htmlDoc.getElementsByTagName('file')[0];
-    const xliffElement = htmlDoc.getElementsByTagName('xliff')[0];
+    const fileInfo: FileInfo = this.createFileInfo(htmlDoc, fileName, sourceLang, translatedUnits);
+    this.saveUploadedFile(fileInfo, translationUnits, htmlDoc);
 
-    const fileInfo: FileInfo = {
-      fileName,
-      sourceLang,
-      translatedUnits,
-      datatype: fileElement.getAttribute('datatype'),
-      original: fileElement.getAttribute('original'),
-      targetLang: xliffElement.getAttribute('trgLang'),
-      totalUnits: htmlDoc.getElementsByTagName('unit').length,
-      xliffVersion: xliffElement.getAttribute('version'),
-    };
-
-    localStorage.setItem('fileInfo', JSON.stringify(fileInfo));
-    localStorage.setItem('translationUnits', JSON.stringify(translationUnits));
-    localStorage.setItem('uploadedFile', this.xmlToString(htmlDoc));
-
-    if (fileInfo.targetLang) {
-      this.translationListService.addTranslation(
-        fileInfo.fileName,
-        fileInfo.targetLang,
-        true
-      );
-    }
+    const newTranslationLanguage: string = fileInfo.targetLang || fileInfo.sourceLang;
+    this.translationListService.addTranslation(newTranslationLanguage, true, fileInfo.fileName);
 
     this.uploadedFile.next(true);
   }
@@ -105,20 +67,58 @@ export class FileUploadService {
     return this.stringToXml(localStorage.getItem('uploadedFile'));
   }
 
-  public getTranslationUnits(): TranslationUnit[] {
-    return JSON.parse(localStorage.getItem('translationUnits'));
-  }
-
   private getNotes(notesNodes: NodeListOf<Element>): Note[] {
     const notesArray = Array.from(notesNodes);
     const notes = [];
     notesArray.forEach(note => {
       const noteObject = {
         from: note.getAttribute('from'),
-        note: note.innerHTML
+        note: note.innerHTML,
       };
       notes.push(noteObject);
     });
     return notes;
+  }
+
+  private createTranslationUnit(unit: Element, segment: Element): TranslationUnit {
+    const targetElementList = segment.getElementsByTagName('target');
+    const targetElement: Element = targetElementList.length ? segment.getElementsByTagName('target')[0] : null;
+    const targetElementState: string = targetElementList.length ? targetElement.getAttribute('state') : null;
+
+    return {
+      note: this.getNotes(unit.getElementsByTagName('note') as any),
+      segmentId: segment.getAttribute('id'),
+      showNote: false,
+      source: segment.querySelector('source').innerHTML,
+      target: targetElement ? targetElement.innerHTML : null,
+      targetState: targetElementState || 'initial',
+      unitId: unit.getAttribute('id'),
+    };
+  }
+
+  private createFileInfo(
+    htmlDoc: HTMLDocument,
+    fileName: string,
+    sourceLang: string,
+    translatedUnits: number,
+  ): FileInfo {
+    const fileElement = htmlDoc.getElementsByTagName('file')[0];
+    const xliffElement = htmlDoc.getElementsByTagName('xliff')[0];
+
+    return {
+      fileName,
+      sourceLang,
+      translatedUnits,
+      datatype: fileElement.getAttribute('datatype'),
+      original: fileElement.getAttribute('original'),
+      targetLang: xliffElement.getAttribute('trgLang'),
+      totalUnits: htmlDoc.getElementsByTagName('unit').length,
+    };
+  }
+
+  private saveUploadedFile(fileInfo: FileInfo, translationUnits: Array<TranslationUnit>, htmlDoc: HTMLDocument): void {
+    localStorage.setItem('fileInfo', JSON.stringify(fileInfo));
+    localStorage.setItem('translationUnits', JSON.stringify(translationUnits));
+    localStorage.setItem('uploadedFile', this.xmlToString(htmlDoc));
   }
 }

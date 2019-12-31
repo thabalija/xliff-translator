@@ -2,7 +2,9 @@
   <div class="flex-row">
     <div class="file-info--group">
       <h5 class="file-info--title">Uploaded file</h5>
-      <h1 class="file-info--value">{{ baseFileInfo.fileName }}</h1>
+      <h1 class="file-info--value">
+        {{ (baseFileInfo.fileName.length > 30 )? (baseFileInfo.fileName | slice:0:30)+'...':(baseFileInfo.fileName) }}
+      </h1>
     </div>
     <div class="flex-spacer"></div>
     <div class="file-info--group">
@@ -19,10 +21,6 @@
       <h5 class="file-info--title">Source language</h5>
       <h1 class="file-info--value">{{ baseFileInfo.sourceLang }}</h1>
     </div>
-    <div class="file-info--group">
-      <h5 class="file-info--title">XLIFF version</h5>
-      <h1 class="file-info--value">{{ baseFileInfo.xliffVersion }}</h1>
-    </div>
   </div>
 </mat-card>
 <mat-card>
@@ -30,11 +28,6 @@
     <mat-card-title>
       My translations
     </mat-card-title>
-    <div class="progress" align="end">
-      <mat-icon class="inactive">lens</mat-icon>
-      <mat-icon class="active">lens</mat-icon>
-      <mat-icon class="inactive">lens</mat-icon>
-    </div>
   </mat-card-header>
   <mat-card-content>
     <div class="translation-list">

@@ -7,67 +7,43 @@ export class TranslationListService {
   private fileInfo: FileInfo;
 
   public getTranslationList(): FileInfo[] {
-    let translationList = JSON.parse(localStorage.getItem('translationList'));
-    if (translationList === null) {
-      translationList = [];
-    }
-    return translationList;
+    return JSON.parse(localStorage.getItem('translationList')) || [];
   }
 
-  public getTranslationInfo(translationID: number): FileInfo {
-    const translationList = JSON.parse(localStorage.getItem('translationList')) || [];
-    let translationFileInfo: FileInfo;
-
-    for (let i = 0; i < translationList.length; i++) {
-      if (translationList[i].id === translationID) {
-        translationFileInfo = translationList[i];
-        break;
-      }
-    }
-
-    return translationFileInfo;
+  public getTranslationInfo(translationId: number): FileInfo {
+    return this.getTranslationList().find((fileInfo: FileInfo) => fileInfo.id === translationId);
   }
 
   public updateTranslationInfo(translationInfo: FileInfo): void {
-    const translationList = JSON.parse(localStorage.getItem('translationList'));
+    const translationList: Array<FileInfo> = this.getTranslationList();
+    const savedTranslationIndex: number = translationList.findIndex((fileInfo: FileInfo) => {
+      return fileInfo.id === translationInfo.id;
+    });
 
-    for (let i = 0; i < translationList.length; i++) {
-      if (translationList[i].id === translationInfo.id) {
-        translationList[i] = translationInfo;
-        break;
-      }
-    }
-
+    translationList[savedTranslationIndex] = translationInfo;
     localStorage.setItem('translationList', JSON.stringify(translationList));
   }
 
-  public addTranslation(fileName: string, targetLang: string, useTranslationUnits: boolean): void {
+  public addTranslation(targetLang: string, useTranslationUnits: boolean, fileName?: string): void {
     this.fileInfo = JSON.parse(localStorage.getItem('fileInfo'));
     const translationUnits = JSON.parse(localStorage.getItem('translationUnits'));
     const translationID = +new Date();
-    const newTranslation = this.createNewTranslationInfo(translationID, fileName, targetLang);
+    const newTranslation = this.createNewTranslationInfo(translationID, targetLang, fileName);
 
     if (!useTranslationUnits) {
       this.resetTargetElement(translationUnits);
       newTranslation.translatedUnits = 0;
     } else {
-      newTranslation.translatedUnits = this.countTranslatedUnits(
-        translationUnits
-      );
+      newTranslation.translatedUnits = this.countTranslatedUnits(translationUnits);
     }
 
     this.saveCreatedTranslation(newTranslation);
     this.saveTraslationUnits(translationID, translationUnits);
   }
 
-  public deleteTranslation(translationID: number): void {
+  public deleteTranslation(translationId: number): void {
     const translationList = this.getTranslationList();
-    for (let i = 0; i < translationList.length; i++) {
-      if (translationList[i].id === translationID) {
-        translationList.splice(i, 1);
-        break;
-      }
-    }
+    translationList.splice(translationList.findIndex((fileInfo: FileInfo) => fileInfo.id === translationId), 1);
     localStorage.setItem('translationList', JSON.stringify(translationList));
   }
 
@@ -77,16 +53,14 @@ export class TranslationListService {
     }, 0);
   }
 
-  private createNewTranslationInfo(translationID: number, fileName: string, targetLang: string): FileInfo {
-    const newFile = {
+  private createNewTranslationInfo(translationID: number, targetLang: string, fileName?: string): FileInfo {
+    return {
       fileName,
       targetLang,
       id: translationID,
-      xliffVersion: this.fileInfo.xliffVersion,
       sourceLang: this.fileInfo.sourceLang,
       totalUnits: this.fileInfo.totalUnits
     };
-    return newFile;
   }
 
   private resetTargetElement(translationUnits: TranslationUnit[]): TranslationUnit[] {

@@ -22,20 +22,6 @@
   }
 }
 
-.progress {
-  .mat-icon {
-    height: 16px;
-    width: 16px;
-    font-size: 12px;
-    &.active {
-      color: $primary;
-    }
-    &.inactive {
-      color: $light-gray;
-    }
-  }
-}
-
 .dialog {
   .dialog-header {
     display: flex;
@@ -77,7 +63,7 @@
 }
 
 .translation-list {
-  margin: 0 auto;
+  margin: 0 -1em;
   margin-bottom: 1em;
   min-height: 250px;
   .mat-header-row {
@@ -109,14 +95,6 @@
   }
 }
 
-.settings {
-  color: $text-gray;
-  padding: 1em 0.5em;
-  .mat-slide-toggle-content {
-    font-size: 1em;
-  }
-}
-
 .file-info {
   .flex-row {
     flex-direction: column;
@@ -130,6 +108,12 @@
   .file-info--group {
     @media screen and (min-width: $breakpoint-md) {
       padding: 0 0.75em;
+      &:first-of-type {
+        padding-left: 0;
+      }
+      &:last-of-type {
+        padding-right: 0;
+      }
     }
     &:first-of-type {
       .file-info--title {

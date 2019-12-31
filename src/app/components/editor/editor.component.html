@@ -1,10 +1,6 @@
 <mat-card class="file-info file-info-editable" *ngIf="fileInfo">
   <div class="flex-row">
     <mat-form-field>
-      <input matInput placeholder="File name" [(ngModel)]="fileInfo.fileName"/>
-    </mat-form-field>
-
-    <mat-form-field>
       <mat-select placeholder="Target language" [(ngModel)]="fileInfo.targetLang">
         <mat-option *ngFor="let lang of languages" [value]="lang.locale">{{ lang.language }}</mat-option>
       </mat-select>
@@ -42,12 +38,6 @@
 <mat-card class="editor">
   <mat-card-header>
     <mat-card-title>Translate strings</mat-card-title>
-
-    <div class="progress" align="end">
-      <mat-icon class="inactive">lens</mat-icon>
-      <mat-icon class="inactive">lens</mat-icon>
-      <mat-icon class="active">lens</mat-icon>
-    </div>
   </mat-card-header>
 
   <ng-container *ngFor="let unit of paginatedTranslationUnits">

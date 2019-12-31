@@ -8,9 +8,6 @@
     }
     .mat-form-field {
       width: 100%;
-      @media screen and (min-width: $breakpoint-sm) {
-        width: calc(50% - 0.15em);
-      }
     }
   }
 }

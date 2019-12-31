@@ -20,8 +20,6 @@ describe('EditorComponent', () => {
   const oldResetTestingModule = TestBed.resetTestingModule;
   const fileInfo: FileInfo = {
     id: 1,
-    fileName: 'Filename',
-    xliffVersion: '1.2',
     sourceLang: 'en-US',
     totalUnits: 1
   };

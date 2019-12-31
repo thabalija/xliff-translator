@@ -68,9 +68,8 @@ export class TranslationsComponent implements OnInit {
 
   public openAddTranslationDialog(): void {
     const dialogRef = this.dialog.open(AddTranslationDialogComponent, {
-      width: '500px',
+      width: '400px',
       data: {
-        fileName: '',
         targetLang: ``,
         useTranslationUnits: true
       }
@@ -78,7 +77,6 @@ export class TranslationsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.createTranslation(
-          result.fileName,
           result.targetLang,
           result.useTranslationUnits
         );
@@ -86,8 +84,8 @@ export class TranslationsComponent implements OnInit {
     });
   }
 
-  private createTranslation(fileName: string, targetLang: string, useTranslationUnits: boolean): void {
-    this.translationListService.addTranslation(fileName, targetLang, useTranslationUnits);
+  private createTranslation(targetLang: string, useTranslationUnits: boolean): void {
+    this.translationListService.addTranslation(targetLang, useTranslationUnits);
     this.loadTranslations();
   }
 

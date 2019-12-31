@@ -7,10 +7,6 @@ import { TranslationUnitsService } from './translation-units.service';
 
 @Injectable()
 export class FileDownloadService {
-  private originalFile: HTMLDocument;
-  private translationUnits: TranslationUnit[];
-  private fileInfo: FileInfo;
-
   constructor(
     private fileUploadService: FileUploadService,
     private translationListService: TranslationListService,
@@ -18,57 +14,39 @@ export class FileDownloadService {
   ) {}
 
   public downloadFile(translationID: number): void {
-    this.originalFile = this.fileUploadService.getFile();
-    this.translationUnits = this.translationUnitsService.getTraslationUnits(translationID);
-    this.fileInfo = this.translationListService.getTranslationInfo(translationID);
+    const originalFile: HTMLDocument = this.fileUploadService.getFile();
 
-    const xliffElement = this.originalFile.getElementsByTagName('xliff')[0];
-    xliffElement.setAttribute('trgLang', this.fileInfo.targetLang);
+    this.translationUnitsService.getTraslationUnits(translationID).forEach((transUnit: TranslationUnit) => {
+      const segmentElement: Element = Array.from(
+        originalFile.getElementById(transUnit.unitId).getElementsByTagName('segment')
+      ).find((element: Element) => element.getAttribute('id') === transUnit.segmentId);
 
-    this.translationUnits.forEach((transUnit: TranslationUnit) => {
-      const segmentElementList: HTMLCollectionOf<Element> = this.originalFile.getElementById(
-        transUnit.unitId
-      ).getElementsByTagName('segment');
+      const targetElementList: Array<Element> = Array.from(segmentElement.getElementsByTagName('target'));
+      let targetElement = targetElementList.length ? targetElementList[0] : null;
 
-      Array.from(segmentElementList).forEach((segment: Element) => {
-        const targetElementList = segment.getElementsByTagName('target');
-        const originalFileUnitElement: Element = this.originalFile.getElementById(transUnit.unitId);
-        let targetElement: Element;
+      if (transUnit.target && transUnit.target.length && !targetElement) {
+        targetElement = document.createElementNS('urn:oasis:names:tc:xliff:document:2.0', 'target');
+        segmentElement.appendChild(targetElement);
+      }
 
-        if (!targetElementList.length) {
-          targetElement = document.createElement('TARGET');
-          const originalFileSegmentElementList: Element[] = Array.from(originalFileUnitElement.getElementsByTagName('segment'));
-
-          if (originalFileSegmentElementList.length === 1) {
-            originalFileSegmentElementList[0].appendChild(targetElement);
-          } else {
-            const originalFileSegmentElement: Element = originalFileSegmentElementList.find((originalSegment: Element) => {
-              return originalSegment.getAttribute('id') === transUnit.segmentId;
-            });
-
-            originalFileSegmentElement.appendChild(targetElement);
-          }
-        } else {
-          targetElement = originalFileUnitElement.getElementsByTagName('target')[0];
-        }
-
+      if (targetElement) {
         targetElement.innerHTML = transUnit.target;
-        targetElement.setAttribute('state', transUnit.targetState);
-      });
+        segmentElement.setAttribute('state', transUnit.targetState);
+      }
     });
 
-    const stringer = new XMLSerializer();
-    const finalFile = stringer.serializeToString(this.originalFile);
+    const targetLanguage: string = this.translationListService.getTranslationInfo(translationID).targetLang;
+    const fileName: string = `${this.fileUploadService.getFileInfo().fileName}-${targetLanguage}`;
+    originalFile.getElementsByTagName('xliff')[0].setAttribute('trgLang', targetLanguage);
+    const stringer: XMLSerializer = new XMLSerializer();
+    const finalFile: string = stringer.serializeToString(originalFile);
 
-    this.triggerBrowserFileDownload(finalFile, this.fileInfo.fileName);
+    this.triggerBrowserFileDownload(finalFile, fileName);
   }
 
   private triggerBrowserFileDownload(file: string, fileName: string): void {
     const element = document.createElement('a');
-    element.setAttribute(
-      'href',
-      'data:text/plain;charset=utf-8,' + encodeURIComponent(file)
-    );
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(file));
     element.setAttribute('download', `${fileName}.xml`);
     element.style.display = 'none';
     document.body.appendChild(element);
