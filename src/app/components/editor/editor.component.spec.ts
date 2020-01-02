@@ -48,8 +48,14 @@ describe('EditorComponent', () => {
           FileUploadService,
           FileDownloadService,
           TranslationListService,
-          TranslationUnitsService,
-          LocaleService
+          LocaleService,
+          {
+            provide: TranslationUnitsService,
+            useValue: {
+              getTraslationUnits: () => [],
+              addTraslationUnits: () => {},
+            }
+          }
         ],
         schemas: [NO_ERRORS_SCHEMA]
       });

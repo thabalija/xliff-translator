@@ -12,6 +12,13 @@ import { TranslationUnitsService } from '../../services/translation-units.servic
 import { MaterialModule } from '../../shared/modules/material/material.module';
 import { TranslationsComponent } from './translations.component';
 
+const baseFileInfo = {
+  fileName: 'Test_file.xml',
+  sourceLang: 'en-US',
+  totalUnits: 1,
+  translatedUnits: 0,
+};
+
 describe('TranslationsComponent', () => {
   let component: TranslationsComponent;
   let fixture: ComponentFixture<TranslationsComponent>;
@@ -31,12 +38,18 @@ describe('TranslationsComponent', () => {
         declarations: [TranslationsComponent],
         providers: [
           FileUploadService,
+          { provide: FileUploadService,
+            useValue: {
+              getFileInfo: () => baseFileInfo,
+              deleteFile: () => {},
+            },
+          },
           FileDownloadService,
           TranslationListService,
           TranslationUnitsService,
-          LocaleService
+          LocaleService,
         ],
-        schemas: [NO_ERRORS_SCHEMA]
+        schemas: [NO_ERRORS_SCHEMA],
       });
       await TestBed.compileComponents();
 
