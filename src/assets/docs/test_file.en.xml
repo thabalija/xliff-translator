@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US">
+  <file id="testFile">
+    <group id="group1">
+      <unit id="unit1">
+        <segment state="initial">
+          <source>Welcome!</source>
+        </segment>
+      </unit>
+      <unit id="unit2">
+        <segment state="initial">
+          <source>I hope you like my translator</source>
+        </segment>
+      </unit>
+    </group>
+    <group id="group2">
+      <unit id="unit3">
+        <notes>
+          <note>Example: segment without state</note>
+        </notes>
+        <segment>
+          <source>If you have any suggestions please let me know.</source>
+        </segment>
+      </unit>
+      <unit id="unit4">
+        <notes>
+          <note>Exaple: two segments in unit example</note>
+        </notes>
+        <segment id="segment1" state="initial">
+          <source>Keep in mind this is work in progress and many features are yet to be added.</source>
+        </segment>
+        <segment id="segment2" state="initial">
+          <source>You can always star this project on github if you like it! :)</source>
+        </segment>
+      </unit>
+    </group>
+  </file>
+</xliff>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US" trgLang="de-DE">
+  <file id="testTranslatedFile">
+    <group id="group1">
+      <unit id="unit1">
+        <segment state="translated">
+          <source>Welcome!</source>
+          <target>Willkommen!</target>
+        </segment>
+      </unit>
+      <unit id="unit2">
+        <segment state="translated">
+          <source>I hope you like my translator</source>
+          <target>Ich hoffe du magst meinen Übersetzer</target>
+        </segment>
+      </unit>
+    </group>
+    <group id="group2">
+      <unit id="unit3">
+        <notes>
+          <note>Example: not translated string</note>
+        </notes>
+        <segment state="initial">
+          <source>If you have any suggestions please let me know.</source>
+        </segment>
+      </unit>
+      <unit id="unit4">
+        <segment id="segment1" state="translated">
+          <source>Keep in mind this is work in progress and many features are yet to be added.</source>
+          <target>Denken Sie daran, dass dies noch in Arbeit ist und viele Funktionen erst noch hinzugefügt werden müssen.</target>
+        </segment>
+        <segment id="segment2" state="translated">
+          <source>You can always star this project on github if you like it! :)</source>
+          <target>Sie können dieses Projekt jederzeit auf Github starten, wenn es Ihnen gefällt! :)</target>
+        </segment>
+      </unit>
+    </group>
+  </file>
+</xliff>
