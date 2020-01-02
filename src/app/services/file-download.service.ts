@@ -46,11 +46,10 @@ export class FileDownloadService {
 
   private triggerBrowserFileDownload(file: string, fileName: string): void {
     const element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(file));
+    const blob = new Blob([file], { type: 'text/plain' });
+    element.setAttribute('href', window.URL.createObjectURL(blob));
     element.setAttribute('download', `${fileName}.xml`);
-    element.style.display = 'none';
-    document.body.appendChild(element);
+    element.dataset.downloadurl = ['text/plain', element.download, element.href].join(':');
     element.click();
-    document.body.removeChild(element);
   }
 }
