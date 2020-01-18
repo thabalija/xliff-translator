@@ -34,28 +34,6 @@
   }
 }
 
-.dialog {
-  .dialog-header {
-    display: flex;
-    justify-content: space-between;
-    .dialog-title {
-      font-size: 1.4em;
-      font-weight: 700;
-      color: #af67b7;
-      display: block;
-      margin: 0 0 16px;
-    }
-  }
-  .dialog-content {
-    margin: 2em 0 1em;
-    display: flex;
-    flex-direction: column;
-    .flex-row {
-      justify-content: space-between;
-    }
-  }
-}
-
 .get-started {
   width: 550px;
   margin: 0 auto;
