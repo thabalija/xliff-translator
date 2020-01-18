@@ -35,7 +35,9 @@
         <div class="translation--cell translation--cell__header translation--cell__status">Status</div>
       </div>
       <div *ngFor="let translation of translationsList" class="translation--row">
-        <div class="translation--cell translation--title">{{ getTranslationTitle(translation) }}</div>
+        <div class="translation--cell translation--title translation--cell__title">
+          {{ getTranslationTitle(translation) }}
+        </div>
 
         <div class="translation--cell translation--status">
           <div *ngIf="translation.targetLang" class="status">
@@ -47,20 +49,20 @@
           </div>
         </div>
 
-        <div class="translation--cell translation--cell__center">
+        <div class="translation--cell translation--cell__center translation--cell__action">
           <a *ngIf="translation.targetLang" (click)="openDeleteTranslationDialog(translation.id)">
             <mat-icon color="primary">delete</mat-icon>
             <span class="mat-table--info-label">Delete</span>
           </a>
         </div>
 
-        <div class="translation--cell translation--cell__center">
+        <div class="translation--cell translation--cell__center translation--cell__action">
           <a *ngIf="translation.targetLang" (click)="openTranslation(translation)">
             <mat-icon color="primary">edit</mat-icon>
             <span class="mat-table--info-label">Translate</span>
           </a>
         </div>
-        <div class="translation--cell translation--cell__center">
+        <div class="translation--cell translation--cell__center translation--cell__action">
           <a *ngIf="translation.targetLang" (click)="downloadFile(translation.id)">
             <mat-icon color="primary">file_download</mat-icon>
             <span class="mat-table--info-label">Download</span>
