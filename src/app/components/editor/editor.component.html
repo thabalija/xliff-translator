@@ -1,7 +1,11 @@
 <div *ngIf="fileInfo" class="card-wrapper file-info file-info-editable">
   <div class="flex-row">
     <mat-form-field>
-      <mat-select placeholder="Target language" [(ngModel)]="fileInfo.targetLang">
+      <mat-select
+        placeholder="File target language"
+        [(ngModel)]="fileInfo.targetLang"
+        (selectionChange)="onTargetLanguageChange()"
+      >
         <mat-option *ngFor="let lang of languages" [value]="lang.locale">{{ lang.language }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -30,7 +34,6 @@
 
     <div class="file-info-actions">
       <button mat-button color="primary" (click)="downloadFile(fileInfo.id)">Download</button>
-      <button mat-button color="primary" (click)="saveChanges()">Save</button>
     </div>
   </div>
 </div>
@@ -60,6 +63,7 @@
           <span class="translation-unit--fingerprint">{{ unit.unitId }} {{ unit.segmentId ? unit.segmentId : '' }}</span>
           <div class="flex-spacer"></div>
           <button
+            tabindex="-1"
             mat-icon-button
             *ngIf="unit.note.length > 0"
             (click)="unit.showNote = true"
@@ -79,12 +83,16 @@
                 matTextareaAutosize
                 matAutosizeMinRows="1"
                 [(ngModel)]="unit.target"
+                (change)="onUnitChange(unit)"
               ></textarea>
             </mat-form-field>
           </div>
         </div>
         <div class="translation-unit--footer">
-          <mat-radio-group [(ngModel)]="unit.targetState">
+          <mat-radio-group
+            [(ngModel)]="unit.targetState"
+            (change)="onUnitTargetStateChange()"
+          >
             <mat-radio-button color="primary" [value]="'initial'">Initial</mat-radio-button>
             <mat-radio-button color="primary" [value]="'translated'">Translated</mat-radio-button>
           </mat-radio-group>

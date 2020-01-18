@@ -46,25 +46,20 @@ export class EditorComponent implements OnInit {
     this.refreshTranslationUnits();
   }
 
-  public saveChanges(): void {
-    this.countTranslatedUnits();
-    this.translationUnitsService.addTraslationUnits(
-      this.translationID,
-      this.translationUnits
-    );
-    this.translationListService.updateTranslationInfo(this.fileInfo);
+  public onUnitChange(unit: TranslationUnit): void {
+    if (unit.target && unit.target.length && unit.targetState !== 'translated') {
+      unit.targetState = 'translated';
+    }
+
+    this.saveChanges();
   }
 
-  private countTranslatedUnits(): void {
-    let translatedUnitsCount = 0;
-    this.translationUnits.forEach(unit => {
-      if (unit.targetState.toLowerCase() === 'translated') {
-        translatedUnitsCount++;
-      }
-    });
-    if (this.fileInfo) {
-      this.fileInfo.translatedUnits = translatedUnitsCount;
-    }
+  public onTargetLanguageChange(): void {
+    this.saveChanges();
+  }
+
+  public onUnitTargetStateChange(): void {
+    this.saveChanges();
   }
 
   public downloadFile(translationID: number): void {
@@ -138,5 +133,26 @@ export class EditorComponent implements OnInit {
 
   public getNote(notes: Array<Note>): string {
     return notes.map((noteObject: Note) => noteObject.note).join(', ');
+  }
+
+  private saveChanges(): void {
+    this.countTranslatedUnits();
+    this.translationUnitsService.addTraslationUnits(
+      this.translationID,
+      this.translationUnits
+    );
+    this.translationListService.updateTranslationInfo(this.fileInfo);
+  }
+
+  private countTranslatedUnits(): void {
+    let translatedUnitsCount = 0;
+    this.translationUnits.forEach(unit => {
+      if (unit.targetState.toLowerCase() === 'translated') {
+        translatedUnitsCount++;
+      }
+    });
+    if (this.fileInfo) {
+      this.fileInfo.translatedUnits = translatedUnitsCount;
+    }
   }
 }
