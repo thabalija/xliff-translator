@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { EditorComponent } from './components/editor/editor.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { SourceEditorComponent } from './components/source-editor/source-editor.component';
 import { TranslationsComponent } from './components/translations/translations.component';
 import { FileDownloadService } from './services/file-download.service';
 import { FileUploadService } from './services/file-upload.service';
@@ -23,7 +24,8 @@ import { SharedModule } from './shared/modules/shared/shared.module';
     FileUploadComponent,
     LayoutComponent,
     EditorComponent,
-    TranslationsComponent
+    SourceEditorComponent,
+    TranslationsComponent,
   ],
   imports: [
     BrowserModule,
