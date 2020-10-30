@@ -44,6 +44,30 @@ export class FileDownloadService {
     this.triggerBrowserFileDownload(finalFile, fileName);
   }
 
+  public downloadNewSourceFile(translationUnits: Array<TranslationUnit>): void {
+    const originalFile: HTMLDocument = this.fileUploadService.getFile();
+
+    translationUnits.forEach((transUnit: TranslationUnit) => {
+      const segmentElement: Element = Array.from(
+        originalFile.getElementById(transUnit.unitId).getElementsByTagName('segment')
+      ).find((element: Element) => element.getAttribute('id') === transUnit.segmentId);
+
+      const sourceElementList: Array<Element> = Array.from(segmentElement.getElementsByTagName('source'));
+      const sourceElement = sourceElementList.length ? sourceElementList[0] : null;
+
+      if (sourceElement) {
+        sourceElement.innerHTML = transUnit.source;
+      }
+    });
+
+    const fileInfo: FileInfo = this.fileUploadService.getFileInfo();
+    const fileName: string = fileInfo.fileName;
+    const stringer: XMLSerializer = new XMLSerializer();
+    const finalFile: string = stringer.serializeToString(originalFile);
+
+    this.triggerBrowserFileDownload(finalFile, fileName);
+  }
+
   private triggerBrowserFileDownload(file: string, fileName: string): void {
     const element = document.createElement('a');
     const blob = new Blob([file], { type: 'text/plain' });
