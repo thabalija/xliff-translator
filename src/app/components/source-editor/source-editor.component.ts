@@ -51,9 +51,9 @@ export class SourceEditorComponent implements OnInit {
     this.saveChanges();
   }
 
-  public downloadFile(translationID: number): void {
+  public downloadFile(): void {
     this.saveChanges();
-    this.fileDownloadService.downloadFile(translationID);
+    this.fileDownloadService.downloadNewSourceFile(this.translationUnits);
   }
 
   public onPageChange(event: PageEvent): void {
