@@ -1,1 +1,67 @@
-Source editor component
+<div *ngIf="fileInfo" class="card-wrapper file-info file-info-editable">
+  <div class="flex-row">
+    <div class="file-info--group">
+        <h5 class="file-info--title">Source language</h5>
+        <h1 class="file-info--value">{{ translationTitle }}</h1>
+      </div>
+
+    <div class="flex-spacer"></div>
+
+    <div class="file-info-actions">
+      <button mat-button color="primary" (click)="downloadFile(fileInfo.id)">Download</button>
+    </div>
+  </div>
+</div>
+
+<div class="card-wrapper editor">
+  <div class="card-header">
+    <div class="card-header--title">Edit source language</div>
+  </div>
+
+  <ng-container *ngFor="let unit of paginatedTranslationUnits">
+    <div class="translation-unit" id="unit.unitId">
+      <div class="source">
+        <div class="card-wrapper source-input">
+          <div class="card-content">
+            <mat-form-field>
+              <textarea
+                matInput
+                matTextareaAutosize
+                matAutosizeMinRows="1"
+                [(ngModel)]="unit.source"
+                (change)="onUnitChange(unit)"
+              ></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="translation-unit--footer">
+          <mat-icon class="mat-icon--fingerprint">fingerprint</mat-icon>
+          <span class="translation-unit--fingerprint">{{ unit.unitId }} {{ unit.segmentId ? unit.segmentId : '' }}</span>
+          <div class="flex-spacer"></div>
+          <button
+            tabindex="-1"
+            mat-icon-button
+            *ngIf="unit.note.length > 0"
+            (click)="unit.showNote = true"
+            matTooltip="{{ getNote(unit.note) }}"
+          >
+            <mat-icon>info_outline</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="missing-data" *ngIf="paginatedTranslationUnits.length === 0">
+    <mat-icon class="mat-48">speaker_notes_off</mat-icon>
+    <p>You have 0 translation units matching your parameters.</p>
+  </div>
+
+  <mat-paginator
+    [length]="translationUnits.length"
+    [pageSize]="pageEvent.pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPageChange($event)"
+  ></mat-paginator>
+</div>
