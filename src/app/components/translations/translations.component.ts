@@ -92,6 +92,10 @@ export class TranslationsComponent implements OnInit {
     this.loadTranslations();
   }
 
+  public openEditSourceTranslationPage(): void {
+    this.router.navigate([`/edit-source-translation`]);
+  }
+
   public openDeleteTranslationDialog(translationID: number): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '290px',
