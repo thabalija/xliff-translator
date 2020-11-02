@@ -43,6 +43,26 @@ export class FileUploadService {
     this.uploadedFile.next(true);
   }
 
+  public updateFile(translationUnits: Array<TranslationUnit>): void {
+    const htmlDoc: HTMLDocument = this.getFile();
+
+    translationUnits.forEach((transUnit: TranslationUnit) => {
+      const segmentElement: Element = Array.from(
+        htmlDoc.getElementById(transUnit.unitId).getElementsByTagName('segment')
+      ).find((element: Element) => element.getAttribute('id') === transUnit.segmentId);
+
+      const sourceElementList: Array<Element> = Array.from(segmentElement.getElementsByTagName('source'));
+      const sourceElement = sourceElementList.length ? sourceElementList[0] : null;
+
+      if (sourceElement) {
+        sourceElement.innerHTML = transUnit.source;
+      }
+    });
+
+    localStorage.setItem('translationUnits', JSON.stringify(translationUnits));
+    localStorage.setItem('uploadedFile', this.xmlToString(htmlDoc));
+  }
+
   public deleteFile(): void {
     localStorage.clear();
     this.uploadedFile.next(false);

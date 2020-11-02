@@ -30,6 +30,7 @@ export class SourceEditorComponent implements OnInit {
     private localeService: LocaleService,
     private fileUploadService: FileUploadService,
     private translationUnitsService: TranslationUnitsService,
+    private translationListService: TranslationListService,
   ) {}
 
   ngOnInit() {
@@ -59,6 +60,29 @@ export class SourceEditorComponent implements OnInit {
   public onPageChange(event: PageEvent): void {
     this.pageEvent = event;
     this.refreshTranslationUnits();
+  }
+
+  public save(): void {
+    this.fileUploadService.updateFile(this.translationUnits);
+  }
+
+  public applyToExisting(): void {
+    this.save();
+
+    const translations: Array<FileInfo> = this.translationListService.getTranslationList();
+
+    translations.forEach((fileInfo: FileInfo) => {
+      const translationUnits: Array<TranslationUnit> = this.translationUnitsService.getTraslationUnits(fileInfo.id);
+      translationUnits.forEach((unit: TranslationUnit) => {
+        const updatedSourceUnit: TranslationUnit = this.translationUnits.find((updatedUnit: TranslationUnit) => {
+          return updatedUnit.unitId === unit.unitId;
+        });
+        unit.source = updatedSourceUnit.source;
+      });
+
+      this.translationUnitsService.addTraslationUnits(fileInfo.id, translationUnits);
+      this.translationListService.updateTranslationInfo(this.fileInfo);
+    });
   }
 
   public refreshTranslationUnits(): void {
