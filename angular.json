@@ -109,7 +109,6 @@
       }
     }
   },
-  "defaultProject": "xliff-translator",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
