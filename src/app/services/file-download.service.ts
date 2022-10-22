@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SEGMENT_ATTRIBUTE_NAME } from '../constants/segment-attribute-name.const';
 import { FileInfo } from '../shared/interfaces/file-info.interface';
 import { TranslationUnit } from '../shared/interfaces/translation-unit.interface';
 import { FileUploadService } from './file-upload.service';
@@ -20,8 +21,8 @@ export class FileDownloadService {
 
     this.translationUnitsService.getTraslationUnits(translationID).forEach((transUnit: TranslationUnit) => {
       const segmentElement: Element = Array.from(
-        originalFile.getElementById(transUnit.unitId).getElementsByTagName('segment')
-      ).find((element: Element) => element.getAttribute('id') === transUnit.segmentId);
+        originalFile.getElementsByTagName('segment')
+      ).find((element: Element) => element.getAttribute(SEGMENT_ATTRIBUTE_NAME) === transUnit.segmentId);
 
       const targetElementList: Array<Element> = Array.from(segmentElement.getElementsByTagName('target'));
       let targetElement = targetElementList.length ? targetElementList[0] : null;
@@ -35,6 +36,8 @@ export class FileDownloadService {
         targetElement.innerHTML = transUnit.target;
         segmentElement.setAttribute('state', transUnit.targetState);
       }
+
+      segmentElement.removeAttribute(SEGMENT_ATTRIBUTE_NAME);
     });
 
     const targetLanguage: string = this.translationListService.getTranslationInfo(translationID).targetLang;
@@ -51,8 +54,8 @@ export class FileDownloadService {
 
     translationUnits.forEach((transUnit: TranslationUnit) => {
       const segmentElement: Element = Array.from(
-        originalFile.getElementById(transUnit.unitId).getElementsByTagName('segment')
-      ).find((element: Element) => element.getAttribute('id') === transUnit.segmentId);
+        originalFile.getElementsByTagName('segment')
+      ).find((element: Element) => element.getAttribute(SEGMENT_ATTRIBUTE_NAME) === transUnit.segmentId);
 
       const sourceElementList: Array<Element> = Array.from(segmentElement.getElementsByTagName('source'));
       const sourceElement = sourceElementList.length ? sourceElementList[0] : null;
@@ -60,6 +63,8 @@ export class FileDownloadService {
       if (sourceElement) {
         sourceElement.innerHTML = transUnit.source;
       }
+
+      segmentElement.removeAttribute(SEGMENT_ATTRIBUTE_NAME);
     });
 
     const fileInfo: FileInfo = this.fileUploadService.getFileInfo();

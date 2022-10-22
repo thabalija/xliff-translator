@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { SEGMENT_ATTRIBUTE_NAME } from '../constants/segment-attribute-name.const';
 import { FileInfo } from './../shared/interfaces/file-info.interface';
 import { Note, TranslationUnit } from './../shared/interfaces/translation-unit.interface';
 import { TranslationListService } from './translation-list.service';
@@ -106,10 +107,11 @@ export class FileUploadService {
   private createTranslationUnit(unit: Element, segment: Element): TranslationUnit {
     const targetElementList = segment.getElementsByTagName('target');
     const targetElement: Element = targetElementList.length ? segment.getElementsByTagName('target')[0] : null;
+    segment.setAttribute(SEGMENT_ATTRIBUTE_NAME, crypto.randomUUID())
 
     return {
       note: this.getNotes(unit.getElementsByTagName('note') as any),
-      segmentId: segment.getAttribute('id'),
+      segmentId: segment.getAttribute(SEGMENT_ATTRIBUTE_NAME),
       showNote: false,
       source: segment.querySelector('source').innerHTML,
       target: targetElement ? targetElement.innerHTML : null,
