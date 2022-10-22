@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { LOCALE } from '../shared/data/locales';
 import { Locale } from '../shared/interfaces/locale.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LocaleService {
   public getLocale(): Locale[] {
     return LOCALE;

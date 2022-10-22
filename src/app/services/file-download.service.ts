@@ -5,7 +5,9 @@ import { FileUploadService } from './file-upload.service';
 import { TranslationListService } from './translation-list.service';
 import { TranslationUnitsService } from './translation-units.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class FileDownloadService {
   constructor(
     private fileUploadService: FileUploadService,

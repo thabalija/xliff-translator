@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { FileInfo } from '../shared/interfaces/file-info.interface';
 import { TranslationUnit } from '../shared/interfaces/translation-unit.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class TranslationListService {
   private fileInfo: FileInfo;
 
