@@ -19,32 +19,31 @@ import { AppRoutingModule } from './shared/modules/routing/app-routing.module';
 import { SharedModule } from './shared/modules/shared/shared.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FileUploadComponent,
-    LayoutComponent,
-    EditorComponent,
-    SourceEditorComponent,
-    TranslationsComponent,
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-    MaterialModule,
-    SharedModule
-  ],
-  providers: [
-    FileUploadService,
-    FileDownloadService,
-    TranslationListService,
-    LocaleService,
-    TranslationUnitsService
-  ],
-  entryComponents: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        FileUploadComponent,
+        LayoutComponent,
+        EditorComponent,
+        SourceEditorComponent,
+        TranslationsComponent,
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        MaterialModule,
+        SharedModule
+    ],
+    providers: [
+        FileUploadService,
+        FileDownloadService,
+        TranslationListService,
+        LocaleService,
+        TranslationUnitsService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

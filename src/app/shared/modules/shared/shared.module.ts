@@ -7,15 +7,14 @@ import { AddTranslationDialogComponent } from './add-translation-dialog/add-tran
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
-  declarations: [ConfirmDialogComponent, AddTranslationDialogComponent],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    DragAndDropModule
-  ],
-  exports: [DragAndDropModule],
-  entryComponents: [ConfirmDialogComponent, AddTranslationDialogComponent]
+    declarations: [ConfirmDialogComponent, AddTranslationDialogComponent],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        DragAndDropModule
+    ],
+    exports: [DragAndDropModule]
 })
 export class SharedModule {}
