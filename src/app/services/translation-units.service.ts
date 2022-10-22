@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { TranslationUnit } from '../shared/interfaces/translation-unit.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class TranslationUnitsService {
   public getTraslationUnits(translationId?: number): TranslationUnit[] {
     return translationId

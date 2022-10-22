@@ -4,7 +4,9 @@ import { FileInfo } from './../shared/interfaces/file-info.interface';
 import { Note, TranslationUnit } from './../shared/interfaces/translation-unit.interface';
 import { TranslationListService } from './translation-list.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class FileUploadService {
   private uploadedFile: Subject<boolean> = new Subject<boolean>();
 

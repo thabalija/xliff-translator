@@ -9,11 +9,6 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
 import { LayoutComponent } from './components/layout/layout.component';
 import { SourceEditorComponent } from './components/source-editor/source-editor.component';
 import { TranslationsComponent } from './components/translations/translations.component';
-import { FileDownloadService } from './services/file-download.service';
-import { FileUploadService } from './services/file-upload.service';
-import { LocaleService } from './services/locale.service';
-import { TranslationListService } from './services/translation-list.service';
-import { TranslationUnitsService } from './services/translation-units.service';
 import { MaterialModule } from './shared/modules/material/material.module';
 import { AppRoutingModule } from './shared/modules/routing/app-routing.module';
 import { SharedModule } from './shared/modules/shared/shared.module';
@@ -36,13 +31,6 @@ import { SharedModule } from './shared/modules/shared/shared.module';
         AppRoutingModule,
         MaterialModule,
         SharedModule
-    ],
-    providers: [
-        FileUploadService,
-        FileDownloadService,
-        TranslationListService,
-        LocaleService,
-        TranslationUnitsService
     ],
     bootstrap: [AppComponent]
 })
