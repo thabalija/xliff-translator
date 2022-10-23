@@ -22,7 +22,7 @@ export class FileDownloadService {
     this.translationUnitsService.getTraslationUnits(translationID).forEach((transUnit: TranslationUnit) => {
       const segmentElement: Element = Array.from(
         originalFile.getElementsByTagName('segment')
-      ).find((element: Element) => element.getAttribute(SEGMENT_ATTRIBUTE_NAME) === transUnit.segmentId);
+      ).find((element: Element) => element.getAttribute(SEGMENT_ATTRIBUTE_NAME) === transUnit.id);
 
       const targetElementList: Array<Element> = Array.from(segmentElement.getElementsByTagName('target'));
       let targetElement = targetElementList.length ? targetElementList[0] : null;
@@ -55,7 +55,7 @@ export class FileDownloadService {
     translationUnits.forEach((transUnit: TranslationUnit) => {
       const segmentElement: Element = Array.from(
         originalFile.getElementsByTagName('segment')
-      ).find((element: Element) => element.getAttribute(SEGMENT_ATTRIBUTE_NAME) === transUnit.segmentId);
+      ).find((element: Element) => element.getAttribute(SEGMENT_ATTRIBUTE_NAME) === transUnit.id);
 
       const sourceElementList: Array<Element> = Array.from(segmentElement.getElementsByTagName('source'));
       const sourceElement = sourceElementList.length ? sourceElementList[0] : null;

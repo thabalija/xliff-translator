@@ -111,7 +111,8 @@ export class FileUploadService {
 
     return {
       note: this.getNotes(unit.getElementsByTagName('note') as any),
-      segmentId: segment.getAttribute(SEGMENT_ATTRIBUTE_NAME),
+      id: segment.getAttribute(SEGMENT_ATTRIBUTE_NAME),
+      segmentId: segment.getAttribute('id'),
       showNote: false,
       source: segment.querySelector('source').innerHTML,
       target: targetElement ? targetElement.innerHTML : null,
