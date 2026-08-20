@@ -1,6 +1,236 @@
-@import './assets/styles/variables';
-@import './assets/styles/fonts';
-@import './assets/styles/base';
-@import './assets/styles/modules';
-@import './assets/styles/theming';
-@import './assets/styles/mat-theme';
+@use '@angular/material' as mat;
+@use 'variables' as *;
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/material-icons.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/nunito-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/nunito-bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: 300;
+  src: url('/fonts/nunito-light.ttf') format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+}
+
+html {
+  color-scheme: light;
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$magenta-palette,
+        tertiary: mat.$violet-palette,
+      ),
+      typography: Nunito,
+      density: 0,
+    )
+  );
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Nunito, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background: $gradient-primary;
+}
+
+a {
+  color: $primary;
+}
+
+.flex-row {
+  display: flex;
+}
+
+.flex-spacer {
+  flex-grow: 1;
+}
+
+.flex-column-center {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+}
+
+.app-container {
+  width: 100%;
+  max-width: $breakpoint-md;
+  margin: 0 auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-wrapper {
+  background: $white;
+  max-width: 100%;
+  margin-bottom: 2em;
+  display: block;
+  position: relative;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 12%);
+
+  .card-header--title {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: var(--mat-sys-primary, $primary);
+    margin-bottom: 1em;
+  }
+}
+
+.get-started {
+  width: min(550px, 100%);
+  margin: 0 auto;
+}
+
+.file-info {
+  .flex-row {
+    flex-direction: column;
+    gap: 0.75rem;
+
+    @media screen and (min-width: $breakpoint-md) {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  &.card-wrapper {
+    margin-bottom: 1em;
+  }
+
+  .file-info--title {
+    font-size: 0.75em;
+    margin: 0;
+    text-transform: uppercase;
+    color: $text-gray;
+  }
+
+  .file-info--value {
+    font-size: 1.5em;
+    margin: 0.25em 0 0;
+    color: var(--mat-sys-primary, $primary);
+    font-weight: 300;
+  }
+}
+
+.file-info-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-round {
+  border-radius: 19px;
+}
+
+.translation-unit {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5em;
+
+  @media screen and (min-width: $breakpoint-md) {
+    flex-direction: row;
+    margin-bottom: 2em;
+    gap: 2em;
+  }
+
+  .source,
+  .target {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .card-wrapper {
+    box-shadow: none;
+    flex-grow: 1;
+    margin-bottom: 0;
+  }
+
+  .source .card-wrapper {
+    background: #f2f2f2;
+  }
+
+  .target .card-wrapper {
+    border: $border-dotted;
+  }
+
+  .card-actions {
+    position: absolute;
+    right: 13px;
+    bottom: 13px;
+  }
+
+  .translation-unit--footer {
+    min-height: 3.5em;
+    display: flex;
+    align-items: center;
+    padding: 1em;
+    color: #b3b3b3;
+  }
+
+  .translation-unit--fingerprint {
+    max-width: calc(100% - 4em);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.missing-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 200px;
+  justify-content: center;
+  color: $text-gray;
+}
+
+.font-bold {
+  font-weight: 700;
+}

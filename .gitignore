@@ -1,17 +1,18 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
-
-# compiled output
+# Compiled output
 /dist
 /tmp
 /out-tsc
+/bazel-out
 
-# dependencies
+# Node
 /node_modules
 .pnpm-store
+npm-debug.log
 pnpm-debug.log*
+yarn-error.log
 
 # IDEs and editors
-/.idea
+.idea/
 .project
 .classpath
 .c9/
@@ -19,30 +20,29 @@ pnpm-debug.log*
 .settings/
 *.sublime-workspace
 
-# IDE - VSCode
+# Visual Studio Code
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+!.vscode/mcp.json
+.history/*
 
-# misc
+# Miscellaneous
 /.angular/cache
-/.sass-cache
+.sass-cache/
 /connect.lock
 /coverage
 /libpeerconnection.log
-npm-debug.log
 testem.log
 /typings
+__screenshots__/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
 
-# e2e
-/e2e/*.js
-/e2e/*.map
-
-# System Files
+# System files
 .DS_Store
 Thumbs.db
-
-# Angular schematics
-/angular_material_schematics*

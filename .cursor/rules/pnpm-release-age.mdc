@@ -11,5 +11,6 @@ alwaysApply: true
   - `minimumReleaseAge: 4320`
   - `minimumReleaseAgeStrict: true`
 - Do not set `minimumReleaseAge` to `0`, add `minimumReleaseAgeExclude` unless the user asks, or pass flags that skip the age gate.
+- Approve native build scripts only via `allowBuilds` in `pnpm-workspace.yaml` (pnpm 11). Never set `strictDepBuilds: false` to hide ignored builds.
 - If pnpm reports `ERR_PNPM_NO_MATURE_MATCHING_VERSION`, pin the newest version that is at least 3 days old instead of forcing latest.
 - Prefer `pnpm dlx @angular/cli@<mature-version>` over unpinned `@latest`.

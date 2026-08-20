@@ -1,0 +1,45 @@
+@if (fileInfo(); as info) {
+  <div class="card-wrapper file-info file-info-editable">
+    <div class="flex-row">
+      <mat-form-field>
+        <mat-label>File target language</mat-label>
+        <mat-select [value]="targetLang()" (selectionChange)="onLanguageChange($event.value)">
+          @for (lang of languages; track lang.locale) {
+            <mat-option [value]="lang.locale">{{ lang.language }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Show</mat-label>
+        <mat-select [value]="filter()" (selectionChange)="onFilterChange($event.value)">
+          <mat-option value="all">All</mat-option>
+          <mat-option value="initial">Initial</mat-option>
+          <mat-option value="translated">Translated</mat-option>
+          <mat-option value="other">Other</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="flex-spacer"></div>
+
+      <div class="file-info--group">
+        <h2 class="file-info--title">Translated</h2>
+        <p class="file-info--value">
+          {{ ((info.translatedUnits ?? 0) / info.totalUnits) * 100 | number: '0.0-0' }}%
+        </p>
+      </div>
+
+      <div class="file-info-actions">
+        <button matButton="filled" type="button" (click)="download()">Download</button>
+      </div>
+    </div>
+  </div>
+}
+
+<app-unit-list
+  [units]="units()"
+  [filter]="filter()"
+  (copySource)="copySource($event)"
+  (targetChange)="onTargetChange($event)"
+  (stateChange)="onStateChange($event)"
+/>

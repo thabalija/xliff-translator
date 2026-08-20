@@ -1,0 +1,11 @@
+@use 'variables' as *;
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  mat-form-field {
+    width: 100%;
+  }
+}

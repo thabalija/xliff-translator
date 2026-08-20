@@ -1,0 +1,92 @@
+@if (fileInfo(); as info) {
+  <div class="card-wrapper file-info">
+    <div class="flex-row">
+      <div class="file-info--group">
+        <h2 class="file-info--title">Uploaded file</h2>
+        <p class="file-info--value">
+          {{ info.fileName && info.fileName.length > 30 ? (info.fileName | slice: 0 : 30) + '...' : info.fileName }}
+        </p>
+      </div>
+      <div class="flex-spacer"></div>
+      <div class="file-info--group">
+        <h2 class="file-info--title">Translation units</h2>
+        <p class="file-info--value">{{ info.totalUnits }}</p>
+      </div>
+      <div class="file-info--group">
+        <h2 class="file-info--title">Translated</h2>
+        <p class="file-info--value">{{ translationStatus() | number: '0.0-0' }}%</p>
+      </div>
+      <div class="file-info--group">
+        <h2 class="file-info--title">Source language</h2>
+        <p class="file-info--value">{{ info.sourceLang }}</p>
+      </div>
+    </div>
+  </div>
+}
+
+<div class="card-wrapper">
+  <div class="card-header">
+    <div class="card-header--title">My translations</div>
+  </div>
+  <div class="card-content">
+    <div class="translation--list">
+      <div class="translation--header-row">
+        <div class="translation--cell translation--cell__header">Language</div>
+        <div class="translation--cell translation--cell__header translation--cell__status">Status</div>
+      </div>
+      @for (translation of translations(); track translation.id) {
+        <div class="translation--row">
+          <div class="translation--cell translation--title translation--cell__title">
+            {{ titleFor(translation) }}
+          </div>
+          <div class="translation--cell translation--status">
+            @if (translation.targetLang) {
+              <div class="status">
+                <mat-progress-bar mode="determinate" [value]="percent(translation)" />
+                <p>{{ percent(translation) | number: '0.0-0' }}%</p>
+              </div>
+            }
+          </div>
+          @if (translation.targetLang) {
+            <div class="translation--cell translation--cell__center translation--cell__action">
+              <button type="button" class="row-action" (click)="confirmDeleteTranslation(translation)">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </div>
+            <div class="translation--cell translation--cell__center translation--cell__action">
+              <button type="button" class="row-action" (click)="openTranslation(translation)">
+                <mat-icon>edit</mat-icon>
+                <span>Translate</span>
+              </button>
+            </div>
+            <div class="translation--cell translation--cell__center translation--cell__action">
+              <button type="button" class="row-action" (click)="download(translation)">
+                <mat-icon>file_download</mat-icon>
+                <span>Download</span>
+              </button>
+            </div>
+          }
+        </div>
+      } @empty {
+        <div class="empty-state">
+          <mat-icon class="icon" aria-hidden="true">playlist_add</mat-icon>
+          <h2>Start translating</h2>
+          <p>
+            You have no translations yet.
+            <button type="button" class="link-button font-bold" (click)="addTranslation()">
+              Create new translation.
+            </button>
+          </p>
+        </div>
+      }
+    </div>
+    <div class="actions">
+      <button matButton type="button" class="button-round" (click)="confirmDeleteFile()">Delete uploaded file</button>
+      <button matButton="outlined" type="button" class="button-round" (click)="editSource()">
+        Edit source translation
+      </button>
+      <button matButton="filled" type="button" class="button-round" (click)="addTranslation()">Add translation</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+@use 'variables' as *;
+
+.row-action,
+.link-button {
+  border: 0;
+  background: none;
+  color: $primary;
+  cursor: pointer;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.translation--list {
+  margin: 0 -1em 1em;
+  min-height: 250px;
+}
+
+.translation--header-row {
+  display: none;
+
+  @media screen and (min-width: $breakpoint-md) {
+    border-bottom: $border-dotted;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.translation--cell__header {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.translation--cell__status {
+  flex: 4;
+}
+
+.translation--row {
+  min-height: 72px;
+  border-bottom: $border-dotted;
+  display: block;
+
+  @media screen and (min-width: $breakpoint-md) {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.translation--cell {
+  align-items: center;
+  color: $text-gray;
+  display: flex;
+  flex: 1;
+  font-size: 1.1em;
+}
+
+.translation--cell__title {
+  padding: 24px 18px 0;
+
+  @media screen and (min-width: $breakpoint-md) {
+    padding: 0 0 0 24px;
+  }
+}
+
+.translation--cell__action {
+  padding: 0 12px 18px;
+
+  @media screen and (min-width: $breakpoint-md) {
+    padding: 0 24px 0 0;
+    margin: 0;
+  }
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 0 18px;
+  gap: 1em;
+
+  p {
+    flex: 0 0 75px;
+  }
+}
+
+.empty-state {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: $text-gray;
+
+  .icon {
+    width: 62px;
+    height: 62px;
+    font-size: 62px;
+    color: $light-gray;
+  }
+}

@@ -1,0 +1,30 @@
+<header>
+  <a routerLink="/" class="header-logo">
+    <mat-icon class="icon" aria-hidden="true">translate</mat-icon>
+    <h1 class="title">Xliff translator</h1>
+  </a>
+  <nav class="navigation" aria-label="Main">
+    <a routerLink="/">
+      <mat-icon aria-hidden="true">file_upload</mat-icon>
+      <span>Upload file</span>
+    </a>
+    <a routerLink="/translations" [class.disabled]="!hasProject()" [attr.aria-disabled]="!hasProject()">
+      <mat-icon aria-hidden="true">list</mat-icon>
+      <span>My translations</span>
+    </a>
+  </nav>
+</header>
+
+<div class="app-container">
+  <router-outlet />
+</div>
+
+<footer class="flex-row">
+  <span>Version {{ version }}</span>
+  <span>
+    <a href="/docs/test_file.en.xml" target="_blank" rel="noopener">Test file</a>
+    |
+    <a href="/docs/test_translated_file.de.xml" target="_blank" rel="noopener">Test translated file</a>
+  </span>
+  <a href="https://github.com/thabalija/xliff-translator" target="_blank" rel="noopener">View on GitHub</a>
+</footer>
