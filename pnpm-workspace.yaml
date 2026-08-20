@@ -1,0 +1,12 @@
+allowBuilds:
+  core-js: set this to true or false
+  esbuild: set this to true or false
+  husky: set this to true or false
+  nice-napi: set this to true or false
+minimumReleaseAge: 4320
+minimumReleaseAgeStrict: true
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
+  - lmdb
+  - nice-napi

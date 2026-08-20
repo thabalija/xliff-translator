@@ -7,6 +7,8 @@
 
 # dependencies
 /node_modules
+.pnpm-store
+pnpm-debug.log*
 
 # IDEs and editors
 /.idea

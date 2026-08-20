@@ -1,0 +1,15 @@
+---
+description: Enforce pnpm and a 3-day package release cooldown
+alwaysApply: true
+---
+
+# Package installs
+
+- Use **pnpm** only. Never `npm install`, `yarn`, or `npx` to add dependencies.
+- Do not install a package version published fewer than **3 days** ago (4320 minutes).
+- The cooldown is enforced by `pnpm-workspace.yaml`:
+  - `minimumReleaseAge: 4320`
+  - `minimumReleaseAgeStrict: true`
+- Do not set `minimumReleaseAge` to `0`, add `minimumReleaseAgeExclude` unless the user asks, or pass flags that skip the age gate.
+- If pnpm reports `ERR_PNPM_NO_MATURE_MATCHING_VERSION`, pin the newest version that is at least 3 days old instead of forcing latest.
+- Prefer `pnpm dlx @angular/cli@<mature-version>` over unpinned `@latest`.
