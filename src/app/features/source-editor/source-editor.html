@@ -1,0 +1,24 @@
+@if (fileInfo()) {
+  <div class="card-wrapper file-info file-info-editable">
+    <div class="flex-row">
+      <div class="file-info--group">
+        <h2 class="file-info--title">Source language</h2>
+        <p class="file-info--value">{{ title() }}</p>
+      </div>
+      <div class="flex-spacer"></div>
+      <div class="file-info-actions">
+        <button matButton type="button" (click)="download()">Download file</button>
+      </div>
+      <div class="file-info-actions">
+        <button matButton="outlined" type="button" (click)="save()">Save changes</button>
+      </div>
+      <div class="file-info-actions">
+        <button matButton="filled" type="button" (click)="applyToExisting()">
+          Save and apply to existing translations
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<app-unit-list mode="source" [units]="units()" (sourceChange)="onSourceChange($event)" />

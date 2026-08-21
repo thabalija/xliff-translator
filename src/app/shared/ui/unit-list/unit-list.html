@@ -1,0 +1,98 @@
+<div class="card-wrapper editor">
+  <div class="card-header">
+    <div class="card-header--title">
+      @if (mode() === 'translate') {
+        Translate strings
+      } @else {
+        Edit source language
+      }
+    </div>
+  </div>
+
+  @for (unit of pagedUnits(); track unit.id) {
+    <div class="translation-unit" [id]="unit.unitId">
+      <div class="source">
+        <div class="card-wrapper" [class.source-input]="mode() === 'source'">
+          <div class="card-content">
+            @if (mode() === 'source') {
+              <mat-form-field>
+                <mat-label class="visually-hidden">Source text for {{ unit.unitId }}</mat-label>
+                <textarea
+                  matInput
+                  cdkTextareaAutosize
+                  [value]="unit.source"
+                  (input)="onSourceInput(unit, $event)"
+                ></textarea>
+              </mat-form-field>
+            } @else {
+              <p>{{ unit.source }}</p>
+            }
+          </div>
+          @if (mode() === 'translate') {
+            <div class="card-actions">
+              <button
+                matIconButton
+                type="button"
+                aria-label="Copy source text"
+                (click)="copySource.emit(unit.source)"
+              >
+                <mat-icon>content_copy</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+        <div class="translation-unit--footer">
+          <mat-icon class="mat-icon--fingerprint" aria-hidden="true">fingerprint</mat-icon>
+          <span class="translation-unit--fingerprint">{{ unit.unitId }} {{ unit.segmentId ?? '' }}</span>
+          <div class="flex-spacer"></div>
+          @if (unit.note.length > 0) {
+            <button matIconButton type="button" [matTooltip]="noteLabel(unit)" [attr.aria-label]="noteLabel(unit)">
+              <mat-icon>info_outline</mat-icon>
+            </button>
+          }
+        </div>
+      </div>
+
+      @if (mode() === 'translate') {
+        <div class="target">
+          <div class="card-wrapper target-input">
+            <div class="card-content">
+              <mat-form-field>
+                <mat-label class="visually-hidden">Translation for {{ unit.unitId }}</mat-label>
+                <textarea
+                  matInput
+                  cdkTextareaAutosize
+                  [value]="unit.target ?? ''"
+                  (input)="onTargetInput(unit, $event)"
+                ></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="translation-unit--footer">
+            <mat-radio-group
+              [value]="unit.targetState"
+              (change)="stateChange.emit({ unit, targetState: $event.value })"
+              [attr.aria-label]="'Status for ' + unit.unitId"
+            >
+              <mat-radio-button value="initial">Initial</mat-radio-button>
+              <mat-radio-button value="translated">Translated</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      }
+    </div>
+  } @empty {
+    <div class="missing-data">
+      <mat-icon class="mat-48" aria-hidden="true">speaker_notes_off</mat-icon>
+      <p>You have 0 translation units matching your parameters.</p>
+    </div>
+  }
+
+  <mat-paginator
+    [length]="filteredUnits().length"
+    [pageSize]="page().pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPage($event)"
+    aria-label="Translation unit pages"
+  />
+</div>

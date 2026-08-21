@@ -4,7 +4,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "@angular/cli",
+        "@angular/cli@22.1.4",
         "mcp"
       ]
     }

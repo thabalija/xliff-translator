@@ -1,0 +1,42 @@
+<div class="home-wrapper">
+  <div class="app-description">
+    <h1>Translate your XML</h1>
+    <p>
+      Xliff translator is an open source app for translating XML files. It is free for personal and commercial
+      use. Feel free to post feedback or suggestions on GitHub.
+    </p>
+  </div>
+  <div class="card-wrapper get-started">
+    <div class="card-header">
+      <div class="card-header--title">Get started</div>
+    </div>
+    <div class="card-content">
+      <app-file-drop (filesSelected)="onFilesSelected($event)" />
+      <div class="flex-row">
+        <mat-form-field>
+          <mat-label>File name</mat-label>
+          <input matInput type="text" [formField]="uploadForm.fileName" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Source language</mat-label>
+          <mat-select [formField]="uploadForm.sourceLang">
+            @for (lang of languages; track lang.locale) {
+              <mat-option [value]="lang.locale">{{ lang.language }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="actions">
+        <button
+          matButton="filled"
+          type="button"
+          class="button-round"
+          [disabled]="!uploadForm().valid() || !fileXml()"
+          (click)="createProject()"
+        >
+          Create project
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

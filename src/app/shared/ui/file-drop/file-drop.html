@@ -1,0 +1,39 @@
+<div
+  class="dropzone"
+  [class.disabled]="disabled()"
+  [class.is-dragged-over]="isDraggedOver()"
+>
+  @if (files().length === 0) {
+    <mat-icon class="upload-icon" aria-hidden="true">file_upload</mat-icon>
+  } @else if (files().length === 1) {
+    <mat-icon color="primary" aria-hidden="true">done</mat-icon>
+  } @else {
+    <mat-icon color="primary" aria-hidden="true">done_all</mat-icon>
+  }
+
+  <p>
+    <button type="button" class="link-button" [disabled]="disabled()" (click)="openFileDialog()">
+      Choose a file
+    </button>
+    or drag it here
+  </p>
+
+  <input
+    #fileInput
+    class="file-input"
+    type="file"
+    accept=".xlf,.xml"
+    [disabled]="disabled()"
+    (change)="onBrowse($event)"
+  />
+
+  <p class="file-name">
+    @if (files().length === 0) {
+      No files selected
+    } @else if (files().length === 1) {
+      {{ files()[0].name }}
+    } @else {
+      Multiple files selected
+    }
+  </p>
+</div>

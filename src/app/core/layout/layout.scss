@@ -1,0 +1,86 @@
+@use 'variables' as *;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+header,
+footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+header {
+  padding: 1em;
+  align-items: center;
+}
+
+.app-container {
+  padding: 0 1em;
+}
+
+footer {
+  padding: 1em;
+  color: #fff;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.navigation {
+  display: flex;
+  gap: 1em;
+
+  a {
+    display: flex;
+    align-items: center;
+  }
+}
+
+a {
+  color: rgba(255, 255, 255, 0.85);
+  transition: 200ms color ease;
+  text-decoration: none;
+
+  &:hover {
+    color: #fff;
+  }
+
+  &.header-logo {
+    display: flex;
+    align-items: center;
+
+    .icon {
+      width: 36px;
+      height: 36px;
+      font-size: 36px;
+      margin-right: 10px;
+    }
+
+    .title {
+      letter-spacing: -1px;
+      margin: 2px 0 0;
+      font-size: 1.5rem;
+    }
+  }
+
+  &.disabled {
+    color: rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+  }
+
+  span {
+    display: none;
+  }
+
+  @media screen and (min-width: $breakpoint-sm) {
+    span {
+      display: inline-block;
+      padding-left: 0.25em;
+    }
+  }
+}

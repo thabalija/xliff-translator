@@ -1,0 +1,43 @@
+@use 'variables' as *;
+
+.app-description {
+  max-width: 100%;
+  color: #fff;
+  font-size: 1.2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h1 {
+    margin: 0;
+  }
+
+  @media screen and (min-width: $breakpoint-sm) {
+    max-width: 50%;
+    padding-right: 2em;
+  }
+}
+
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: $breakpoint-sm) {
+    flex-direction: row;
+  }
+}
+
+.get-started .flex-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  @media screen and (min-width: $breakpoint-sm) {
+    flex-direction: row;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}

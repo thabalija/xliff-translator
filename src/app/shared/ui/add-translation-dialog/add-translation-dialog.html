@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>Add translation</h1>
+
+<mat-dialog-content class="dialog">
+  <div class="dialog-content">
+    <mat-form-field>
+      <mat-label>Target language</mat-label>
+      <mat-select [formField]="translationForm.targetLang">
+        @for (language of languages; track language.locale) {
+          <mat-option [value]="language.locale">{{ language.language }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    @if (data.translatedLanguages.length) {
+      <mat-checkbox [checked]="copyFromExisting()" (change)="copyFromExisting.set($event.checked)">
+        Copy translations from an existing file
+      </mat-checkbox>
+    }
+
+    @if (copyFromExisting()) {
+      <mat-form-field>
+        <mat-label>Choose translation</mat-label>
+        <mat-select [formField]="translationForm.copyFromId">
+          @for (language of data.translatedLanguages; track language.id) {
+            <mat-option [value]="language.id">{{ languageLabel(language) }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button matButton type="button" class="button-round" (click)="cancel()">Cancel</button>
+  <button
+    matButton="filled"
+    type="button"
+    class="button-round"
+    [disabled]="!translationForm().valid() || (copyFromExisting() && !model().copyFromId)"
+    (click)="create()"
+  >
+    Create translation
+  </button>
+</mat-dialog-actions>
